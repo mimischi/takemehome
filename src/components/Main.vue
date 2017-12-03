@@ -30,9 +30,9 @@ export default {
       stations: []
     }
   },
-  mounted () {
-    this.$store.dispatch('LOAD_DEPARTURE_LIST')
-  },
+  // mounted () {
+  //   this.$store.dispatch('LOAD_DEPARTURE_LIST')
+  // },
   watch: {
     start () {
       this.currentStation = "You're still typing, aren't you?"
