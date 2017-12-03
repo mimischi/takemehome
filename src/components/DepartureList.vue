@@ -2,6 +2,10 @@
   v-list(two-line v-if="departures")
     template(v-for="journey in departures")
       v-list-tile(v-bind:key="journey.name" @click="")
+        v-list-tile-avatar(v-if="journey.name.substring(0, 3) === 'Bus'")
+          v-icon directions_bus
+        v-list-tile-avatar(v-else)
+          v-icon train
         v-list-tile-content
           v-list-tile-title(v-html="$options.filters.formatLine(journey.name, journey.direction)")
           v-list-tile-sub-title(v-html="$options.filters.formatTime(journey.time)")
