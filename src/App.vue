@@ -1,22 +1,22 @@
-<template>
-  <div id="app">
-    <router-view/>
-  </div>
+<template lang="pug">
+  v-app(light)
+    v-toolbar(color="blue" dark fixed app)
+      v-toolbar-title(v-text="title")
+    v-content
+      v-container(fluid)
+        v-fade-transition(mode="out-in")
+          router-view
 </template>
+
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data () {
+    return {
+      title: 'TAKE.ME.HOME.',
+      drawer: null
+    }
+  }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
