@@ -1,17 +1,12 @@
 <template lang="pug">
   v-content
-    departure-search(v-on:selectedStation="setStation")
+    departure-search(v-on:madeSelection="setStation" v-on:resetSelection="resetDepartures")
     v-layout(row)
       v-btn(
         color="primary"
         @click.prevent="getDeparture"
         :disabled="!select.extId"
         ) Show departures!
-      v-btn(
-        color="error"
-        @click.prevent="resetForm"
-        :disabled="!select.extId"
-        ) Reset
     v-list(two-line v-if="data")
       template(v-for="journey in data")
         v-list-tile(v-bind:key="journey.name" @click="")
@@ -60,8 +55,7 @@ export default {
     setStation (data) {
       this.select = data
     },
-    resetForm () {
-      this.stations = []
+    resetDepartures () {
       this.data = ''
       this.select = {
         extId: null,

@@ -40,10 +40,13 @@ export default {
       const stationObj = this.stations.find(this.getExtId)
       if (typeof stationObj !== 'undefined') {
         this.select.extId = stationObj.StopLocation.extId
+
+        this.$emit('madeSelection', this.select)
       } else if (typeof stationObj === 'undefined') {
         this.select.extId = null
+
+        this.$emit('resetSelection')
       }
-      this.$emit('selectedStation', this.select)
     }
   },
   methods: {
