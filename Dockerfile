@@ -1,4 +1,6 @@
 FROM node:9.2
+ARG API_URL
+ENV API_URL=${API_URL}
 
 # use changes to package.json to force Docker not to use the cache
 # when we change our application's nodejs dependencies:
@@ -11,7 +13,7 @@ RUN mkdir -p /usr/src/app && cp -a /tmp/node_modules /usr/src/app
 WORKDIR /usr/src/app
 ADD . /usr/src/app
 
-RUN npm run build
+RUN yarn build
 RUN rm -rf ./build
 RUN rm -rf ./test
 RUN rm -rf ./src
