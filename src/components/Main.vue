@@ -7,29 +7,25 @@
         @click.prevent="getDeparture"
         :disabled="!select.extId"
         ) Show departures!
-    v-list(two-line v-if="data")
-      template(v-for="journey in data")
-        v-list-tile(v-bind:key="journey.name" @click="")
-          v-list-tile-content
-            v-list-tile-title(v-html="$options.filters.formatLine(journey.name, journey.direction)")
-            v-list-tile-sub-title(v-html="$options.filters.formatTime(journey.time)")
+    departure-list(:departures="departures")
 </template>
 
 <script>
 import _ from 'lodash'
-import DepartureSearch from './DepartureSearch'
+import DepartureSearch from '@/components/DepartureSearch'
+import DepartureList from '@/components/DepartureList'
 import API from '@/api'
 
 export default {
   name: 'Main',
-  components: {DepartureSearch},
+  components: {DepartureList, DepartureSearch},
   data () {
     return {
       select: {
         name: '',
         extId: null
       },
-      data: '',
+      departures: '',
       errors: [],
       stations: []
     }
@@ -43,20 +39,12 @@ export default {
       this.getStation()
     }
   },
-  filters: {
-    formatLine (line, direction) {
-      return `${line} to ${direction}`
-    },
-    formatTime (time) {
-      return `Departure: ${time}`
-    }
-  },
   methods: {
     setStation (data) {
       this.select = data
     },
     resetDepartures () {
-      this.data = ''
+      this.departures = ''
       this.select = {
         extId: null,
         name: ''
@@ -83,7 +71,7 @@ export default {
         this.data = ''
       }
       API.post('/', {url: 'departureBoard', params: {extId: this.select.extId, rtMode: 'REALTIME'}}).then(response => {
-        this.data = response.data.Departure
+        this.departures = response.data.Departure
       }).catch(e => {
         this.errors.push(e)
       })
