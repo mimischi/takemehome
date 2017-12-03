@@ -1,18 +1,6 @@
 <template lang="pug">
   v-content
-    v-layout(row)
-      v-flex(xs4)
-        v-subheader Enter departure station
-      v-flex(xs8)
-        v-select(
-          label="Departure station"
-          autocomplete
-          :loading="loading"
-          :items="items"
-          :search-input.sync="search"
-          v-model="select.name"
-          clearable=true
-        )
+    departure-search(v-on:selectedStation="setStation")
     v-layout(row)
       v-btn(
         color="primary"
@@ -34,21 +22,14 @@
 
 <script>
 import _ from 'lodash'
-import axios from 'axios'
-
-const API = axios.create({
-  timeout: 1000,
-  baseURL: 'http://proxify.dev'
-})
+import DepartureSearch from './DepartureSearch'
+import API from '@/api'
 
 export default {
   name: 'Main',
+  components: {DepartureSearch},
   data () {
     return {
-      loading: false,
-      items: [],
-      search: null,
-      states: [],
       select: {
         name: '',
         extId: null
@@ -62,17 +43,6 @@ export default {
     this.$store.dispatch('LOAD_DEPARTURE_LIST')
   },
   watch: {
-    search (val) {
-      val && this.querySelections(val)
-    },
-    'select.name' (val) {
-      const stationObj = this.stations.find(this.getExtId)
-      if (typeof stationObj !== 'undefined') {
-        this.select.extId = stationObj.StopLocation.extId
-      } else if (typeof stationObj === 'undefined') {
-        this.select.extId = null
-      }
-    },
     start () {
       this.currentStation = "You're still typing, aren't you?"
       this.getStation()
@@ -87,29 +57,8 @@ export default {
     }
   },
   methods: {
-    filterStations (stations) {
-      return stations.filter(
-        s => {
-          if (typeof s.StopLocation !== 'undefined') {
-            return s
-          }
-        }
-      )
-    },
-    getExtId (item) {
-      if (typeof item.StopLocation !== 'undefined') {
-        return item.StopLocation.name === this.select.name
-      }
-    },
-    querySelections (v) {
-      this.loading = true
-      API.post('/', {url: 'location.name', params: {input: v}}).then(response => {
-        this.stations = response.data.stopLocationOrCoordLocation
-        this.items = this.filterStations(this.stations).map(s => s.StopLocation.name)
-        this.loading = false
-      }).catch(e => {
-        this.stations = e
-      })
+    setStation (data) {
+      this.select = data
     },
     resetForm () {
       this.stations = []
