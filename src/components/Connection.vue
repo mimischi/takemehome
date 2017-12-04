@@ -1,21 +1,21 @@
 <template lang="pug">
   v-content
-    v-flex(xs8)
+    v-flex(xs12)
       v-text-field(
         name="startStation"
-        label="Start"
+        label="What place do you want to leave?"
         v-model="stations.start.name"
         prepend-icon="flight_takeoff"
         readonly
       )
       v-text-field(
         name="endStation"
-        label="Destination"
+        label="What is your destination?"
         v-model="stations.end.name"
         prepend-icon="flight_land"
         readonly
       )
-    v-btn(color="primary" @click="getTrip") Submit
+    v-btn(color="primary" block large @click="getTrip" :loading="loading" :disabled="loading") TAKE.ME.HOME
     timeline(v-if="trips" v-for="trip in trips" :trip="trip" :key="trip.tripId")
     //- v-list(two-line v-if="trips")
     //-   template(v-for="leg in trips")
@@ -35,7 +35,8 @@ export default {
   components: {Timeline},
   data () {
     return {
-      test: 'right',
+      loading: false,
+      dialog: false,
       stations: {
         start: {
           name: 'Frankfurt (Main) Uni Campus Riedberg',
@@ -62,7 +63,8 @@ export default {
   },
   methods: {
     getTrip () {
-      console.log('Sending request!')
+      this.loading = true
+      this.trips = null
       API.post(
         '/',
         {
@@ -73,6 +75,7 @@ export default {
           }
         }
       ).then(response => {
+        this.loading = false
         this.trips = response.data.Trip
       }).catch(e => {
         console.log(e)
