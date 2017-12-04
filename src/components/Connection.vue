@@ -69,6 +69,7 @@ export default {
       this.loading = true
       this.trips = null
       this.errors = null
+      this.alert = false
       API.post(
         '/',
         {
