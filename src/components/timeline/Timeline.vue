@@ -173,7 +173,7 @@ Responsive Stuff
   .timeline .event:nth-child(1)::before,
   .timeline .event:nth-child(3)::before,
   .timeline .event:nth-child(5)::before {
-    top: 38px;
+    top: 20px;
   }
   .timeline h3 {
     font-size: 16px;
