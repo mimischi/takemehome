@@ -12,12 +12,12 @@
 
 <script>
 import _ from 'lodash'
-import DepartureSearch from '@/components/DepartureSearch'
-import DepartureList from '@/components/DepartureList'
+import DepartureSearch from '@/components/departures/DepartureSearch'
+import DepartureList from '@/components/departures/DepartureList'
 import API from '@/api'
 
 export default {
-  name: 'Main',
+  name: 'Departures',
   components: {DepartureList, DepartureSearch},
   data () {
     return {
