@@ -16,6 +16,7 @@
         readonly
       )
     v-btn(color="primary" block large @click="getTrip" :loading="loading" :disabled="loading") TAKE.ME.HOME
+    v-alert(color="error" icon="warning" :value="errors" v-model="alert" dismissible transition="scale-transition") {{ errors }}
     timeline(v-if="trips" v-for="trip in trips" :trip="trip" :key="trip.tripId")
     //- v-list(two-line v-if="trips")
     //-   template(v-for="leg in trips")
@@ -37,6 +38,8 @@ export default {
     return {
       loading: false,
       dialog: false,
+      alert: false,
+      errors: null,
       stations: {
         start: {
           name: 'Frankfurt (Main) Uni Campus Riedberg',
@@ -65,6 +68,7 @@ export default {
     getTrip () {
       this.loading = true
       this.trips = null
+      this.errors = null
       API.post(
         '/',
         {
@@ -78,7 +82,9 @@ export default {
         this.loading = false
         this.trips = response.data.Trip
       }).catch(e => {
-        console.log(e)
+        this.loading = false
+        this.alert = true
+        this.errors = 'Something went wrong with the API: "' + e + '".'
       })
     }
   }
