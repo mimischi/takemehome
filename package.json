@@ -11,9 +11,11 @@
     "test": "yarn run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "build": "node build/build.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "export NPM_CONFIG_PRODUCTION=true && yarn build"
   },
   "dependencies": {
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
