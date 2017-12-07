@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-fade-transition(mode="out-in")
+  v-slide-y-transition
     v-flex(xs12)
       ul.timeline
         li.event(v-for="l in trip.LegList.Leg" :key="trip.tripId" :data-date="$options.computed.productType(l)")

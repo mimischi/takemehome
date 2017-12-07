@@ -1,32 +1,5 @@
 <template lang="pug">
   v-content
-    //- v-dialog(v-model="dialog" persistent max-width="500px")
-    //-   v-btn(color="secondary" dark slot="activator") Change settings
-    //-   v-card
-    //-     v-card-title
-    //-       span.headline TAKE.ME.HOME settings
-    //-     v-card-text
-    //-       v-container(grid-list-md)
-    //-         v-layout(wrap)
-    //-           v-flex(xs12)
-    //-             v-text-field(
-    //-               name="startStation"
-    //-               label="What place do you want to leave?"
-    //-               v-model="stations.start.name"
-    //-               prepend-icon="flight_takeoff"
-    //-               readonly
-    //-             )
-    //-             v-text-field(
-    //-               name="endStation"
-    //-               label="What is your destination?"
-    //-               v-model="stations.end.name"
-    //-               prepend-icon="flight_land"
-    //-               readonly
-    //-             )
-    //-     v-card-actions
-    //-       v-spacer
-    //-       v-btn(color="blue darken-1" flat @click="dialog = false") Save
-    //-       v-btn(color="blue darken-1" flat @click.native="dialog = false") Close
     departure-search(
       label="What place do you want to leave?"
       icon="flight_takeoff"
@@ -41,6 +14,7 @@
     )
     v-btn(color="primary" block large @click="getTrip" :loading="loading" :disabled="disabled") TAKE.ME.HOME
     v-alert(color="error" icon="warning" :value="errors" v-model="alert" dismissible transition="scale-transition") {{ errors }}
+    timeline-skeleton(v-if="showSkeleton")
     timeline(v-if="trips" v-for="trip in trips" :trip="trip" :key="trip.tripId")
 </template>
 
@@ -48,12 +22,14 @@
 import API from '@/api'
 import DepartureSearch from '@/components/departures/DepartureSearch'
 import Timeline from '@/components/timeline/Timeline'
+import TimelineSkeleton from '@/components/timeline/TimelineSkeleton'
 
 export default {
   name: 'Connection',
   components: {
     DepartureSearch,
-    Timeline
+    Timeline,
+    TimelineSkeleton
   },
   data () {
     return {
@@ -85,6 +61,11 @@ export default {
   },
   mounted () {
     this.toggleSubmitButton()
+  },
+  computed: {
+    showSkeleton () {
+      return (!this.trip && this.loading)
+    }
   },
   methods: {
     toggleSubmitButton () {
