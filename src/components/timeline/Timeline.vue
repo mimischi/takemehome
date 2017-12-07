@@ -3,7 +3,8 @@
     v-flex(xs12)
       ul.timeline
         li.event(v-for="l in trip.LegList.Leg" :key="trip.tripId" :data-date="$options.computed.productType(l)")
-          h3 {{ l.Product.name }} - {{ l.direction }}
+          h3(v-if="l.type === 'JNY'") {{ l.Product.name }} - {{ l.direction }}
+          h3(v-else-if="l.type === 'WALK'") Walk to {{ l.Destination.name }}
           p {{ l.Origin.time }} - {{ l.Origin.name }}
           p {{ l.Destination.time }} - {{ l.Destination.name }}
 </template>
@@ -15,14 +16,18 @@ export default {
   computed: {
     productType (leg) {
       let transport = 'directions_railway'
+      if (typeof leg.Product === 'undefined') {
+        return 'directions_walk'
+      }
       let product = leg.Product.catOutL
       if (product.startsWith('U-Bahn')) {
-        transport = 'train'
+        transport = 'directions_subway'
       } else if (product.startsWith('Niederflurbus')) {
         transport = 'directions_bus'
       } else if (product.startsWith('Niederflurstraßenbahn')) {
         transport = 'tram'
       }
+
       return transport
     }
   }
