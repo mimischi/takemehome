@@ -1,5 +1,32 @@
 <template lang="pug">
   v-content
+    //- v-dialog(v-model="dialog" persistent max-width="500px")
+    //-   v-btn(color="secondary" dark slot="activator") Change settings
+    //-   v-card
+    //-     v-card-title
+    //-       span.headline TAKE.ME.HOME settings
+    //-     v-card-text
+    //-       v-container(grid-list-md)
+    //-         v-layout(wrap)
+    //-           v-flex(xs12)
+    //-             v-text-field(
+    //-               name="startStation"
+    //-               label="What place do you want to leave?"
+    //-               v-model="stations.start.name"
+    //-               prepend-icon="flight_takeoff"
+    //-               readonly
+    //-             )
+    //-             v-text-field(
+    //-               name="endStation"
+    //-               label="What is your destination?"
+    //-               v-model="stations.end.name"
+    //-               prepend-icon="flight_land"
+    //-               readonly
+    //-             )
+    //-     v-card-actions
+    //-       v-spacer
+    //-       v-btn(color="blue darken-1" flat @click="dialog = false") Save
+    //-       v-btn(color="blue darken-1" flat @click.native="dialog = false") Close
     v-flex(xs12)
       v-text-field(
         name="startStation"
