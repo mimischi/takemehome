@@ -1,41 +1,32 @@
 <template lang="pug">
-  .main-container
-    section#timeline.timeline-outer
-      #content.container
-        .row
-          .col.s12.m12.l12
-            ul.timeline(v-if="trip.LegList.Leg.length > 1")
-              li.event(v-for="l in trip.LegList.Leg" :data-date="l.Origin.time")
-                h3 {{ l.Product.name }}
-                p
-                  | {{ l.Origin.time }} - {{ l.Origin.name }} <br>
-                  | {{ l.Destination.time }} - {{ l.Destination.name }}
-            ul.timeline(v-else)
-              li.event(v-for="l in trip.LegList.Leg" :data-date="l.Origin.time")
-                h3 {{ l.Product.name }}
-                p
-                  | {{ l.Origin.time }} - {{ l.Origin.name }} <br>
-                  | {{ l.Destination.time }} - {{ l.Destination.name }}
-            </template>
+  //- .main-container
+  //-   section#timeline.timeline-outer
+  //-     #content.container
+  v-fade-transition(mode="out-in")
+    v-flex(xs12)
+      ul.timeline
+        li.event(v-for="l in trip.LegList.Leg" :key="trip.tripId" :data-date="$options.computed.productType(l)")
+          h3 {{ l.Product.name }} - {{ l.direction }}
+          p {{ l.Origin.time }} - {{ l.Origin.name }}
+          p {{ l.Destination.time }} - {{ l.Destination.name }}
+</template>
 
 <script>
 export default {
   name: 'Timeline',
   props: ['trip'],
-  data () {
-    return {
-      events: [
-        {
-          title: 'Test 1',
-          date: 123,
-          text: 'Lorem ipsum'
-        },
-        {
-          title: 'Test 2',
-          date: 456,
-          text: 'DSA'
-        }
-      ]
+  computed: {
+    productType (leg) {
+      let transport = 'event_seat'
+      let product = leg.Product.catOutL
+      if (product.startsWith('U-Bahn')) {
+        transport = 'train'
+      } else if (product.startsWith('Niederflurbus')) {
+        transport = 'directions_bus'
+      } else if (product.startsWith('Niederflurstraßenbahn')) {
+        transport = 'tram'
+      }
+      return transport
     }
   }
 }
@@ -48,15 +39,14 @@ TimeLine CSS
 /* Base */
 
 #content {
-  margin-top: 50px;
+  margin-top: 25px;
   text-align: center;
 }
 
 section.timeline-outer {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
 }
-
 h1.header {
   font-size: 50px;
   line-height: 70px;
@@ -69,7 +59,7 @@ h1.header {
   border-top-right-radius: 2px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   color: #333;
-  /* margin: 50px auto; */
+  margin: 50px auto;
   letter-spacing: 0.5px;
   position: relative;
   line-height: 1.4em;
@@ -82,6 +72,23 @@ h1.header {
 .timeline h2,
 .timeline h3 {
   font-size: 1.4em;
+}
+
+.timeline p:first-of-type {
+  padding-top: 20px;
+}
+
+.timeline p::before {
+  position: absolute;
+  display: inline-block;
+  box-shadow: 0 0 0 8px #42A5F5;
+  left: -27px;
+  background: #212121;
+  border-radius: 50%;
+  margin-top: 7px;
+  height: 5px;
+  width: 5px;
+  content: "";
 }
 
 .timeline .event {
@@ -105,58 +112,43 @@ h1.header {
 }
 
 .timeline .event:before {
-  left: -177.5px;
   color: #212121;
   content: attr(data-date);
-  text-align: right;
-  /*  font-weight: 100;*/
-
-  font-size: 16px;
-  min-width: 120px;
+  font-family: "Material Icons";
+  left: -36px;
+  top: 1px;
+  font-size: 23px;
+  z-index: 1;
 }
 
 .timeline .event:after {
   box-shadow: 0 0 0 8px #42A5F5;
   left: -30px;
-  background: #212121;
+  background: #42A5F5;
   border-radius: 50%;
   height: 11px;
   width: 11px;
   content: "";
-  top: 5px;
+  top: 4px;
 }
 
-.timeline .event:first-of-type::after {
-  border-radius: 0 0 0 1px;
-  box-shadow: 0;
-  background-color: #42A5F5;
-  height: 5px;
-  /* top: -25px; */
-  left: -32.5px;
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 12px solid #212121;
-}
-/**/
 /*——————————————
 Responsive Stuff
 ———————————————*/
 
 @media (max-width: 945px) {
-  .timeline .event::before {
+  /* .timeline .event::before {
     left: 0.5px;
     top: 20px;
     min-width: 0;
     font-size: 13px;
-  }
+  } */
   .timeline h3 {
     font-size: 16px;
   }
-  .timeline p {
+  /* .timeline p {
     padding-top: 20px;
-  }
+  } */
   section.lab h3.card-title {
     padding: 5px;
     font-size: 16px
@@ -164,22 +156,22 @@ Responsive Stuff
 }
 
 @media (max-width: 768px) {
-  .timeline .event::before {
+  /* .timeline .event::before {
     left: 0.5px;
     top: 20px;
     min-width: 0;
     font-size: 13px;
-  }
-  .timeline .event:nth-child(1)::before,
+  } */
+  /* .timeline .event:nth-child(1)::before,
   .timeline .event:nth-child(3)::before,
   .timeline .event:nth-child(5)::before {
     top: 20px;
-  }
+  } */
   .timeline h3 {
     font-size: 16px;
   }
-  .timeline p {
+  /* .timeline p {
     padding-top: 20px;
-  }
+  } */
 }
 </style>

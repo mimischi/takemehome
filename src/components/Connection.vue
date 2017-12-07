@@ -46,10 +46,12 @@ export default {
           extId: '003060765'
         },
         end: {
-          name: 'Frankfurt (Main) Heddernheim',
-          extId: '003001317'
+          // name: 'Frankfurt (Main) Heddernheim',
+          // extId: '003001317'
           // name: 'Frankfurt (Main) Hauptbahnhof',
           // extId: '003000010'
+          extId: '003001201',
+          name: 'Frankfurt (Main) Bockenheimer Warte'
         }
       },
       trips: null
