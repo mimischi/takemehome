@@ -2,6 +2,8 @@
   v-slide-y-transition
     v-flex(xs12)
       ul.timeline
+        span(data-icon="timer") {{ $options.computed.formatDuration(trip.duration) }}
+        span(data-icon="autorenew") {{ LegListLength }}
         li.event(v-for="l in trip.LegList.Leg" :key="trip.tripId" :data-date="$options.computed.productType(l)")
           h3(v-if="l.type === 'JNY'") {{ l.Product.name }} - {{ l.direction }}
           h3(v-else-if="l.type === 'WALK'") Walk to {{ l.Destination.name }}
@@ -14,6 +16,9 @@ export default {
   name: 'Timeline',
   props: ['trip'],
   computed: {
+    LegListLength () {
+      return Object.keys(this.trip.LegList.Leg).length - 1
+    },
     productType (leg) {
       let transport = 'directions_railway'
       if (typeof leg.Product === 'undefined') {
@@ -29,32 +34,26 @@ export default {
       }
 
       return transport
+    },
+    formatDuration (duration) {
+      const s = duration.split(/P|T|H|M/)
+      let hours, minutes
+      if (s.length === 5) {
+        hours = s[2]
+        minutes = s[3]
+      } else {
+        hours = 0
+        minutes = s[2]
+      }
+      if (hours < 10) { hours = '0' + hours }
+      if (minutes < 10) { minutes = '0' + minutes }
+      return hours + 'h' + minutes + 'm'
     }
   }
 }
 </script>
 
 <style scoped>
-/*——————————————
-TimeLine CSS
-———————————————*/
-/* Base */
-
-#content {
-  margin-top: 25px;
-  text-align: center;
-}
-
-section.timeline-outer {
-  width: 100%;
-  margin: 0 auto;
-}
-h1.header {
-  font-size: 50px;
-  line-height: 70px;
-}
-/* Timeline */
-
 .timeline {
   border-left: 8px solid #42A5F5;
   border-bottom-right-radius: 2px;
@@ -70,8 +69,6 @@ h1.header {
   text-align: left;
 }
 
-.timeline h1,
-.timeline h2,
 .timeline h3 {
   font-size: 1.4em;
 }
@@ -106,24 +103,44 @@ h1.header {
   border: none;
 }
 
-.timeline .event:before,
-.timeline .event:after {
+.timeline span {
+  display: inline-block;
+  font-size: 16px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+}
+
+.timeline span:last-of-type {
+  margin-left: 15px;
+}
+
+.timeline span::before {
+  position: relative;
+  content: attr(data-icon);
+  font-family: "Material Icons";
+  font-size: 16px;
+  top: 2px;
+  left: -5px;
+}
+
+.timeline .event::before,
+.timeline .event::after {
   position: absolute;
   display: block;
   top: 0;
 }
 
-.timeline .event:before {
+.timeline .event::before {
   color: #212121;
   content: attr(data-date);
   font-family: "Material Icons";
   left: -36px;
   top: 1px;
   font-size: 23px;
-  z-index: 1;
+  z-index: 10;
 }
 
-.timeline .event:after {
+.timeline .event::after {
   box-shadow: 0 0 0 8px #42A5F5;
   left: -30px;
   background: #42A5F5;
