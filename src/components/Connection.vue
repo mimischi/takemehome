@@ -39,7 +39,7 @@
       v-on:madeSelection="setDestinationStation"
       v-on:resetSelection="resetDestinationStation"
     )
-    v-btn(color="primary" block large @click="getTrip" :loading="loading" :disabled="loading") TAKE.ME.HOME
+    v-btn(color="primary" block large @click="getTrip" :loading="loading" :disabled="disabled") TAKE.ME.HOME
     v-alert(color="error" icon="warning" :value="errors" v-model="alert" dismissible transition="scale-transition") {{ errors }}
     timeline(v-if="trips" v-for="trip in trips" :trip="trip" :key="trip.tripId")
 </template>
@@ -60,6 +60,7 @@ export default {
       loading: false,
       dialog: false,
       alert: false,
+      disabled: false,
       errors: null,
       stations: {
         start: {
@@ -74,7 +75,25 @@ export default {
       trips: null
     }
   },
+  watch: {
+    'stations.start' (value) {
+      this.toggleSubmitButton()
+    },
+    'stations.end' (value) {
+      this.toggleSubmitButton()
+    }
+  },
+  mounted () {
+    this.toggleSubmitButton()
+  },
   methods: {
+    toggleSubmitButton () {
+      if (this.stations.start.extId === null || this.stations.end.extId === null) {
+        this.disabled = true
+      } else {
+        this.disabled = false
+      }
+    },
     setDepartureStation (data) {
       this.stations.start = data
     },
@@ -95,6 +114,7 @@ export default {
     },
     getTrip () {
       this.loading = true
+      this.disabled = true
       this.trips = null
       this.errors = null
       this.alert = false
@@ -109,9 +129,11 @@ export default {
         }
       ).then(response => {
         this.loading = false
+        this.disabled = false
         this.trips = response.data.Trip
       }).catch(e => {
         this.loading = false
+        this.disabled = false
         this.alert = true
         this.errors = 'Something went wrong with the API: "' + e + '".'
       })
