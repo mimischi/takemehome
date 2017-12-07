@@ -1,10 +1,9 @@
 <template lang="pug">
   v-layout(row)
-      v-flex(xs4)
-        v-subheader Enter departure station
-      v-flex(xs8)
+      v-flex(xs12)
         v-select(
-          label="Departure station"
+          :label="label"
+          :prepend-icon="icon"
           autocomplete
           :loading="loading"
           :items="items"
@@ -19,7 +18,7 @@ import API from '@/api'
 
 export default {
   name: 'DepartureSearch',
-  props: ['stationSelect'],
+  props: ['stationSelect', 'label', 'icon'],
   data () {
     return {
       loading: false,

@@ -1,7 +1,4 @@
 <template lang="pug">
-  //- .main-container
-  //-   section#timeline.timeline-outer
-  //-     #content.container
   v-fade-transition(mode="out-in")
     v-flex(xs12)
       ul.timeline
@@ -17,7 +14,7 @@ export default {
   props: ['trip'],
   computed: {
     productType (leg) {
-      let transport = 'event_seat'
+      let transport = 'directions_railway'
       let product = leg.Product.catOutL
       if (product.startsWith('U-Bahn')) {
         transport = 'train'
@@ -137,18 +134,10 @@ Responsive Stuff
 ———————————————*/
 
 @media (max-width: 945px) {
-  /* .timeline .event::before {
-    left: 0.5px;
-    top: 20px;
-    min-width: 0;
-    font-size: 13px;
-  } */
   .timeline h3 {
     font-size: 16px;
   }
-  /* .timeline p {
-    padding-top: 20px;
-  } */
+
   section.lab h3.card-title {
     padding: 5px;
     font-size: 16px
@@ -156,22 +145,8 @@ Responsive Stuff
 }
 
 @media (max-width: 768px) {
-  /* .timeline .event::before {
-    left: 0.5px;
-    top: 20px;
-    min-width: 0;
-    font-size: 13px;
-  } */
-  /* .timeline .event:nth-child(1)::before,
-  .timeline .event:nth-child(3)::before,
-  .timeline .event:nth-child(5)::before {
-    top: 20px;
-  } */
   .timeline h3 {
     font-size: 16px;
   }
-  /* .timeline p {
-    padding-top: 20px;
-  } */
 }
 </style>

@@ -27,40 +27,34 @@
     //-       v-spacer
     //-       v-btn(color="blue darken-1" flat @click="dialog = false") Save
     //-       v-btn(color="blue darken-1" flat @click.native="dialog = false") Close
-    v-flex(xs12)
-      v-text-field(
-        name="startStation"
-        label="What place do you want to leave?"
-        v-model="stations.start.name"
-        prepend-icon="flight_takeoff"
-        readonly
+    departure-search(
+      label="What place do you want to leave?"
+      icon="flight_takeoff"
+      v-on:madeSelection="setDepartureStation"
+      v-on:resetSelection="resetDepartureStation"
       )
-      v-text-field(
-        name="endStation"
-        label="What is your destination?"
-        v-model="stations.end.name"
-        prepend-icon="flight_land"
-        readonly
-      )
+    departure-search(
+      label="What is your destination?"
+      icon="flight_landing"
+      v-on:madeSelection="setDestinationStation"
+      v-on:resetSelection="resetDestinationStation"
+    )
     v-btn(color="primary" block large @click="getTrip" :loading="loading" :disabled="loading") TAKE.ME.HOME
     v-alert(color="error" icon="warning" :value="errors" v-model="alert" dismissible transition="scale-transition") {{ errors }}
     timeline(v-if="trips" v-for="trip in trips" :trip="trip" :key="trip.tripId")
-    //- v-list(two-line v-if="trips")
-    //-   template(v-for="leg in trips")
-    //-     v-list-tile(v-if="leg.LegList.Leg.length > 1")
-    //-     v-list-tile(v-bind:key="leg.LegList.Leg.Origin" @click="")
-    //-       v-list-tile-content
-    //-         v-list-tile-title {{ leg.LegList.Leg[0].Origin.name }}
-    //-         v-list-tile-sub-title {{ leg.LegList.Leg[0].Destination.name }}
 </template>
 
 <script>
 import API from '@/api'
+import DepartureSearch from '@/components/departures/DepartureSearch'
 import Timeline from '@/components/timeline/Timeline'
 
 export default {
   name: 'Connection',
-  components: {Timeline},
+  components: {
+    DepartureSearch,
+    Timeline
+  },
   data () {
     return {
       loading: false,
@@ -69,31 +63,36 @@ export default {
       errors: null,
       stations: {
         start: {
-          name: 'Frankfurt (Main) Uni Campus Riedberg',
-          extId: '003060765'
+          name: '',
+          extId: null
         },
         end: {
-          // name: 'Frankfurt (Main) Heddernheim',
-          // extId: '003001317'
-          // name: 'Frankfurt (Main) Hauptbahnhof',
-          // extId: '003000010'
-          extId: '003001201',
-          name: 'Frankfurt (Main) Bockenheimer Warte'
+          name: '',
+          extId: null
         }
       },
       trips: null
     }
   },
-  computed: {
-    bla (index) {
-      return index % 2
-    },
-    invertTest () {
-      this.test = !this.test
-      return this.test
-    }
-  },
   methods: {
+    setDepartureStation (data) {
+      this.stations.start = data
+    },
+    resetDepartureStation () {
+      this.stations.start = {
+        extId: null,
+        name: ''
+      }
+    },
+    setDestinationStation (data) {
+      this.stations.end = data
+    },
+    resetDestinationStation () {
+      this.stations.end = {
+        extId: null,
+        name: ''
+      }
+    },
     getTrip () {
       this.loading = true
       this.trips = null
