@@ -35,7 +35,7 @@
       )
     departure-search(
       label="What is your destination?"
-      icon="flight_landing"
+      icon="flight_land"
       v-on:madeSelection="setDestinationStation"
       v-on:resetSelection="resetDestinationStation"
     )
