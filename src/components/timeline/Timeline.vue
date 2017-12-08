@@ -7,8 +7,8 @@
         li.event(v-for="l in trip.LegList.Leg" :key="trip.tripId" :data-date="$options.computed.productType(l)")
           h3(v-if="l.type === 'JNY'") {{ l.Product.name }} - {{ l.direction }}
           h3(v-else-if="l.type === 'WALK'") Walk to {{ l.Destination.name }}
-          p {{ l.Origin.time }} - {{ l.Origin.name }}
-          p {{ l.Destination.time }} - {{ l.Destination.name }}
+          p(:class="$options.computed.delayedClass(l.Origin, l)") {{ $options.computed.departureTime(l.Origin, l) }} - {{ l.Origin.name }}
+          p(:class="$options.computed.delayedClass(l.Destination, l)") {{ $options.computed.departureTime(l.Destination, l) }} - {{ l.Destination.name }}
 </template>
 
 <script>
@@ -16,6 +16,37 @@ export default {
   name: 'Timeline',
   props: ['trip'],
   computed: {
+    connectionDelayed (obj, leg) {
+      let plannedDate = new Date(obj.date + ' ' + obj.time)
+      let realTimeDate = new Date(obj.rtDate + ' ' + obj.rtTime)
+
+      if (typeof leg.Product === 'undefined') {
+        return false
+      }
+      if (plannedDate.getTime() !== realTimeDate.getTime()) {
+        return (realTimeDate.getTime() - plannedDate.getTime()) / 1000
+      }
+      return false
+    },
+    delayedClass (obj, leg) {
+      if (this.connectionDelayed(obj, leg)) {
+        return 'delayed'
+      }
+      return ''
+    },
+    departureTime (obj, leg) {
+      if (typeof leg.Product === 'undefined') {
+        return obj.time.substring(0, 5)
+      }
+
+      // In case we do not have any information on the real time date.
+      const connectionDelayed = this.connectionDelayed(obj, leg)
+      if (typeof obj.rtTime !== 'undefined' && connectionDelayed) {
+        let delay = (connectionDelayed) % 3600 / 60
+        return obj.rtTime.substring(0, 5) + ' (+' + delay + 'm)'
+      }
+      return obj.time.substring(0, 5)
+    },
     LegListLength () {
       return Object.keys(this.trip.LegList.Leg).length - 1
     },
@@ -64,7 +95,7 @@ export default {
   letter-spacing: 0.5px;
   position: relative;
   line-height: 1.4em;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   list-style: none;
   text-align: left;
 }
@@ -106,6 +137,7 @@ export default {
 .timeline span {
   display: inline-block;
   font-size: 16px;
+  margin: 10px 0;
   padding-bottom: 5px;
   padding-left: 5px;
 }
@@ -137,7 +169,7 @@ export default {
   left: -36px;
   top: 1px;
   font-size: 23px;
-  z-index: 10;
+  z-index: 1;
 }
 
 .timeline .event::after {
@@ -149,6 +181,10 @@ export default {
   width: 11px;
   content: "";
   top: 4px;
+}
+
+.timeline p.delayed {
+  font-style: italic;
 }
 
 /*——————————————
