@@ -4,7 +4,7 @@
       ul.timeline
         span(data-icon="timer") {{ $options.computed.formatDuration(trip.duration) }}
         span(data-icon="autorenew") {{ LegListLength }}
-        li.event(v-for="l in trip.LegList.Leg" :key="trip.tripId" :data-date="$options.computed.productType(l)")
+        li.event(v-for="l in trip.LegList.Leg" :key="trip.tripId" :data-icon="$options.computed.productType(l)")
           h3(v-if="l.type === 'JNY'") {{ l.Product.name }} - {{ l.direction }}
           h3(v-else-if="l.type === 'WALK'") Walk to {{ l.Destination.name }}
           p(:class="$options.computed.delayedClass(l.Origin, l)") {{ $options.computed.departureTime(l.Origin, l) }} - {{ l.Origin.name }}
@@ -85,8 +85,20 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+material-icons(font-size, attr)
+  font-family: "Material Icons"
+  font-size: font-size
+  content: attr
+  font-feature-settings: "liga"
+  -webkit-font-feature-settings: "liga"
+  -moz-font-feature-settings: "liga"
+
+bg-color = #212121
+common-color = #42A5F5
+font-size = 16px
+
 .timeline
-  border-left: 8px solid #42A5F5
+  border-left: 8px solid common-color
   border-bottom-right-radius: 2px
   border-top-right-radius: 2px
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)
@@ -108,9 +120,9 @@ export default {
 .timeline p::before
   position: absolute
   display: inline-block
-  box-shadow: 0 0 0 8px #42A5F5
+  box-shadow: 0 0 0 8px common-color
   left: -27px
-  background: #212121
+  background: bg-color
   border-radius: 50%
   margin-top: 7px
   height: 5px
@@ -130,7 +142,7 @@ export default {
 
 .timeline span
   display: inline-block
-  font-size: 16px
+  font-size: font-size
   margin: 10px 0
   padding-bottom: 5px
   padding-left: 5px
@@ -139,15 +151,10 @@ export default {
   margin-left: 15px
 
 .timeline span::before
+  material-icons(font-size, attr(data-icon))
   position: relative
-  content: attr(data-icon)
-  font-family: "Material Icons"
-  font-size: 16px
   top: 2px
   left: -5px
-  font-feature-settings: 'liga'
-  -webkit-font-feature-settings: 'liga'
-  -moz-font-feature-settings: 'liga'
 
 .timeline .event::before,
 .timeline .event::after
@@ -156,21 +163,16 @@ export default {
   top: 0
 
 .timeline .event::before
-  color: #212121
-  content: attr(data-date)
-  font-family: "Material Icons"
+  color: bg-color
+  material-icons(23px, attr(data-icon))
   left: -36px
   top: 1px
-  font-size: 23px
   z-index: 1
-  font-feature-settings: 'liga'
-  -webkit-font-feature-settings: 'liga'
-  -moz-font-feature-settings: 'liga'
 
 .timeline .event::after
-  box-shadow: 0 0 0 8px #42A5F5
+  box-shadow: 0 0 0 8px common-color
   left: -30px
-  background: #42A5F5
+  background: common-color
   border-radius: 50%
   height: 11px
   width: 11px
@@ -186,13 +188,13 @@ Responsive Stuff
 
 @media (max-width: 945px)
   .timeline h3
-    font-size: 16px
+    font-size: font-size
 
   section.lab h3.card-title
     padding: 5px
-    font-size: 16px
+    font-size: font-size
 
 @media (max-width: 768px)
   .timeline h3
-    font-size: 16px
+    font-size: font-size
 </style>
