@@ -84,127 +84,115 @@ export default {
 }
 </script>
 
-<style scoped>
-.timeline {
-  border-left: 8px solid #42A5F5;
-  border-bottom-right-radius: 2px;
-  border-top-right-radius: 2px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  color: #333;
-  margin: 50px auto;
-  letter-spacing: 0.5px;
-  position: relative;
-  line-height: 1.4em;
-  padding: 0 20px 20px 20px;
-  list-style: none;
-  text-align: left;
-}
+<style lang="stylus" scoped>
+.timeline
+  border-left: 8px solid #42A5F5
+  border-bottom-right-radius: 2px
+  border-top-right-radius: 2px
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)
+  color: #333
+  margin: 50px auto
+  letter-spacing: 0.5px
+  position: relative
+  line-height: 1.4em
+  padding: 0 20px 20px 20px
+  list-style: none
+  text-align: left
 
-.timeline h3 {
-  font-size: 1.4em;
-}
+.timeline h3
+  font-size: 1.4em
 
-.timeline p:first-of-type {
-  padding-top: 20px;
-}
+.timeline p:first-of-type
+  padding-top: 20px
 
-.timeline p::before {
-  position: absolute;
-  display: inline-block;
-  box-shadow: 0 0 0 8px #42A5F5;
-  left: -27px;
-  background: #212121;
-  border-radius: 50%;
-  margin-top: 7px;
-  height: 5px;
-  width: 5px;
-  content: "";
-}
+.timeline p::before
+  position: absolute
+  display: inline-block
+  box-shadow: 0 0 0 8px #42A5F5
+  left: -27px
+  background: #212121
+  border-radius: 50%
+  margin-top: 7px
+  height: 5px
+  width: 5px
+  content: ""
 
-.timeline .event {
-  border-bottom: 1px solid rgba(160, 160, 160, 0.2);
-  padding-bottom: 15px;
-  margin-bottom: 20px;
-  position: relative;
-}
+.timeline .event
+  border-bottom: 1px solid rgba(160, 160, 160, 0.2)
+  padding-bottom: 15px
+  margin-bottom: 20px
+  position: relative
 
-.timeline .event:last-of-type {
-  padding-bottom: 0;
-  margin-bottom: 0;
-  border: none;
-}
+.timeline .event:last-of-type
+  padding-bottom: 0
+  margin-bottom: 0
+  border: none
 
-.timeline span {
-  display: inline-block;
-  font-size: 16px;
-  margin: 10px 0;
-  padding-bottom: 5px;
-  padding-left: 5px;
-}
+.timeline span
+  display: inline-block
+  font-size: 16px
+  margin: 10px 0
+  padding-bottom: 5px
+  padding-left: 5px
 
-.timeline span:last-of-type {
-  margin-left: 15px;
-}
+.timeline span:last-of-type
+  margin-left: 15px
 
-.timeline span::before {
-  position: relative;
-  content: attr(data-icon);
-  font-family: "Material Icons";
-  font-size: 16px;
-  top: 2px;
-  left: -5px;
-}
+.timeline span::before
+  position: relative
+  content: attr(data-icon)
+  font-family: "Material Icons"
+  font-size: 16px
+  top: 2px
+  left: -5px
+  font-feature-settings: 'liga'
+  -webkit-font-feature-settings: 'liga'
+  -moz-font-feature-settings: 'liga'
 
 .timeline .event::before,
-.timeline .event::after {
-  position: absolute;
-  display: block;
-  top: 0;
-}
+.timeline .event::after
+  position: absolute
+  display: block
+  top: 0
 
-.timeline .event::before {
-  color: #212121;
-  content: attr(data-date);
-  font-family: "Material Icons";
-  left: -36px;
-  top: 1px;
-  font-size: 23px;
-  z-index: 1;
-}
+.timeline .event::before
+  color: #212121
+  content: attr(data-date)
+  font-family: "Material Icons"
+  left: -36px
+  top: 1px
+  font-size: 23px
+  z-index: 1
+  font-feature-settings: 'liga'
+  -webkit-font-feature-settings: 'liga'
+  -moz-font-feature-settings: 'liga'
 
-.timeline .event::after {
-  box-shadow: 0 0 0 8px #42A5F5;
-  left: -30px;
-  background: #42A5F5;
-  border-radius: 50%;
-  height: 11px;
-  width: 11px;
-  content: "";
-  top: 4px;
-}
+.timeline .event::after
+  box-shadow: 0 0 0 8px #42A5F5
+  left: -30px
+  background: #42A5F5
+  border-radius: 50%
+  height: 11px
+  width: 11px
+  content: ""
+  top: 4px
 
-.timeline p.delayed {
-  font-style: italic;
-}
+.timeline p.delayed
+  font-style: italic
 
 /*——————————————
 Responsive Stuff
 ———————————————*/
 
-@media (max-width: 945px) {
-  .timeline h3 {
-    font-size: 16px;
-  }
-
-  section.lab h3.card-title {
-    padding: 5px;
+@media (max-width: 945px)
+  .timeline h3
     font-size: 16px
-  }
-}
 
-@media (max-width: 768px) {
-  .timeline h3 {
-    font-size: 16px;
-  }
-}
+  section.lab h3.card-title
+    padding: 5px
+    font-size: 16px
+
+@media (max-width: 768px)
+  .timeline h3
+    font-size: 16px
 </style>
