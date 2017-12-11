@@ -19,6 +19,7 @@
     "express": "^4.16.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
+    "localforage": "^1.5.5",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuetify": "^1.0.7",

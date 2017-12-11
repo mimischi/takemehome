@@ -1,14 +1,24 @@
 <template lang="pug">
   v-content
     departure-search(
+      :stationSelect="stations.start"
+      :initialItems="items.start"
+      identity="departure"
       label="What place do you want to leave?"
       icon="flight_takeoff"
+      v-on:setItems="setDepartureItems"
+      v-on:setSelect="setDepartureStation"
       v-on:madeSelection="setDepartureStation"
       v-on:resetSelection="resetDepartureStation"
       )
     departure-search(
+      :stationSelect="stations.end"
+      :initialItems="items.end"
+      identity="destination"
       label="What is your destination?"
       icon="flight_land"
+      v-on:setItems="setDestinationItems"
+      v-on:setSelect="setDestinationStation"
       v-on:madeSelection="setDestinationStation"
       v-on:resetSelection="resetDestinationStation"
     )
@@ -36,47 +46,82 @@ export default {
       loading: false,
       dialog: false,
       alert: false,
-      disabled: false,
+      disabled: true,
       errors: null,
-      stations: {
-        start: {
-          name: '',
-          extId: null
-        },
-        end: {
-          name: '',
-          extId: null
-        }
+      // items: {
+      //   start: null,
+      //   end: null
+      // },
+      search: {
+        start: null,
+        end: null
       },
+      // stations: {
+      //   start: {
+      //     name: '',
+      //     extId: null
+      //   },
+      //   end: {
+      //     name: '',
+      //     extId: null
+      //   }
+      // },
       trips: null
     }
   },
-  watch: {
-    'stations.start' (value) {
-      this.toggleSubmitButton()
-    },
-    'stations.end' (value) {
-      this.toggleSubmitButton()
-    }
-  },
-  mounted () {
-    this.toggleSubmitButton()
-  },
+  // watch: {
+  //   'stations.start' (value) {
+  //     this.toggleSubmitButton()
+  //   },
+  //   'stations.end' (value) {
+  //     this.toggleSubmitButton()
+  //   }
+  // },
+  // mounted () {
+  //   this.$store.dispatch('LOAD_ITEM_LIST').then(() => {
+  //     if (this.$store.state.items) {
+  //       this.items = this.$store.state.items
+  //     }
+  //   })
+  //   this.$store.dispatch('LOAD_STATION_LIST').then(() => {
+  //     if (this.$store.state.stations) {
+  //       this.stations = this.$store.state.stations
+  //     }
+  //     this.toggleSubmitButton()
+  //   })
+  // },
   computed: {
     showSkeleton () {
       return (!this.trip && this.loading)
+    },
+    stations () {
+      return this.$store.state.stations
+    },
+    items () {
+      return this.$store.state.items
     }
   },
   methods: {
-    toggleSubmitButton () {
-      if (this.stations.start.extId === null || this.stations.end.extId === null) {
-        this.disabled = true
-      } else {
-        this.disabled = false
-      }
+    setDepartureItems (data) {
+      console.log('Receiving departure items!')
+      this.$store.dispatch('SET_ITEM_LIST', { start: data.items })
     },
+    setDestinationItems (data) {
+      console.log('Receiving destination items!')
+      this.$store.dispatch('SET_ITEM_LIST', { end: data.items })
+    },
+    // toggleSubmitButton () {
+    //   if (this.stations.start.extId === null || this.stations.end.extId === null) {
+    //     this.disabled = true
+    //   } else {
+    //     this.disabled = false
+    //     this.$store.dispatch('SET_STATION_LIST', this.stations)
+    //     this.$store.dispatch('SET_ITEM_LIST', this.items)
+    //   }
+    // },
     setDepartureStation (data) {
-      this.stations.start = data
+      console.log('Receiving departure station!')
+      this.$store.dispatch('SET_STATION_LIST', { start: data.station })
     },
     resetDepartureStation () {
       this.stations.start = {
@@ -85,7 +130,8 @@ export default {
       }
     },
     setDestinationStation (data) {
-      this.stations.end = data
+      console.log('Receiving destination station!')
+      this.$store.dispatch('SET_STATION_LIST', { end: data.station })
     },
     resetDestinationStation () {
       this.stations.end = {

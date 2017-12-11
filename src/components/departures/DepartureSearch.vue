@@ -9,6 +9,7 @@
           :items="items"
           :search-input.sync="search"
           v-model="select.name"
+          return-object
           clearable=true
         )
 </template>
@@ -18,17 +19,38 @@ import API from '@/api'
 
 export default {
   name: 'DepartureSearch',
-  props: ['stationSelect', 'label', 'icon'],
+  props: ['stationSelect', 'label', 'icon', 'initialItems', 'identity'],
   data () {
     return {
       loading: false,
-      items: [],
+      // items: [],
       search: null,
-      select: this.stationSelect || {
-        name: '',
-        extId: null
-      },
+      // select: {
+      //   name: '',
+      //   extId: null
+      // },
       stations: []
+    }
+  },
+  computed: {
+    items: {
+      get () {
+        // return this.initialItems || []
+        return this.$store.state.items[this.identity]
+      },
+      set (value) {
+        // this.$emit('setItems', {
+        //   items: value
+        // })
+        console.log(value)
+        this.$store.dispatch('SET_ITEM_LIST', { [this.identity]: value })
+      }
+    },
+    select: {
+      get () {
+        // return this.stationSelect || { name: '', extId: null }
+        return this.$store.state.stations[this.identity]
+      }
     }
   },
   watch: {
@@ -38,13 +60,18 @@ export default {
     'select.name' (val) {
       const stationObj = this.stations.find(this.getExtId)
       if (typeof stationObj !== 'undefined') {
-        this.select.extId = stationObj.StopLocation.extId
+        // this.select.extId = stationObj.StopLocation.extId
 
-        this.$emit('madeSelection', this.select)
+        this.$store.dispatch('SET_STATION_LIST', { [this.identity]: val })
+        // this.$emit('madeSelection', {
+        //   station: this.select,
+        //   items: this.items,
+        //   search: this.search
+        // })
       } else if (typeof stationObj === 'undefined') {
-        this.select.extId = null
+        // this.select.extId = null
 
-        this.$emit('resetSelection')
+        // this.$emit('resetSelection')
       }
     }
   },
@@ -67,6 +94,7 @@ export default {
       this.loading = true
       API.post('/', {url: 'location.name', params: {input: v}}).then(response => {
         this.stations = response.data.stopLocationOrCoordLocation
+        console.log(JSON.stringify(this.stations))
         this.items = this.filterStations(this.stations).map(s => s.StopLocation.name)
         this.loading = false
       }).catch(e => {
