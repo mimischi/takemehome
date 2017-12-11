@@ -1,8 +1,8 @@
-# TAKE.ME.HOME.
+# 🚄 TAKE.ME.HOME. 🏠
 
 I'm tired of the web interface from my local transportation service (looking at
 you [RMV](https://www.rmv.de/) 👀). It's slow and looks like it was build in the
-90s.
+90s 👴🏻.
 
 Most of my requests on that page revolve around me looking for the next
 connection home from work. So why bother typing the same thing over and over
@@ -13,7 +13,7 @@ familiar with the modern JavaScript stack I've build this small app. It consumes
 the [RMV API](https://opendata.rmv.de/) and provides the next available
 connections to the user.
 
-## Used things
+## Tech stack
 
 * [VueJS](https://vuejs.org/)
 * [vue-router](https://router.vuejs.org/en/)
@@ -27,7 +27,7 @@ connections to the user.
 ## Missing features
 
 * Store a favorite connection in the users IndexedDB and automatically hit the
-  API with that on initial page load.
+  API with that on initial page load (actually, that is the main feature 😬)
 
 ## Installation
 
