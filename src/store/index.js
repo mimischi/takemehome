@@ -1,22 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { loadStations, setStations, setItems, loadItems } from '@/api'
+import { loadStations, setStations, setItems, loadItems, loadSavedState } from '@/api'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    // departure: {
-    //   name: '',
-    //   extId: null,
-    //   items: []
-    // },
-    // destination: {
-    //   name: '',
-    //   extId: null,
-    //   items: []
-    // },
+    buttonDisabled: false,
     stations: {
       departure: {
         name: '',
@@ -59,12 +50,17 @@ const store = new Vuex.Store({
       })
     },
     SET_STATION_LIST: function ({ commit }, data) {
-      commit('SET_STATIONS', { stations: data })
-      setStations(data)
+      commit('SET_STATIONS', { data: data })
+      setStations(data['identity'], data['station'])
     },
     SET_ITEM_LIST: function ({ commit }, data) {
-      commit('SET_ITEMS', { items: data })
-      setItems(data)
+      commit('SET_ITEMS', { data: data })
+      setItems(data['identity'], data['items'])
+    },
+    LOAD_SAVED_DATA: function ({ commit }) {
+      return loadSavedState().then((res) => {
+        commit('LOAD_DATA', res)
+      })
     }
   },
   mutations: {
@@ -77,11 +73,15 @@ const store = new Vuex.Store({
     GET_ITEMS: (state, { items }) => {
       state.items = items
     },
-    SET_STATIONS: (state, { stations }) => {
-      state.stations = stations
+    LOAD_DATA: (state, data) => {
+      state.stations = data.stations
+      state.items = data.items
     },
-    SET_ITEMS: (state, { items }) => {
-      state.items = items
+    SET_STATIONS: (state, { data }) => {
+      state.stations[data.identity] = data.station
+    },
+    SET_ITEMS: (state, { data }) => {
+      state.items[data.identity] = data.items
     }
   }
 })

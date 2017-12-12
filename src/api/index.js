@@ -6,25 +6,47 @@ export const API = axios.create({
   baseURL: process.env.API_URL
 })
 
-export const loadStations = () => {
-  return localforage.getItem('stations').then((value) => {
+export const loadStations = (identity) => {
+  return localforage.getItem(identity + '_STATION').then((value) => {
     return value
   }).catch((err) => {
     return err
   })
 }
 
-export const loadItems = () => {
-  return localforage.getItem('items').then((value) => {
+export const loadItems = (identity) => {
+  return localforage.getItem(identity + '_ITEMS').then((value) => {
     return value
   }).catch((err) => {
     return err
   })
 }
 
-export const setStations = (stations) => {
+export const loadSavedState = () => {
+  return Promise.all([
+    localforage.getItem('departure_STATION'),
+    localforage.getItem('departure_ITEMS'),
+    localforage.getItem('destination_STATION'),
+    localforage.getItem('destination_ITEMS')
+  ]).then((value) => {
+    return {
+      'stations': {
+        'departure': value[0],
+        'destination': value[2]
+      },
+      'items': {
+        'departure': value[1],
+        'destination': value[3]
+      }
+    }
+  }).catch((err) => {
+    return err
+  })
+}
+
+export const setStations = (identity, stations) => {
   return localforage.setItem(
-    'stations', stations
+    identity + '_STATION', stations
   ).then((value) => {
     return value
   }).catch((err) => {
@@ -32,9 +54,9 @@ export const setStations = (stations) => {
   })
 }
 
-export const setItems = (items) => {
+export const setItems = (identity, items) => {
   return localforage.setItem(
-    'items', items
+    identity + '_ITEMS', items
   ).then((value) => {
     return value
   }).catch((err) => {

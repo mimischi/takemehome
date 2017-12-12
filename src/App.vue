@@ -21,6 +21,9 @@ export default {
       title: 'TAKE.ME.HOME.',
       drawer: null
     }
+  },
+  mounted () {
+    this.$store.dispatch('LOAD_SAVED_DATA')
   }
 }
 </script>

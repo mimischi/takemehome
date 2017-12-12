@@ -8,7 +8,9 @@
           :loading="loading"
           :items="items"
           :search-input.sync="search"
-          v-model="select.name"
+          item-text="name"
+          item-value="extId"
+          v-model="select"
           return-object
           clearable=true
         )
@@ -23,57 +25,55 @@ export default {
   data () {
     return {
       loading: false,
-      // items: [],
       search: null,
-      // select: {
-      //   name: '',
-      //   extId: null
-      // },
       stations: []
     }
   },
   computed: {
     items: {
       get () {
-        // return this.initialItems || []
         return this.$store.state.items[this.identity]
       },
       set (value) {
-        // this.$emit('setItems', {
-        //   items: value
-        // })
-        console.log(value)
-        this.$store.dispatch('SET_ITEM_LIST', { [this.identity]: value })
+        this.$store.dispatch('SET_ITEM_LIST', {
+          identity: this.identity,
+          items: value
+        })
       }
     },
     select: {
       get () {
-        // return this.stationSelect || { name: '', extId: null }
         return this.$store.state.stations[this.identity]
+      },
+      set (value) {
+        this.$store.dispatch('SET_STATION_LIST', {
+          identity: this.identity,
+          station: value
+        })
       }
     }
   },
   watch: {
     search (val) {
       val && this.querySelections(val)
-    },
-    'select.name' (val) {
-      const stationObj = this.stations.find(this.getExtId)
-      if (typeof stationObj !== 'undefined') {
-        // this.select.extId = stationObj.StopLocation.extId
-
-        this.$store.dispatch('SET_STATION_LIST', { [this.identity]: val })
-        // this.$emit('madeSelection', {
-        //   station: this.select,
-        //   items: this.items,
-        //   search: this.search
-        // })
-      } else if (typeof stationObj === 'undefined') {
-        // this.select.extId = null
-
-        // this.$emit('resetSelection')
-      }
     }
+    // 'select.name' (val) {
+    //   const stationObj = this.stations.find(this.getExtId)
+    //   if (typeof stationObj !== 'undefined') {
+    //     // this.select.extId = stationObj.StopLocation.extId
+
+    //     this.$store.dispatch('SET_STATION_LIST', { [this.identity]: val })
+    //     // this.$emit('madeSelection', {
+    //     //   station: this.select,
+    //     //   items: this.items,
+    //     //   search: this.search
+    //     // })
+    //   } else if (typeof stationObj === 'undefined') {
+    //     // this.select.extId = null
+
+    //     // this.$emit('resetSelection')
+    //   }
+    // }
   },
   methods: {
     filterStations (stations) {
@@ -94,8 +94,12 @@ export default {
       this.loading = true
       API.post('/', {url: 'location.name', params: {input: v}}).then(response => {
         this.stations = response.data.stopLocationOrCoordLocation
-        console.log(JSON.stringify(this.stations))
-        this.items = this.filterStations(this.stations).map(s => s.StopLocation.name)
+        this.items = this.filterStations(this.stations).map(
+          s => ({
+            name: s.StopLocation.name,
+            extId: s.StopLocation.extId
+          })
+        )
         this.loading = false
       }).catch(e => {
         this.stations = e

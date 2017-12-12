@@ -22,7 +22,7 @@
       v-on:madeSelection="setDestinationStation"
       v-on:resetSelection="resetDestinationStation"
     )
-    v-btn(color="primary" block large @click="getTrip" :loading="loading" :disabled="disabled") TAKE.ME.HOME
+    v-btn(color="primary" block large @click="getTrip" :loading="loading" :disabled="buttonDisabled") TAKE.ME.HOME
     v-alert(color="error" icon="warning" :value="errors" v-model="alert" dismissible transition="scale-transition") {{ errors }}
     timeline-skeleton(v-if="showSkeleton")
     timeline(v-if="trips" v-for="trip in trips" :trip="trip" :key="trip.tripId")
@@ -91,6 +91,9 @@ export default {
   //   })
   // },
   computed: {
+    buttonDisabled () {
+      return this.$store.state.buttonDisabled
+    },
     showSkeleton () {
       return (!this.trip && this.loading)
     },
@@ -150,8 +153,8 @@ export default {
         {
           url: 'trip',
           params: {
-            originExtId: this.stations.start.extId,
-            destExtId: this.stations.end.extId
+            originExtId: this.$store.state.stations.departure.extId,
+            destExtId: this.$store.state.stations.destination.extId
           }
         }
       ).then(response => {
