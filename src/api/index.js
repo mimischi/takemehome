@@ -40,8 +40,8 @@ export const loadSavedState = () => {
         'departure': value[1] || [],
         'destination': value[3] || []
       },
-      'saveSelection': value[4],
-      'autoRetrieve': value[5]
+      'saveSelection': value[4] || false,
+      'autoRetrieve': value[5] || false
     }
   }).catch((err) => {
     return err
