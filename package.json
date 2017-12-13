@@ -11,15 +11,14 @@
     "test": "yarn run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "build": "node build/build.js",
-    "start": "node server.js",
-    "postinstall": "export NPM_CONFIG_PRODUCTION=true && yarn build"
+    "start": "node server.js"
   },
   "dependencies": {
     "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "localforage": "^1.5.5",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
-    "localforage": "^1.5.5",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuetify": "^1.0.7",
