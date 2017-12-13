@@ -12,7 +12,6 @@
           item-value="extId"
           v-model="select"
           return-object
-          clearable=true
         )
 </template>
 
@@ -35,7 +34,7 @@ export default {
         return this.$store.state.items[this.identity]
       },
       set (value) {
-        this.$store.dispatch('SET_ITEM_LIST', {
+        this.$store.dispatch('SET_ITEMS', {
           identity: this.identity,
           items: value
         })
@@ -46,7 +45,7 @@ export default {
         return this.$store.state.stations[this.identity]
       },
       set (value) {
-        this.$store.dispatch('SET_STATION_LIST', {
+        this.$store.dispatch('SET_STATIONS', {
           identity: this.identity,
           station: value
         })
@@ -57,23 +56,6 @@ export default {
     search (val) {
       val && this.querySelections(val)
     }
-    // 'select.name' (val) {
-    //   const stationObj = this.stations.find(this.getExtId)
-    //   if (typeof stationObj !== 'undefined') {
-    //     // this.select.extId = stationObj.StopLocation.extId
-
-    //     this.$store.dispatch('SET_STATION_LIST', { [this.identity]: val })
-    //     // this.$emit('madeSelection', {
-    //     //   station: this.select,
-    //     //   items: this.items,
-    //     //   search: this.search
-    //     // })
-    //   } else if (typeof stationObj === 'undefined') {
-    //     // this.select.extId = null
-
-    //     // this.$emit('resetSelection')
-    //   }
-    // }
   },
   methods: {
     filterStations (stations) {

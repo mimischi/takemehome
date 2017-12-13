@@ -1,5 +1,8 @@
 import axios from 'axios'
 import localforage from 'localforage'
+import { extendPrototype } from 'localforage-setitems'
+
+extendPrototype(localforage)
 
 export const API = axios.create({
   timeout: 10000,
@@ -24,47 +27,53 @@ export const loadItems = (identity) => {
 
 export const loadSavedState = () => {
   return Promise.all([
-    localforage.getItem('departure_STATION'),
-    localforage.getItem('departure_ITEMS'),
-    localforage.getItem('destination_STATION'),
-    localforage.getItem('destination_ITEMS'),
+    localforage.getItem('stations'),
+    localforage.getItem('items'),
     localforage.getItem('saveSelection'),
     localforage.getItem('autoRetrieve')
   ]).then((value) => {
-    return {
-      'stations': {
-        'departure': value[0] || [],
-        'destination': value[2] || []
-      },
-      'items': {
-        'departure': value[1] || [],
-        'destination': value[3] || []
-      },
-      'saveSelection': value[4] || false,
-      'autoRetrieve': value[5] || false
+    let [stations, items, saveSelection, autoRetrieve] = value
+    if (autoRetrieve) {
+      return {
+        'stations': stations,
+        'items': items,
+        'saveSelection': saveSelection,
+        'autoRetrieve': autoRetrieve
+      }
     }
   }).catch((err) => {
     return err
   })
 }
 
-export const setStations = (identity, stations) => {
-  return localforage.setItem(
-    identity + '_STATION', stations
-  ).then((value) => {
+export const saveState = (state) => {
+  console.log(state)
+  return localforage.setItems(state).then((value) => {
     return value
   }).catch((err) => {
     return err
   })
 }
 
+export const setStations = (identity, station) => {
+  localforage.getItem('stations').then((item) => {
+    item[identity] = station
+    localforage.setItem('stations', item).then((value) => {
+      return value
+    }).catch((err) => {
+      return err
+    })
+  })
+}
+
 export const setItems = (identity, items) => {
-  return localforage.setItem(
-    identity + '_ITEMS', items
-  ).then((value) => {
-    return value
-  }).catch((err) => {
-    return err
+  localforage.getItem('items').then((item) => {
+    item[identity] = items
+    localforage.setItem('items', item).then((value) => {
+      return value
+    }).catch((err) => {
+      return err
+    })
   })
 }
 

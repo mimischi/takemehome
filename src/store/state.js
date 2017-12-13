@@ -1,5 +1,4 @@
 export const state = {
-  buttonDisabled: false,
   stations: {
     departure: {
       name: '',
