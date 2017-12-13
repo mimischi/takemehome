@@ -1,7 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { loadStations, setStations, setItems, loadItems, loadSavedState } from '@/api'
+import {
+  loadStations,
+  setStations,
+  setItems,
+  loadItems,
+  loadSavedState,
+  toggleSaveSelection,
+  toggleAutoRetrieve,
+  clearStorage
+} from '@/api'
 
 Vue.use(Vuex)
 
@@ -21,7 +30,9 @@ const store = new Vuex.Store({
     items: {
       departure: [],
       destination: []
-    }
+    },
+    saveSelection: false,
+    autoRetrieve: false
   },
   actions: {
     // LOAD_DEPARTURE_LIST: function ({ commit }) {
@@ -51,16 +62,28 @@ const store = new Vuex.Store({
     },
     SET_STATION_LIST: function ({ commit }, data) {
       commit('SET_STATIONS', { data: data })
-      setStations(data['identity'], data['station'])
+      if (this.state.saveSelection) {
+        setStations(data['identity'], data['station'])
+      }
     },
     SET_ITEM_LIST: function ({ commit }, data) {
       commit('SET_ITEMS', { data: data })
-      setItems(data['identity'], data['items'])
+      if (this.state.saveSelection) {
+        setItems(data['identity'], data['items'])
+      }
     },
     LOAD_SAVED_DATA: function ({ commit }) {
       return loadSavedState().then((res) => {
         commit('LOAD_DATA', res)
       })
+    },
+    TOGGLE_SAVE_SELECTION: function ({ commit }) {
+      commit('TOGGLE_SAVE')
+      toggleSaveSelection(this.state.saveSelection)
+    },
+    TOGGLE_AUTO_RETRIEVE: function ({ commit }) {
+      commit('TOGGLE_RETRIEVE')
+      toggleAutoRetrieve(this.state.autoRetrieve)
     }
   },
   mutations: {
@@ -76,12 +99,25 @@ const store = new Vuex.Store({
     LOAD_DATA: (state, data) => {
       state.stations = data.stations
       state.items = data.items
+      state.saveSelection = data.saveSelection
+      state.autoRetrieve = data.autoRetrieve
     },
     SET_STATIONS: (state, { data }) => {
       state.stations[data.identity] = data.station
     },
     SET_ITEMS: (state, { data }) => {
       state.items[data.identity] = data.items
+    },
+    TOGGLE_SAVE: (state) => {
+      state.saveSelection = !state.saveSelection
+
+      if (!state.saveSelection) {
+        state.autoRetrieve = false
+        clearStorage()
+      }
+    },
+    TOGGLE_RETRIEVE: (state) => {
+      state.autoRetrieve = !state.autoRetrieve
     }
   }
 })

@@ -22,10 +22,38 @@
       v-on:madeSelection="setDestinationStation"
       v-on:resetSelection="resetDestinationStation"
     )
-    v-btn(color="primary" block large @click="getTrip" :loading="loading" :disabled="buttonDisabled") TAKE.ME.HOME
-    v-alert(color="error" icon="warning" :value="errors" v-model="alert" dismissible transition="scale-transition") {{ errors }}
+    v-switch(
+      v-bind:label="`Remember connection`"
+      v-model="saveSelection"
+      )
+    v-switch(
+      v-bind:label="`Auto-Retrieve on next visit`"
+      v-model="autoRetrieve"
+      :disabled="!saveSelection"
+      )
+    v-btn(
+      color="primary"
+      block
+      large
+      @click="getTrip"
+      :loading="loading"
+      :disabled="buttonDisabled"
+      ) TAKE.ME.HOME
+    v-alert(
+      color="error"
+      icon="warning"
+      :value="errors"
+      v-model="alert"
+      dismissible
+      transition="scale-transition"
+      ) {{ errors }}
     timeline-skeleton(v-if="showSkeleton")
-    timeline(v-if="trips" v-for="trip in trips" :trip="trip" :key="trip.tripId")
+    timeline(
+      v-if="trips"
+      v-for="trip in trips"
+      :trip="trip"
+      :key="trip.tripId"
+      )
 </template>
 
 <script>
@@ -102,6 +130,22 @@ export default {
     },
     items () {
       return this.$store.state.items
+    },
+    saveSelection: {
+      get () {
+        return this.$store.state.saveSelection
+      },
+      set (value) {
+        this.$store.dispatch('TOGGLE_SAVE_SELECTION')
+      }
+    },
+    autoRetrieve: {
+      get () {
+        return this.$store.state.autoRetrieve
+      },
+      set (value) {
+        this.$store.dispatch('TOGGLE_AUTO_RETRIEVE')
+      }
     }
   },
   methods: {
