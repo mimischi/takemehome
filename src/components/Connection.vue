@@ -1,15 +1,15 @@
 <template lang="pug">
   v-content
     departure-search(
-      :stationSelect="stations.start"
-      :initialItems="items.start"
+      :stationSelect="stations.departure"
+      :initialItems="items.departure"
       identity="departure"
       label="What place do you want to leave?"
       icon="flight_takeoff"
       )
     departure-search(
-      :stationSelect="stations.end"
-      :initialItems="items.end"
+      :stationSelect="stations.destination"
+      :initialItems="items.destination"
       identity="destination"
       label="What is your destination?"
       icon="flight_land"
@@ -72,11 +72,11 @@ export default {
     TimelineSkeleton
   },
   mounted () {
-    // setTimeout(() => {
-    //   if (this.$store.state.autoRetrieve) {
-    //     this.getTrip()
-    //   }
-    // }, 1000)
+    setTimeout(() => {
+      if (this.$store.state.autoRetrieve) {
+        this.getTrip()
+      }
+    }, 1000)
   },
   data () {
     return {

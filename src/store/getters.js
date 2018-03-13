@@ -7,8 +7,8 @@ export const stations = (state) => {
   return state.stations
 }
 
-export const items = (items) => {
-  return stations.items
+export const items = (state) => {
+  return state.items
 }
 
 export const reloadConnection = (state) => {

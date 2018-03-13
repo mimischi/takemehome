@@ -47,7 +47,6 @@ export const loadSavedState = () => {
 }
 
 export const saveState = (state) => {
-  console.log(state)
   return localforage.setItems(state).then((value) => {
     return value
   }).catch((err) => {
