@@ -2,8 +2,8 @@
   v-app(light)
     v-toolbar(color="blue" dark fixed app)
       v-toolbar-title(v-text="title")
-      v-spacer
-      v-toolbar-items
+      //- v-spacer
+      //- v-toolbar-items
         v-btn(flat to="/") HOME
         v-btn(flat to="/departures") Departures
     v-content
