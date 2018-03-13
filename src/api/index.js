@@ -9,22 +9,6 @@ export const API = axios.create({
   baseURL: process.env.API_URL
 })
 
-export const loadStations = (identity) => {
-  return localforage.getItem(identity + '_STATION').then((value) => {
-    return value
-  }).catch((err) => {
-    return err
-  })
-}
-
-export const loadItems = (identity) => {
-  return localforage.getItem(identity + '_ITEMS').then((value) => {
-    return value
-  }).catch((err) => {
-    return err
-  })
-}
-
 export const loadSavedState = () => {
   return Promise.all([
     localforage.getItem('stations'),
@@ -54,10 +38,10 @@ export const saveState = (state) => {
   })
 }
 
-export const setStations = (identity, station) => {
-  localforage.getItem('stations').then((item) => {
-    item[identity] = station
-    localforage.setItem('stations', item).then((value) => {
+export const setValues = (key, identity, value) => {
+  localforage.getItem(key).then((item) => {
+    item[identity] = value
+    localforage.setItem(key, item).then((value) => {
       return value
     }).catch((err) => {
       return err
@@ -65,30 +49,9 @@ export const setStations = (identity, station) => {
   })
 }
 
-export const setItems = (identity, items) => {
-  localforage.getItem('items').then((item) => {
-    item[identity] = items
-    localforage.setItem('items', item).then((value) => {
-      return value
-    }).catch((err) => {
-      return err
-    })
-  })
-}
-
-export const toggleSaveSelection = (saveSelection) => {
+export const toggleSelection = (selection, value) => {
   return localforage.setItem(
-    'saveSelection', saveSelection
-  ).then((value) => {
-    return value
-  }).catch((err) => {
-    return err
-  })
-}
-
-export const toggleAutoRetrieve = (autoRetrieve) => {
-  return localforage.setItem(
-    'autoRetrieve', autoRetrieve
+    selection, value
   ).then((value) => {
     return value
   }).catch((err) => {

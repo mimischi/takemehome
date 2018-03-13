@@ -1,32 +1,16 @@
 import {
-  setItems,
-  setStations,
+  setValues,
   saveState,
-  toggleSaveSelection,
-  toggleAutoRetrieve,
+  toggleSelection,
   clearStorage,
-  loadStations,
-  loadItems,
   loadSavedState
 } from '@/api'
-
-export const LOAD_STATIONS = ({ commit }) => {
-  return loadStations().then((res) => {
-    commit('LOAD_STATIONS', { stations: res })
-  })
-}
-
-export const LOAD_ITEMS = ({ commit }) => {
-  return loadItems().then((res) => {
-    commit('LOAD_ITEMS', { items: res })
-  })
-}
 
 export const SET_STATIONS = ({ commit, state }, data) => {
   commit('SET_STATIONS', { data: data })
 
   if (state.saveSelection) {
-    setStations(data['identity'], data['station'])
+    setValues('stations', data['identity'], data['station'])
   }
 }
 
@@ -34,7 +18,7 @@ export const SET_ITEMS = ({ commit, state }, data) => {
   commit('SET_ITEMS', { data: data })
 
   if (state.saveSelection) {
-    setItems(data['identity'], data['items'])
+    setValues('items', data['identity'], data['items'])
   }
 }
 
@@ -51,7 +35,7 @@ export const TOGGLE_SAVE_SELECTION = ({ commit, state }) => {
     state.autoRetrieve = false
     clearStorage()
   } else {
-    toggleSaveSelection(state.saveSelection)
+    toggleSelection('saveSelection', state.saveSelection)
     saveState(state)
   }
 }
@@ -64,5 +48,5 @@ export const RESET_FORM = ({ commit }) => {
 export const TOGGLE_AUTO_RETRIEVE = ({ commit, state }) => {
   commit('TOGGLE_AUTO_RETRIEVE')
 
-  toggleAutoRetrieve(state.autoRetrieve)
+  toggleSelection('autoRetrieve', state.autoRetrieve)
 }
