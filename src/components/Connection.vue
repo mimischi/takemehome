@@ -14,15 +14,18 @@
       label="What is your destination?"
       icon="flight_land"
     )
-    v-switch(
-      v-bind:label="`Remember connection`"
-      v-model="saveSelection"
-      )
-    v-switch(
-      v-bind:label="`Auto-Retrieve on next visit`"
-      v-model="autoRetrieve"
-      :disabled="!saveSelection"
-      )
+    v-layout(row)
+      v-flex(xs6)
+        v-switch(
+          v-bind:label="`Remember connection`"
+          v-model="saveSelection"
+        )
+      v-flex(xs6)
+        v-switch(
+          v-bind:label="`Auto-Retrieve on next visit`"
+          v-model="autoRetrieve"
+          :disabled="!saveSelection"
+          )
     v-layout(row)
       v-flex(xs4)
         v-btn(
@@ -90,7 +93,8 @@ export default {
         start: null,
         end: null
       },
-      trips: null
+      trips: null,
+      target: 'Button'
     }
   },
 
@@ -100,6 +104,13 @@ export default {
       'stations',
       'stationValid'
     ]),
+    options () {
+      return {
+        duration: 300,
+        offset: 0,
+        easing: 'easeInOutCubic'
+      }
+    },
     showSkeleton () {
       return (!this.trip && this.loading)
     },
@@ -146,6 +157,7 @@ export default {
         this.loading = false
         this.takemehome = false
         this.trips = response.data.Trip
+        this.$vuetify.goTo(this.target, this.options)
       }).catch(e => {
         this.loading = false
         this.takemehome = false
