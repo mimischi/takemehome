@@ -30,12 +30,14 @@ export const LOAD_SAVED_DATA = ({ commit }) => {
 
 export const TOGGLE_SAVE_SELECTION = ({ commit, state }) => {
   commit('TOGGLE_SAVE_SELECTION')
+  commit('TOGGLE_AUTO_RETRIEVE')
 
   if (!state.saveSelection) {
     state.autoRetrieve = false
     clearStorage()
   } else {
     toggleSelection('saveSelection', state.saveSelection)
+    toggleSelection('autoRetrieve', state.autoRetrieve)
     saveState(state)
   }
 }
