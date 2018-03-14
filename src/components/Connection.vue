@@ -137,6 +137,7 @@ export default {
   methods: {
     resetForm () {
       this.$store.dispatch('RESET_FORM')
+      this.trips = ''
     },
     getTrip () {
       this.loading = true
