@@ -39,8 +39,8 @@
       v-spacer
       v-flex(xs2)
         v-btn(
-          color="yellow"
           @click="resetForm"
+          block
           large
           ) RESET.ME.NOW
     v-alert(
