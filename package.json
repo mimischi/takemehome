@@ -99,5 +99,8 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "now": {
+    "alias": "takemehome.now.sh"
+  }
 }
