@@ -50,13 +50,14 @@
       dismissible
       transition="scale-transition"
       ) {{ errors }}
-    timeline-skeleton(v-if="showSkeleton")
-    timeline(
-      v-if="trips"
-      v-for="trip in trips"
-      :trip="trip"
-      :key="trip.tripId"
-      )
+    div#timeline
+      timeline-skeleton(v-if="showSkeleton")
+      timeline(
+        v-if="trips"
+        v-for="trip in trips"
+        :trip="trip"
+        :key="trip.tripId"
+        )
 </template>
 
 <script>
@@ -94,7 +95,7 @@ export default {
         end: null
       },
       trips: null,
-      target: 'Button'
+      target: '#timeline'
     }
   },
 
@@ -104,13 +105,6 @@ export default {
       'stations',
       'stationValid'
     ]),
-    options () {
-      return {
-        duration: 300,
-        offset: 0,
-        easing: 'easeInOutCubic'
-      }
-    },
     showSkeleton () {
       return (!this.trip && this.loading)
     },
@@ -158,7 +152,10 @@ export default {
         this.loading = false
         this.takemehome = false
         this.trips = response.data.Trip
-        this.$vuetify.goTo(this.target, this.options)
+        this.$nextTick(() => {
+          this.$vuetify.goTo(this.target, {'offset': -30, 'duration': 700, easing: 'easeInOutCubic'
+          })
+        })
       }).catch(e => {
         this.loading = false
         this.takemehome = false

@@ -2,7 +2,7 @@
   v-app(light)
     v-layout(justify-center)
       v-flex(xs12 sm10 md8)
-        v-toolbar(color="blue" dark fixed app)
+        v-toolbar(color="blue" dark fixed app :scroll-off-screen="true")
           v-toolbar-title(v-text="title")
           //- v-spacer
           //- v-toolbar-items
