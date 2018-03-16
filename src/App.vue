@@ -12,6 +12,7 @@
           v-container(fluid)
             v-fade-transition(mode="out-in")
               router-view
+    v-footer(class="pa-3") ASD
 </template>
 
 
