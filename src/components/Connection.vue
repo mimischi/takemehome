@@ -27,12 +27,6 @@
           :disabled="!saveSelection"
           )
     v-layout(row)
-      v-flex(xs4)
-        v-btn(
-          color="yellow"
-          @click="resetForm"
-          large
-          ) RESET.ME.NOW
       v-flex(xs8)
         v-btn(
           color="primary"
@@ -42,6 +36,13 @@
           :loading="loading"
           :disabled="buttonDisabled"
           ) TAKE.ME.HOME
+      v-spacer
+      v-flex(xs2)
+        v-btn(
+          color="yellow"
+          @click="resetForm"
+          large
+          ) RESET.ME.NOW
     v-alert(
       color="error"
       icon="warning"
@@ -98,7 +99,6 @@ export default {
       target: '#timeline'
     }
   },
-
   computed: {
     ...mapGetters([
       'items',
