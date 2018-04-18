@@ -21,6 +21,7 @@
     "express": "^4.16.2",
     "localforage": "^1.6.0",
     "localforage-setitems": "^1.4.0",
+    "now": "^11.1.6",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue": "^2.5.2",
