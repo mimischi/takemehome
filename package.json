@@ -11,7 +11,10 @@
     "test": "yarn run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "build": "node build/build.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "deploy": "now -e NODE_ENV=production -e API_URL=$API_URL --token $NOW_TOKEN --npm --public",
+    "alias": "now alias --token=$NOW_TOKEN",
+    "rmold": "now rm takemehome --token=$NOW_TOKEN --safe -y"
   },
   "dependencies": {
     "ejs": "^2.5.7",
