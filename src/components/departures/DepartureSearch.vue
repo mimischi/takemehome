@@ -8,8 +8,10 @@
           :loading="loading"
           :items="items"
           :search-input.sync="search"
-          v-model="select.name"
-          clearable=true
+          item-text="name"
+          item-value="extId"
+          v-model="select"
+          return-object
         )
 </template>
 
@@ -18,34 +20,41 @@ import API from '@/api'
 
 export default {
   name: 'DepartureSearch',
-  props: ['stationSelect', 'label', 'icon'],
+  props: ['stationSelect', 'label', 'icon', 'initialItems', 'identity'],
   data () {
     return {
       loading: false,
-      items: [],
       search: null,
-      select: this.stationSelect || {
-        name: '',
-        extId: null
-      },
       stations: []
+    }
+  },
+  computed: {
+    items: {
+      get () {
+        return this.$store.state.items[this.identity]
+      },
+      set (value) {
+        this.$store.dispatch('SET_ITEMS', {
+          identity: this.identity,
+          items: value
+        })
+      }
+    },
+    select: {
+      get () {
+        return this.$store.state.stations[this.identity]
+      },
+      set (value) {
+        this.$store.dispatch('SET_STATIONS', {
+          identity: this.identity,
+          station: value
+        })
+      }
     }
   },
   watch: {
     search (val) {
       val && this.querySelections(val)
-    },
-    'select.name' (val) {
-      const stationObj = this.stations.find(this.getExtId)
-      if (typeof stationObj !== 'undefined') {
-        this.select.extId = stationObj.StopLocation.extId
-
-        this.$emit('madeSelection', this.select)
-      } else if (typeof stationObj === 'undefined') {
-        this.select.extId = null
-
-        this.$emit('resetSelection')
-      }
     }
   },
   methods: {
@@ -67,7 +76,12 @@ export default {
       this.loading = true
       API.post('/', {url: 'location.name', params: {input: v}}).then(response => {
         this.stations = response.data.stopLocationOrCoordLocation
-        this.items = this.filterStations(this.stations).map(s => s.StopLocation.name)
+        this.items = this.filterStations(this.stations).map(
+          s => ({
+            name: s.StopLocation.name,
+            extId: s.StopLocation.extId
+          })
+        )
         this.loading = false
       }).catch(e => {
         this.stations = e

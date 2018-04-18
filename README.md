@@ -13,6 +13,11 @@ familiar with the modern JavaScript stack I've build this small app. It consumes
 the [RMV API](https://opendata.rmv.de/) and provides the next available
 connections to the user.
 
+## Features
+
+* Lookup connections for the whole RMV area.
+* Save your connection and have it automatically loaded the next time you visit the site.
+
 ## Tech stack
 
 * [VueJS](https://vuejs.org/)
@@ -24,10 +29,6 @@ connections to the user.
 * [webpack](https://webpack.js.org/)
 * [nodemon](https://nodemon.io/)
 
-## Missing features
-
-* Store a favorite connection in the users IndexedDB and automatically hit the
-  API with that on initial page load (actually, that is the main feature 😬)
 
 ## Installation
 

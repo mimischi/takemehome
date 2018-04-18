@@ -11,12 +11,13 @@
     "test": "yarn run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "build": "node build/build.js",
-    "start": "node server.js",
-    "postinstall": "export NPM_CONFIG_PRODUCTION=true && yarn build"
+    "start": "node server.js"
   },
   "dependencies": {
     "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "localforage": "^1.6.0",
+    "localforage-setitems": "^1.4.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue": "^2.5.2",
@@ -98,5 +99,8 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "now": {
+    "alias": "takemehome.now.sh"
+  }
 }
