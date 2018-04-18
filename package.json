@@ -11,13 +11,17 @@
     "test": "yarn run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "build": "node build/build.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "deploy": "now -e NODE_ENV=production -e API_URL=$API_URL --token $NOW_TOKEN --npm --public",
+    "alias": "now alias --token=$NOW_TOKEN",
+    "rmold": "now rm takemehome --token=$NOW_TOKEN --safe -y"
   },
   "dependencies": {
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "localforage": "^1.6.0",
     "localforage-setitems": "^1.4.0",
+    "now": "^11.1.6",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue": "^2.5.2",
@@ -101,6 +105,7 @@
     "not ie <= 8"
   ],
   "now": {
+    "name": "takemehome",
     "alias": "takemehome.now.sh"
   }
 }
