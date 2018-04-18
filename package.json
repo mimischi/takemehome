@@ -101,6 +101,7 @@
     "not ie <= 8"
   ],
   "now": {
+    "name": "takemehome",
     "alias": "takemehome.now.sh"
   }
 }
