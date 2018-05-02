@@ -27,7 +27,7 @@
           :disabled="!saveSelection"
           )
     v-layout(row)
-      v-flex(xs8)
+      v-flex(xs6)
         v-btn(
           color="primary"
           @click="getTrip"
@@ -37,7 +37,7 @@
           :disabled="buttonDisabled"
           ) TAKE.ME.HOME
       v-spacer
-      v-flex(xs2)
+      v-flex(xs5)
         v-btn(
           @click="resetForm"
           block
