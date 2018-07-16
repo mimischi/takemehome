@@ -17,32 +17,36 @@
     v-layout(row)
       v-flex(xs6)
         v-switch(
-          v-bind:label="`Remember connection`"
+          :label="`Remember connection`"
           v-model="saveSelection"
         )
       v-flex(xs6)
         v-switch(
-          v-bind:label="`Auto-Retrieve on next visit`"
+          :label="`Auto-Retrieve on next visit`"
           v-model="autoRetrieve"
           :disabled="!saveSelection"
           )
+    v-switch(
+      label="Submit button on the right"
+      v-model="submitOnRightSide"
+      @change="toggleButtonOrder"
+    )
     v-layout(row)
-      v-flex(xs6)
-        v-btn(
-          color="primary"
-          @click="getTrip"
-          block
-          large
-          :loading="loading"
-          :disabled="buttonDisabled"
-          ) TAKE.ME.HOME
-      v-spacer
-      v-flex(xs5)
-        v-btn(
-          @click="resetForm"
-          block
-          large
-          ) RESET.ME.NOW
+      template(v-for="button in buttons")
+        v-flex(
+          :key="button.id"
+          :xs5="button.xs5"
+          :xs6="button.xs6"
+        )
+          v-btn(
+            :block="button.block"
+            :color="button.color"
+            :large="button.large"
+            :loading="button.loading"
+            :disabled="button.disabled"
+            @click="button.callback"
+          ) {{ button.text }}
+        v-spacer(v-if="button.id === buttons[0].id")
     v-alert(
       color="error"
       icon="warning"
@@ -83,30 +87,49 @@ export default {
       }
     }, 1000)
   },
-  data () {
-    return {
-      loading: false,
-      takemehome: false,
-      dialog: false,
-      alert: false,
-      disabled: true,
-      errors: null,
-      search: {
-        start: null,
-        end: null
+  data: vm => ({
+    buttons: [
+      {
+        id: 1,
+        name: 'submit',
+        text: 'Submit',
+        color: 'primary',
+        block: true,
+        large: true,
+        xs5: false,
+        xs6: true,
+        callback: vm.getTrip
       },
-      trips: null,
-      target: '#timeline'
-    }
-  },
+      {
+        id: 2,
+        name: 'reset',
+        text: 'Reset',
+        color: 'normal',
+        block: true,
+        large: true,
+        xs5: true,
+        xs6: false,
+        callback: vm.resetForm
+      }
+    ],
+    submitOnRightSide: false,
+    loading: false,
+    takemehome: false,
+    dialog: false,
+    alert: false,
+    disabled: true,
+    errors: null,
+    search: {
+      start: null,
+      end: null
+    },
+    trips: null,
+    target: '#timeline'
+  }),
   computed: {
-    ...mapGetters([
-      'items',
-      'stations',
-      'stationValid'
-    ]),
+    ...mapGetters(['items', 'stations', 'stationValid']),
     showSkeleton () {
-      return (!this.trip && this.loading)
+      return !this.trip && this.loading
     },
     buttonDisabled () {
       return this.stationValid || this.takemehome
@@ -129,6 +152,9 @@ export default {
     }
   },
   methods: {
+    toggleButtonOrder () {
+      this.buttons = this.buttons.reverse()
+    },
     resetForm () {
       this.$store.dispatch('RESET_FORM')
       this.trips = ''
@@ -139,29 +165,31 @@ export default {
       this.trips = null
       this.errors = null
       this.alert = false
-      API.post(
-        '/',
-        {
-          url: 'trip',
-          params: {
-            originExtId: this.stations.departure.extId,
-            destExtId: this.stations.destination.extId
-          }
+      API.post('/', {
+        url: 'trip',
+        params: {
+          originExtId: this.stations.departure.extId,
+          destExtId: this.stations.destination.extId
         }
-      ).then(response => {
-        this.loading = false
-        this.takemehome = false
-        this.trips = response.data.Trip
-        this.$nextTick(() => {
-          this.$vuetify.goTo(this.target, {'offset': -30, 'duration': 700, easing: 'easeInOutCubic'
+      })
+        .then(response => {
+          this.loading = false
+          this.takemehome = false
+          this.trips = response.data.Trip
+          this.$nextTick(() => {
+            this.$vuetify.goTo(this.target, {
+              offset: -30,
+              duration: 700,
+              easing: 'easeInOutCubic'
+            })
           })
         })
-      }).catch(e => {
-        this.loading = false
-        this.takemehome = false
-        this.alert = true
-        this.errors = 'Something went wrong with the API: "' + e + '".'
-      })
+        .catch(e => {
+          this.loading = false
+          this.takemehome = false
+          this.alert = true
+          this.errors = 'Something went wrong with the API: "' + e + '".'
+        })
     }
   }
 }
