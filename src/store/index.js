@@ -8,11 +8,9 @@ import * as actions from './actions'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   state,
   getters,
   mutations,
   actions
 })
-
-export default store
