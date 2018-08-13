@@ -57,14 +57,7 @@
       dismissible
       transition="scale-transition"
       ) {{ errors }}
-    div#timeline
-      timeline-skeleton(v-if="showSkeleton")
-      timeline(
-        v-if="trips"
-        v-for="trip in trips"
-        :trip="trip"
-        :key="trip.tripId"
-        )
+    timeline(:trips="trips")
 </template>
 
 <script>
@@ -73,14 +66,12 @@ import { mapGetters } from 'vuex'
 import API from '@/api'
 import DepartureSearch from '@/components/departures/DepartureSearch'
 import Timeline from '@/components/timeline/Timeline'
-import TimelineSkeleton from '@/components/timeline/TimelineSkeleton'
 
 export default {
   name: 'Connection',
   components: {
     DepartureSearch,
-    Timeline,
-    TimelineSkeleton
+    Timeline
   },
   mounted () {
     if (this.settings.submitButtonOnRightSide) {
