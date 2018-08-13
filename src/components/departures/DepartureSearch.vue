@@ -34,9 +34,10 @@ export default {
         return this.$store.state.items[this.identity]
       },
       set (value) {
-        this.$store.dispatch('SET_ITEMS', {
+        this.$store.dispatch('SET_VALUES', {
+          type: 'items',
           identity: this.identity,
-          items: value
+          values: value
         })
       }
     },
@@ -45,9 +46,10 @@ export default {
         return this.$store.state.stations[this.identity]
       },
       set (value) {
-        this.$store.dispatch('SET_STATIONS', {
+        this.$store.dispatch('SET_VALUES', {
+          type: 'stations',
           identity: this.identity,
-          station: value
+          values: value
         })
       }
     }
@@ -59,13 +61,11 @@ export default {
   },
   methods: {
     filterStations (stations) {
-      return stations.filter(
-        s => {
-          if (typeof s.StopLocation !== 'undefined') {
-            return s
-          }
+      return stations.filter(s => {
+        if (typeof s.StopLocation !== 'undefined') {
+          return s
         }
-      )
+      })
     },
     getExtId (item) {
       if (typeof item.StopLocation !== 'undefined') {
@@ -74,18 +74,18 @@ export default {
     },
     querySelections (v) {
       this.loading = true
-      API.post('/', {url: 'location.name', params: {input: v}}).then(response => {
-        this.stations = response.data.stopLocationOrCoordLocation
-        this.items = this.filterStations(this.stations).map(
-          s => ({
+      API.post('/', { url: 'location.name', params: { input: v } })
+        .then(response => {
+          this.stations = response.data.stopLocationOrCoordLocation
+          this.items = this.filterStations(this.stations).map(s => ({
             name: s.StopLocation.name,
             extId: s.StopLocation.extId
-          })
-        )
-        this.loading = false
-      }).catch(e => {
-        this.stations = e
-      })
+          }))
+          this.loading = false
+        })
+        .catch(e => {
+          this.stations = e
+        })
     }
   }
 }

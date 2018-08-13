@@ -18,17 +18,19 @@
       v-flex(xs6)
         v-switch(
           :label="`Remember connection`"
-          v-model="saveSelection"
+          v-model="settings.rememberConnection"
+          @change="updateSettings('rememberConnection')"
         )
       v-flex(xs6)
         v-switch(
           :label="`Auto-Retrieve on next visit`"
-          v-model="autoRetrieve"
-          :disabled="!saveSelection"
+          v-model="settings.autoRetrieveConnection"
+          @change="updateSettings('autoRetrieveConnection')"
+          :disabled="!settings.rememberConnection"
           )
     v-switch(
       label="Submit button on the right"
-      v-model="submitOnRightSide"
+      v-model="settings.submitButtonOnRightSide"
       @change="toggleButtonOrder"
     )
     v-layout(row)
@@ -43,7 +45,7 @@
             :color="button.color"
             :large="button.large"
             :loading="button.loading"
-            :disabled="button.disabled"
+            :disabled="buttonDisabled"
             @click="button.callback"
           ) {{ button.text }}
         v-spacer(v-if="button.id === buttons[0].id")
@@ -81,8 +83,11 @@ export default {
     TimelineSkeleton
   },
   mounted () {
+    if (this.settings.submitButtonOnRightSide) {
+      this.toggleButtonOrder()
+    }
     setTimeout(() => {
-      if (this.$store.state.autoRetrieve) {
+      if (this.settings.autoRetrieveConnection) {
         this.getTrip()
       }
     }, 1000)
@@ -112,12 +117,10 @@ export default {
         callback: vm.resetForm
       }
     ],
-    submitOnRightSide: false,
     loading: false,
     takemehome: false,
     dialog: false,
     alert: false,
-    disabled: true,
     errors: null,
     search: {
       start: null,
@@ -126,41 +129,37 @@ export default {
     trips: null,
     target: '#timeline'
   }),
+  watch: {
+    buttonOrder: function () {
+      this.buttons.reverse()
+    }
+  },
   computed: {
-    ...mapGetters(['items', 'stations', 'stationValid']),
-    showSkeleton () {
-      return !this.trip && this.loading
+    ...mapGetters(['items', 'stations', 'stationValid', 'settings']),
+    buttonOrder () {
+      return this.settings.submitButtonOnRightSide
     },
     buttonDisabled () {
       return this.stationValid || this.takemehome
-    },
-    saveSelection: {
-      get () {
-        return this.$store.state.saveSelection
-      },
-      set (value) {
-        this.$store.dispatch('TOGGLE_SAVE_SELECTION')
-      }
-    },
-    autoRetrieve: {
-      get () {
-        return this.$store.state.autoRetrieve
-      },
-      set (value) {
-        this.$store.dispatch('TOGGLE_AUTO_RETRIEVE')
-      }
     }
   },
   methods: {
+    updateSettings (identity) {
+      const payload = {
+        identity: identity,
+        value: this.settings[identity]
+      }
+      this.$store.dispatch('UPDATE_SETTINGS', payload)
+    },
     toggleButtonOrder () {
-      this.buttons = this.buttons.reverse()
+      this.updateSettings('submitButtonOnRightSide')
     },
     resetForm () {
       this.$store.dispatch('RESET_FORM')
       this.trips = ''
     },
     getTrip () {
-      this.loading = true
+      this.$store.dispatch('TOGGLE_LOADING')
       this.takemehome = true
       this.trips = null
       this.errors = null
@@ -173,7 +172,7 @@ export default {
         }
       })
         .then(response => {
-          this.loading = false
+          this.$store.dispatch('TOGGLE_LOADING')
           this.takemehome = false
           this.trips = response.data.Trip
           this.$nextTick(() => {
@@ -185,7 +184,7 @@ export default {
           })
         })
         .catch(e => {
-          this.loading = false
+          this.$store.dispatch('TOGGLE_LOADING')
           this.takemehome = false
           this.alert = true
           this.errors = 'Something went wrong with the API: "' + e + '".'

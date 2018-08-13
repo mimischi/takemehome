@@ -1,45 +1,33 @@
-import {
-  setValues,
-  saveState,
-  toggleSelection,
-  clearStorage,
-  loadSavedState
-} from '@/api'
+import { setValues, updateSettings, clearStorage, loadSavedState } from '@/api'
 
-export const SET_STATIONS = ({ commit, state }, data) => {
-  commit('SET_STATIONS', { data: data })
+export const UPDATE_SETTINGS = ({ commit, state }, data) => {
+  commit('UPDATE_SETTINGS', { data: data })
 
-  if (state.saveSelection) {
-    setValues('stations', data['identity'], data['station'])
+  if (!state.approved) return
+
+  let settings = state.settings
+  settings[data.identity] = data.value
+
+  if (data.identity === 'rememberConnection') {
+    settings.autoRetrieveConnection = false
   }
-}
 
-export const SET_ITEMS = ({ commit, state }, data) => {
-  commit('SET_ITEMS', { data: data })
-
-  if (state.saveSelection) {
-    setValues('items', data['identity'], data['items'])
-  }
+  updateSettings('settings', settings)
 }
 
 export const LOAD_SAVED_DATA = ({ commit }) => {
-  return loadSavedState().then((res) => {
+  return loadSavedState().then(res => {
     commit('LOAD_SAVED_DATA', res)
   })
 }
 
-export const TOGGLE_SAVE_SELECTION = ({ commit, state }) => {
-  commit('TOGGLE_SAVE_SELECTION')
-  commit('TOGGLE_AUTO_RETRIEVE')
+export const SET_VALUES = ({ commit, state }, data) => {
+  commit('SET_VALUES', { data: data })
 
-  if (!state.saveSelection) {
-    state.autoRetrieve = false
-    clearStorage()
-  } else {
-    toggleSelection('saveSelection', state.saveSelection)
-    toggleSelection('autoRetrieve', state.autoRetrieve)
-    saveState(state)
-  }
+  if (!state.settings.rememberConnection) return
+
+  const { type, identity, values } = data
+  setValues(type, identity, values)
 }
 
 export const RESET_FORM = ({ commit }) => {
@@ -47,8 +35,6 @@ export const RESET_FORM = ({ commit }) => {
   commit('RESET_FORM')
 }
 
-export const TOGGLE_AUTO_RETRIEVE = ({ commit, state }) => {
-  commit('TOGGLE_AUTO_RETRIEVE')
-
-  toggleSelection('autoRetrieve', state.autoRetrieve)
+export const TOGGLE_LOADING = ({ commit, state }) => {
+  commit('TOGGLE_LOADING')
 }
