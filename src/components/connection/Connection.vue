@@ -17,14 +17,11 @@
       @submit="getTrip"
       @reset="resetForm"
       )
-    v-alert(
-      color="error"
-      icon="warning"
-      :value="errors"
-      v-model="alert"
-      dismissible
-      transition="scale-transition"
-      ) {{ errors }}
+    connection-alert(
+      :errors="errors"
+      :initialAlert="alert"
+      @close="alert = false"
+      )
     timeline(:trips="trips")
 </template>
 
@@ -33,6 +30,7 @@ import { mapGetters } from 'vuex'
 
 import API from '@/api'
 import DepartureSearch from '@/components/departures/DepartureSearch'
+import ConnectionAlert from '@/components/connection/ConnectionAlert'
 import ConnectionButton from '@/components/connection/ConnectionButton'
 import ConnectionSettings from '@/components/connection/ConnectionSettings'
 import Timeline from '@/components/timeline/Timeline'
@@ -41,6 +39,7 @@ export default {
   name: 'Connection',
   components: {
     DepartureSearch,
+    ConnectionAlert,
     ConnectionButton,
     ConnectionSettings,
     Timeline
