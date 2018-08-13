@@ -4,11 +4,13 @@
       identity="departure"
       label="What place do you want to leave?"
       icon="flight_takeoff"
+      @searchError="toggleSearchAlert"
       )
     departure-search(
       identity="destination"
       label="What is your destination?"
       icon="flight_land"
+      @searchError="toggleSearchAlert"
     )
     connection-settings
     connection-button(
@@ -53,19 +55,26 @@ export default {
   },
   data: () => ({
     buttonLoading: false,
-    takemehome: false,
     alert: false,
     errors: null,
     trips: null,
     target: '#timeline'
   }),
   computed: {
-    ...mapGetters(['items', 'stations', 'stationValid', 'settings']),
+    ...mapGetters(['stations', 'stationValid', 'settings']),
     buttonDisabled () {
       return this.stationValid || this.buttonLoading
     }
   },
   methods: {
+    toggleSearchAlert () {
+      let error = 'You are either offline or the API is unreachable.'
+      if (!navigator.onLine) {
+        error = 'You are offline. Please reconnect to the internet.'
+      }
+      this.errors = error
+      this.alert = true
+    },
     resetForm () {
       this.$store.dispatch('RESET_FORM')
       this.trips = ''

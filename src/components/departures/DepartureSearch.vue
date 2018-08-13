@@ -1,18 +1,18 @@
 <template lang="pug">
   v-layout(row)
-      v-flex(xs12)
-        v-select(
-          :label="label"
-          :prepend-icon="icon"
-          autocomplete
-          :loading="loading"
-          :items="items"
-          :search-input.sync="search"
-          item-text="name"
-          item-value="extId"
-          v-model="select"
-          return-object
-        )
+    v-flex(xs12)
+      v-select(
+        :label="label"
+        :prepend-icon="icon"
+        autocomplete
+        :loading="loading"
+        :items="items"
+        :search-input.sync="search"
+        item-text="name"
+        item-value="extId"
+        v-model="select"
+        return-object
+      )
 </template>
 
 <script>
@@ -84,7 +84,8 @@ export default {
           this.loading = false
         })
         .catch(e => {
-          this.stations = e
+          this.loading = false
+          this.$emit('searchError')
         })
     }
   }
