@@ -1,15 +1,11 @@
 <template lang="pug">
   v-content
     departure-search(
-      :stationSelect="stations.departure"
-      :initialItems="items.departure"
       identity="departure"
       label="What place do you want to leave?"
       icon="flight_takeoff"
       )
     departure-search(
-      :stationSelect="stations.destination"
-      :initialItems="items.destination"
       identity="destination"
       label="What is your destination?"
       icon="flight_land"

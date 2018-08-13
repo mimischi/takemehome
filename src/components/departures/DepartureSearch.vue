@@ -20,7 +20,7 @@ import API from '@/api'
 
 export default {
   name: 'DepartureSearch',
-  props: ['stationSelect', 'label', 'icon', 'initialItems', 'identity'],
+  props: ['label', 'icon', 'identity'],
   data () {
     return {
       loading: false,
