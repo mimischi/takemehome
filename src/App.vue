@@ -1,11 +1,6 @@
 <template lang="pug">
   v-app(light)
-    v-toolbar(color="blue" dark fixed app :scroll-off-screen="true")
-      v-toolbar-title(v-text="title")
-      //- v-spacer
-      //- v-toolbar-items
-        v-btn(flat to="/") HOME
-        v-btn(flat to="/departures") Departures
+    the-header
     v-content(v-scroll="onScroll")
       v-container(fluid)
         v-layout(justify-center)
@@ -25,30 +20,19 @@
         @click="scrollToTop"
         )
         v-icon keyboard_arrow_up
-    v-footer(height="auto")
-      v-card(flat tile width="100%" class="blue white--text text-xs-center")
-        v-card-text
-          strong Initiative to get rid of ugly user interfaces. Looking at you RMV!
-        v-card-text
-          strong Build in Frankfurt. Hosted on <a href="https://zeit.co/now">now.sh</a>.
-        v-card-text
-          strong Code available on GitHub!
-          v-btn(
-            icon
-            class="mx-3 white--text"
-            href="https://github.com/mimischi/takemehome"
-            )
-            v-icon fab fa-github
+    the-footer
 </template>
 
 
 <script>
+import TheHeader from '@/components/TheHeader'
+import TheFooter from '@/components/TheFooter'
+
 export default {
   name: 'app',
+  components: { TheHeader, TheFooter },
   data () {
     return {
-      title: 'TAKE.ME.HOME.',
-      drawer: null,
       offsetTop: 0
     }
   },
