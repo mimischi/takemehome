@@ -13,7 +13,7 @@
     connection-settings
     connection-button(
       :buttonDisabled="buttonDisabled"
-      :buttonLoading="loading"
+      :buttonLoading="buttonLoading"
       @submit="getTrip"
       @reset="resetForm"
       )
@@ -52,7 +52,7 @@ export default {
     }, 1000)
   },
   data: () => ({
-    loading: false,
+    buttonLoading: false,
     takemehome: false,
     alert: false,
     errors: null,
@@ -62,21 +62,17 @@ export default {
   computed: {
     ...mapGetters(['items', 'stations', 'stationValid', 'settings']),
     buttonDisabled () {
-      return this.stationValid || this.takemehome
+      return this.stationValid || this.buttonLoading
     }
   },
   methods: {
-    toggleLoading () {
-      this.loading = !this.loading
-      this.takemehome = !this.takemehome
-    },
     resetForm () {
       this.$store.dispatch('RESET_FORM')
       this.trips = ''
     },
     getTrip () {
       this.$store.dispatch('TOGGLE_LOADING')
-      this.toggleLoading()
+      this.buttonLoading = true
       this.trips = null
       this.errors = null
       this.alert = false
@@ -91,7 +87,7 @@ export default {
           this.$store.dispatch('TOGGLE_LOADING')
           this.trips = response.data.Trip
           this.$nextTick(() => {
-            this.toggleLoading()
+            this.buttonLoading = false
             this.$vuetify.goTo(this.target, {
               offset: -30,
               duration: 700,
@@ -101,7 +97,7 @@ export default {
         })
         .catch(e => {
           this.$store.dispatch('TOGGLE_LOADING')
-          this.toggleLoading()
+          this.buttonLoading = false
           this.alert = true
           this.errors = 'Something went wrong with the API: "' + e + '".'
         })
