@@ -4,7 +4,7 @@
       ul.timeline
         span(data-icon="timer") {{ $options.computed.formatDuration(trip.duration) }}
         span(data-icon="autorenew") {{ LegListLength }}
-        li.event(v-for="l in trip.LegList.Leg" :key="trip.tripId" :data-icon="$options.computed.productType(l)")
+        li.event(v-for="l in trip.LegList.Leg" :key="l.number" :data-icon="$options.computed.productType(l)")
           h3(v-if="l.type === 'JNY'") {{ l.Product.name }} - {{ l.direction }}
           h3(v-else-if="l.type === 'WALK'") Walk to {{ l.Destination.name }}
           p(:class="$options.computed.delayedClass(l.Origin, l)") {{ $options.computed.departureTime(l.Origin, l) }} - {{ l.Origin.name }}
