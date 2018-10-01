@@ -10,7 +10,7 @@ v-layout(row)
         :block="button.block"
         :color="button.color"
         :large="button.large"
-        :loading="buttonLoading"
+        :loading="loading(button.name)"
         :disabled="buttonDisabled"
         @click="button.callback"
       ) {{ button.text }}
@@ -49,7 +49,7 @@ export default {
   }),
   mounted () {
     if (this.settings.submitButtonOnRightSide) {
-      this.toggleButtonOrder()
+      this.buttons.reverse()
     }
   },
   computed: {
@@ -66,6 +66,9 @@ export default {
     },
     reset () {
       this.$emit('reset')
+    },
+    loading (name) {
+      return name === 'submit' ? this.buttonLoading : false
     }
   },
   watch: {
