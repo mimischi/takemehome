@@ -19,6 +19,7 @@ export const SET_VALUES = (state, { data }) => {
 
 export const RESET_FORM = state => {
   state = initState
+  state.stations = []
 }
 
 export const TOGGLE_LOADING = state => {
