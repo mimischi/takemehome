@@ -1,9 +1,17 @@
 import { setValues, updateSettings, clearStorage, loadSavedState } from '@/api'
 
+export const TOGGLE_TERMS = ({ commit, state }) => {
+  commit('TOGGLE_TERMS')
+}
+
+export const TOGGLE_MESSAGE_READ = ({ commit, state }) => {
+  commit('TOGGLE_MESSAGE_READ')
+}
+
 export const UPDATE_SETTINGS = ({ commit, state }, data) => {
   commit('UPDATE_SETTINGS', { data: data })
 
-  if (!state.approved) return
+  if (!state.termsAccepted) return
 
   let settings = state.settings
   settings[data.identity] = data.value

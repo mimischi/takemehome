@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Connection from '@/components/connection/Connection'
+import Index from '@/views/Index'
+import About from '@/views/About'
 
 Vue.use(Router)
 
@@ -9,12 +10,17 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Connection',
-      component: Connection
+      name: 'Index',
+      component: Index
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: About
     },
     {
       path: '*',
-      component: Connection
+      component: Index
     }
   ]
 })

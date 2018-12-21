@@ -1,8 +1,13 @@
 <template lang="pug">
   v-content
+    settings(
+      :dialog="dialog"
+      @close="toggleSettings"
+      )
+    h1 Where do you want to go today?
     departure-search(
       identity="departure"
-      label="What place do you want to leave?"
+      label="What is your departure station?"
       icon="flight_takeoff"
       @searchError="toggleSearchAlert"
       )
@@ -12,12 +17,12 @@
       icon="flight_land"
       @searchError="toggleSearchAlert"
     )
-    connection-settings
+    //- connection-settings
     connection-button(
       :buttonDisabled="buttonDisabled"
       :buttonLoading="buttonLoading"
       @submit="getTrip"
-      @reset="resetForm"
+      @settings="toggleSettings"
       )
     connection-alert(
       :errors="errors"
@@ -31,10 +36,11 @@
 import { mapGetters } from 'vuex'
 
 import API from '@/api'
+import Settings from '@/components/Settings'
 import DepartureSearch from '@/components/departures/DepartureSearch'
 import ConnectionAlert from '@/components/connection/ConnectionAlert'
 import ConnectionButton from '@/components/connection/ConnectionButton'
-import ConnectionSettings from '@/components/connection/ConnectionSettings'
+// import ConnectionSettings from '@/components/connection/ConnectionSettings'
 import Timeline from '@/components/timeline/Timeline'
 
 export default {
@@ -43,7 +49,8 @@ export default {
     DepartureSearch,
     ConnectionAlert,
     ConnectionButton,
-    ConnectionSettings,
+    Settings,
+    // ConnectionSettings,
     Timeline
   },
   mounted () {
@@ -58,7 +65,8 @@ export default {
     alert: false,
     errors: null,
     trips: null,
-    target: '#timeline'
+    target: '#timeline',
+    dialog: false
   }),
   computed: {
     ...mapGetters(['stations', 'stationValid', 'settings']),
@@ -78,6 +86,9 @@ export default {
     resetForm () {
       this.$store.dispatch('RESET_FORM')
       this.trips = ''
+    },
+    toggleSettings () {
+      this.dialog = !this.dialog
     },
     getTrip () {
       this.$store.dispatch('TOGGLE_LOADING')

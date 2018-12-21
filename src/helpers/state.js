@@ -16,7 +16,8 @@ export const initState = {
   saveSelection: false,
   autoRetrieve: false,
   loading: false,
-  approved: true,
+  messageRead: false,
+  termsAccepted: false,
   settings: {
     color: 'blue',
     rememberConnection: false,

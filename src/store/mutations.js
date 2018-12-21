@@ -18,10 +18,19 @@ export const SET_VALUES = (state, { data }) => {
 }
 
 export const RESET_FORM = state => {
+  console.log(initState)
   state = initState
   state.stations = []
 }
 
 export const TOGGLE_LOADING = state => {
   state.loading = !state.loading
+}
+
+export const TOGGLE_TERMS = state => {
+  state.termsAccepted = !state.termsAccepted
+}
+
+export const TOGGLE_MESSAGE_READ = state => {
+  state.messageRead = !state.messageRead
 }
