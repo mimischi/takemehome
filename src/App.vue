@@ -16,20 +16,17 @@
       </v-btn>
     </v-toolbar>
 
-    <v-content>
-      <router-view/>
-    </v-content>
+    <v-content> <router-view /> </v-content>
   </v-app>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-  data () {
+  name: "App",
+  data() {
     return {
       //
-    }
+    };
   }
-}
+};
 </script>
