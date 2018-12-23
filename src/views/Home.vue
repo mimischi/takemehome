@@ -4,7 +4,6 @@
 
 <script>
 import SearchStations from "@/components/SearchStations";
-// import HelloWorld from "../components/HelloWorld";
 
 export default {
   components: {
