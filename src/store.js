@@ -4,7 +4,11 @@ import createPersistedState from "vuex-persistedstate";
 
 import { getField, updateField } from "vuex-map-fields";
 
+import uuid from "uuid/v4";
+
 const connectionDraft = {
+  uuid: null,
+  provider: "RMV",
   from: {
     items: [],
     station: null
@@ -35,6 +39,7 @@ export default new Vuex.Store({
   getters: { getField },
   mutations: {
     addConnection(state, connection) {
+      connection.uuid = uuid();
       state.connections.push(connection);
     },
     resetDraft(state) {
