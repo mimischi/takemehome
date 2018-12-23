@@ -1,23 +1,19 @@
-<template>
-  <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-toolbar>
+<template lang="pug">
+v-app
+  v-toolbar(app)
+    v-toolbar-title(class="headline text-uppercase")
+      span TAKE.
+      span(class="font-weight-light") ME.
+      span HOME.
+    v-spacer
+    v-btn(flat to="/") Home
+    v-spacer
 
-    <v-content> <router-view /> </v-content>
-  </v-app>
+  v-content
+    v-container(fluid)
+      v-layout(justify-center)
+        v-flex(xs12)
+          router-view
 </template>
 
 <script>
