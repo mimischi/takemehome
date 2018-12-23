@@ -36,7 +36,7 @@ v-card
 </template>
 
 <script>
-import StationModel from "@/components/stations/StationModel";
+import StationModel from "@/components/StationModel";
 import { mapFields } from "vuex-map-fields";
 
 export default {
