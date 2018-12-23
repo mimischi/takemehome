@@ -1,13 +1,14 @@
 <template lang="pug">
-  HelloWorld
+  search-stations
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld";
+import SearchStations from "@/components/SearchStations";
+// import HelloWorld from "../components/HelloWorld";
 
 export default {
   components: {
-    HelloWorld
+    SearchStations
   }
 };
 </script>
