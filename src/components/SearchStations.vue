@@ -108,6 +108,7 @@ export default {
     },
     update() {
       this.connections[this.entity] = this.connection;
+      this.$router.push({ name: "manager" });
     },
     clear() {
       this.connection = this.initialize();
