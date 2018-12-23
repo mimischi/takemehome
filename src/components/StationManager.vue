@@ -10,7 +10,7 @@ v-card
         row
         wrap
         v-for="(connection, index) in connections"
-        :key="connection"     
+        :key="connection.uuid"     
         )
         v-flex(xs12)
           station-model(:id="index")
@@ -22,7 +22,6 @@ v-card
                 v-spacer
                 v-btn(
                   v-if="index === 0"
-                  color="green"
                   disabled
                 )
                   | Primary
