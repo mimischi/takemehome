@@ -5,12 +5,13 @@ v-card
     grid-list-lg
   )
     h2(class="headline mb-0") Connections
-    transition-group(name="flip-list" tag="div")
+    transition-group(name="cards" tag="div")
       v-layout(
         row
         wrap
         v-for="(connection, index) in connections"
-        :key="connection.uuid"     
+        :key="connection.uuid"
+        class="card-connection"
         )
         v-flex(xs12)
           station-model(:id="index")
@@ -64,7 +65,15 @@ export default {
 </script>
 
 <style>
-.flip-list-move {
-  transition: transform 0.3s;
+.card-connection {
+  transition: all 0.3s;
+}
+.cards-enter,
+.cards-leave-to {
+  opacity: 0;
+  transform: translateX(50px);
+}
+.cards-leave-active {
+  position: relative;
 }
 </style>
