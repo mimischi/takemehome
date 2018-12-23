@@ -26,10 +26,7 @@ export default {
       this.connectionDraft = { ...this.connections[this.id] };
     },
     destroy() {
-      const del = this.connections.splice(this.id, 1);
-      this.connections = this.connections.filter(
-        connection => connection != del
-      );
+      this.connections.splice(this.id, 1);
     },
     makeDefault() {
       let connections = this.connections;
