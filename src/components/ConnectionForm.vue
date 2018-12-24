@@ -99,7 +99,7 @@ export default {
     },
     create() {
       this.$store.dispatch("addConnection", this.connection);
-      this.clear();
+      this.cancel();
     },
     update() {
       this.connections[this.entity] = this.connection;
