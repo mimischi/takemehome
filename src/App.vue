@@ -7,7 +7,7 @@ v-app
       span HOME.
     v-spacer
     v-btn(flat to="/") Home
-    v-btn(flat to="/manager") Manager
+    v-btn(flat to="/manage") Manager
     v-spacer
 
   v-content

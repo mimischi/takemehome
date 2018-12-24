@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import StationManager from "./views/StationManager";
+import ConnectionManager from "./views/ConnectionManager";
 import Home from "./views/Home";
 
 Vue.use(Router);
@@ -27,9 +27,9 @@ export default new Router({
       props: numberRouteParams
     },
     {
-      path: "/manager",
-      name: "manager",
-      component: StationManager
+      path: "/manage",
+      name: "connectionManager",
+      component: ConnectionManager
     }
   ]
 });

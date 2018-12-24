@@ -49,7 +49,7 @@ import StationModel from "@/components/StationModel";
 import { mapFields } from "vuex-map-fields";
 
 export default {
-  name: "StationManager",
+  name: "ConnectionManager",
   components: { StationModel },
   data: () => ({}),
   computed: {
