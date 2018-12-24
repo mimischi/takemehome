@@ -11,12 +11,11 @@ v-autocomplete(
   clearable
   clear-icon="cancel"
   :label="label"
-  :placeholder="label"
+  :placeholder="placeholder"
+  persisted-hint
   :prepend-icon="prependIcon"
   @click:clear="clear"
   return-object
-  flat
-  solo-inverted
 )
 </template>
 
@@ -35,11 +34,12 @@ export default {
       default: "Station name"
     },
     placeholder: {
-      type: String
+      type: String,
+      default: ""
     },
     prependIcon: {
       type: String,
-      default: "search"
+      default: ""
     },
     direction: {
       type: String,
