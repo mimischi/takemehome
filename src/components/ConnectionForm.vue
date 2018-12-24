@@ -19,7 +19,7 @@ v-card(color="teal lighten-2" dark)
       :disabled="clearDisabled"
       color="teal darken-1"
       flat
-      @click="clear()"
+      @click="cancel()"
     ) Cancel
     v-btn(
       :disabled="clearDisabled"
@@ -103,10 +103,10 @@ export default {
     },
     update() {
       this.connections[this.entity] = this.connection;
-      this.$router.push({ name: "manage" });
+      this.$router.push({ name: "connectionManager" });
     },
-    clear() {
-      this.connection = this.initialize();
+    cancel() {
+      this.$router.push({ name: "connectionManager" });
     }
   }
 };
