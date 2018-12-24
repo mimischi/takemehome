@@ -1,18 +1,16 @@
 <template lang="pug">
 v-card(color="teal lighten-2" dark)
-  v-card-title(class="headline teal lighten-3") Station selection
+  v-card-title(class="headline teal lighten-3") {{ submitLabel }} connection
     v-card-text
       search-station(
         v-model="connection.from"
         direction="from"
         label="Departure station"
-        prepend-icon="trending_up"
       )
       search-station(
         v-model="connection.to"
         direction="to"
         label="Destination station"
-        prepend-icon="trending_down"
       )
   v-divider
   v-card-actions
@@ -20,17 +18,14 @@ v-card(color="teal lighten-2" dark)
     v-btn(
       :disabled="clearDisabled"
       color="teal darken-1"
-      @click="submit()"
-    )
-      | {{ submitLabel }}
-      v-icon(right) add
+      flat
+      @click="clear()"
+    ) Cancel
     v-btn(
       :disabled="clearDisabled"
-      color="teal darken-1"
-      @click="clear()"
-    )
-      | Clear
-      v-icon(right) close
+      color="teal darken-2"
+      @click="submit()"
+    ) {{ submitLabel }}
 </template>
 
 <script>
@@ -40,7 +35,7 @@ import StationSearchModel from "@/components/StationSearchModel";
 import { mapFields } from "vuex-map-fields";
 
 export default {
-  name: "SearchStations",
+  name: "ConnectionForm",
   components: { SearchStation, StationSearchModel },
   props: {
     entity: {
@@ -62,7 +57,7 @@ export default {
       );
     },
     submitLabel() {
-      return this.entity === null ? "Add connection" : "Update connection";
+      return this.entity === null ? "Add" : "Update";
     }
   },
   created() {

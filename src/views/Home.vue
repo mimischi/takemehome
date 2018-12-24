@@ -1,13 +1,13 @@
 <template lang="pug">
-  search-stations(:entity="id")
+connection-form(:entity="id")
 </template>
 
 <script>
-import SearchStations from "@/components/SearchStations";
+import ConnectionForm from "@/components/ConnectionForm";
 
 export default {
   components: {
-    SearchStations
+    ConnectionForm
   },
   props: {
     id: {
