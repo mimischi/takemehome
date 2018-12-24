@@ -99,7 +99,7 @@ export default {
       this.loading = true;
 
       axios
-        .post(`http://proxify.localapp`, {
+        .post(process.env.VUE_APP_API_URL, {
           url: "location.name",
           params: {
             input: this.search,
