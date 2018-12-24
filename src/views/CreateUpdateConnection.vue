@@ -1,7 +1,5 @@
 <template lang="pug">
-v-btn(
-  to="/create"
-) Add connection
+connection-form(:entity="id")
 </template>
 
 <script>

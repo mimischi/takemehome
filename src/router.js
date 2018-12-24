@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
-import ConnectionManager from "./views/ConnectionManager";
-import Home from "./views/Home";
+import Home from "@/views/Home";
+import CreateUpdateConnection from "@/views/CreateUpdateConnection";
+import ConnectionManager from "@/views/ConnectionManager";
 
 Vue.use(Router);
 
@@ -21,9 +22,14 @@ export default new Router({
       component: Home
     },
     {
+      path: "/create",
+      name: "createConnection",
+      component: CreateUpdateConnection
+    },
+    {
       path: "/edit/:id",
       name: "editConnection",
-      component: Home,
+      component: CreateUpdateConnection,
       props: numberRouteParams
     },
     {
