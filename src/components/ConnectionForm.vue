@@ -79,6 +79,9 @@ export default {
     },
     initialize() {
       return {
+        isDefault: false,
+        isFavorite: false,
+        provider: "RMV",
         to: {
           items: [],
           station: null
