@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "@/views/Home";
 import CreateUpdateConnection from "@/views/CreateUpdateConnection";
 import ConnectionManager from "@/views/ConnectionManager";
+import ConnectionList from "@/views/ConnectionList";
 
 Vue.use(Router);
 
@@ -20,6 +21,11 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/list",
+      name: "list",
+      component: ConnectionList
     },
     {
       path: "/create",
