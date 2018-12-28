@@ -1,7 +1,7 @@
 import { mapFields } from "vuex-map-fields";
 
 export default {
-  name: "StationModel",
+  name: "ConnectionModel",
   props: {
     entity: {
       type: Object
