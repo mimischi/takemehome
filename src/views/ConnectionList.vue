@@ -46,12 +46,39 @@ v-card
           :key="index"
         )
 
+  v-dialog(
+    v-model="dialog"
+    fullscreen
+    hide-overlay
+    transition="dialog-bottom-transition"
+    @keydown.esc="dialog = false"
+  )
+    v-card
+      v-toolbar(dark color="primary")
+        v-btn(
+          icon
+          dark
+          @click="dialog = false"
+        )
+          v-icon close
+
+        v-toolbar-title Connection
+        v-spacer
+        v-toolbar-items
+          v-btn(
+            dark
+            flat
+            @click="dialog = false"
+          ) Save
+      // TODO: This currently renders our current ConnectionForm, but we should actually change it to a different layout.
+      connection-form
+
   portal(to="fab")
     v-btn(
       fab
       bottom
       right
-      color="red accent-2"
+      color="primary"
       fixed
       @click="dialog = !dialog"
     )
@@ -59,6 +86,7 @@ v-card
 </template>
 
 <script>
+import ConnectionForm from "@/components/ConnectionForm";
 import ConnectionModel from "@/components/ConnectionModel";
 import { mapFields } from "vuex-map-fields";
 
@@ -78,7 +106,7 @@ export default {
       });
     }
   },
-  components: { ConnectionModel }
+  components: { ConnectionModel, ConnectionForm }
 };
 </script>
 
