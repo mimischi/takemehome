@@ -2,11 +2,12 @@
 v-card
   v-list(two-line)
     transition-group(name="list" tag="div")
-      template(v-for="(connection, index) in connections")
-        station-model(:id="index" :key="connection.uuid")
+      template(v-for="(connection, index) in sortedConnections")
+        station-model(:id="connection.uuid" :key="connection.uuid")
           v-list-tile(
             slot-scope="{ update: update, makeDefault, destroy, toggleFavorite }"
             class="list-connection"
+            ripple
             @click=""
           )
             v-list-tile-action
@@ -37,6 +38,8 @@ v-card
                       v-else
                       @click="makeDefault()")
                       v-list-tile-title Make primary
+                    v-list-tile(@click="destroy()")
+                      v-list-tile-title Delete
 
         v-divider(
           v-if="index + 1 < connections.length"
@@ -50,7 +53,16 @@ import { mapFields } from "vuex-map-fields";
 
 export default {
   computed: {
-    ...mapFields(["connections"])
+    ...mapFields(["connections"]),
+    sortedConnections() {
+      const unsorted = this.connections.slice();
+      return unsorted.sort((a, b) => {
+        const x = a.isFavorite;
+        const y = b.isFavorite;
+
+        return x === y ? 0 : x ? -1 : 1;
+      });
+    }
   },
   components: { StationModel }
 };

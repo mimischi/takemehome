@@ -23,23 +23,35 @@ export default {
       this.$store.dispatch("addConnection");
     },
     update() {
-      this.connectionDraft = { ...this.connections[this.id] };
+      this.connectionDraft = {
+        ...this.connections.filter(connection => connection.uuid === this.id)
+      };
     },
     destroy() {
-      const del = this.connections.splice(this.id, 1);
+      const index = this.connections.findIndex(
+        connection => connection.uuid === this.id
+      );
+      const del = this.connections.splice(index, 1);
       this.connections = this.connections.filter(
         connection => connection != del
       );
     },
     makeDefault() {
-      let connections = this.connections;
-      const newActive = connections.splice(this.id, 1);
-      connections.unshift(...newActive);
-      this.connections = connections;
+      const newDefault = this.connections.filter(
+        connection => connection.uuid === this.id
+      );
+      const remainingConnections = this.connections.filter(
+        connection => connection.uuid !== this.id
+      );
+      this.connections = [...newDefault, ...remainingConnections];
     },
     toggleFavorite() {
       let connections = this.connections;
-      connections[this.id].isFavorite = !connections[this.id].isFavorite;
+
+      const index = connections.findIndex(
+        connection => connection.uuid === this.id
+      );
+      connections[index].isFavorite = !connections[index].isFavorite;
       this.connections = connections;
     }
   },
