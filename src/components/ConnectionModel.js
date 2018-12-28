@@ -19,6 +19,9 @@ export default {
     },
     connection() {
       return this.connections.filter(connection => connection.uuid === this.id);
+    },
+    remainingConnections() {
+      return this.connections.filter(connection => connection.uuid !== this.id);
     }
   },
   data() {
@@ -36,16 +39,10 @@ export default {
       };
     },
     destroy() {
-      const del = this.connections.splice(this.index, 1);
-      this.connections = this.connections.filter(
-        connection => connection != del
-      );
+      this.connections = this.remainingConnections;
     },
     makeDefault() {
-      const remainingConnections = this.connections.filter(
-        connection => connection.uuid !== this.id
-      );
-      this.connections = [...this.connection, ...remainingConnections];
+      this.connections = [...this.connection, ...this.remainingConnections];
     },
     toggleFavorite() {
       let connections = this.connections;
