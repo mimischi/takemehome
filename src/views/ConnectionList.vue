@@ -45,6 +45,17 @@ v-card
           v-if="index + 1 < connections.length"
           :key="index"
         )
+
+  portal(to="fab")
+    v-btn(
+      fab
+      bottom
+      right
+      color="red accent-2"
+      fixed
+      @click="dialog = !dialog"
+    )
+      v-icon add
 </template>
 
 <script>
@@ -52,6 +63,9 @@ import ConnectionModel from "@/components/ConnectionModel";
 import { mapFields } from "vuex-map-fields";
 
 export default {
+  data: () => ({
+    dialog: false
+  }),
   computed: {
     ...mapFields(["connections"]),
     sortedConnections() {

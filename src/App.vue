@@ -16,6 +16,9 @@ v-app
         v-flex(xs12)
           v-slide-y-transition(leave-absolute)
             router-view
+
+  portal-target(name="fab")
+
 </template>
 
 <script>
