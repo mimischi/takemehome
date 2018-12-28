@@ -11,7 +11,15 @@ export default {
     }
   },
   computed: {
-    ...mapFields(["connections", "connectionDraft"])
+    ...mapFields(["connections", "connectionDraft"]),
+    index() {
+      return this.connections.findIndex(
+        connection => connection.uuid === this.id
+      );
+    },
+    connection() {
+      return this.connections.filter(connection => connection.uuid === this.id);
+    }
   },
   data() {
     return {
@@ -24,34 +32,24 @@ export default {
     },
     update() {
       this.connectionDraft = {
-        ...this.connections.filter(connection => connection.uuid === this.id)
+        ...this.connection
       };
     },
     destroy() {
-      const index = this.connections.findIndex(
-        connection => connection.uuid === this.id
-      );
-      const del = this.connections.splice(index, 1);
+      const del = this.connections.splice(this.index, 1);
       this.connections = this.connections.filter(
         connection => connection != del
       );
     },
     makeDefault() {
-      const newDefault = this.connections.filter(
-        connection => connection.uuid === this.id
-      );
       const remainingConnections = this.connections.filter(
         connection => connection.uuid !== this.id
       );
-      this.connections = [...newDefault, ...remainingConnections];
+      this.connections = [...this.connection, ...remainingConnections];
     },
     toggleFavorite() {
       let connections = this.connections;
-
-      const index = connections.findIndex(
-        connection => connection.uuid === this.id
-      );
-      connections[index].isFavorite = !connections[index].isFavorite;
+      connections[this.index].isFavorite = !connections[this.index].isFavorite;
       this.connections = connections;
     }
   },
