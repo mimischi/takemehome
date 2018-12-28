@@ -5,14 +5,13 @@ v-card
       template(v-for="(connection, index) in connections")
         station-model(:id="index" :key="connection.uuid")
           v-list-tile(
-            slot-scope="{ update: update, makeDefault, destroy }"
+            slot-scope="{ update: update, makeDefault, destroy, toggleFavorite }"
             class="list-connection"
-            ripple
             @click=""
           )
             v-list-tile-action
-              v-btn(flat icon)
-                v-icon(v-if="index === 0") star
+              v-btn(flat icon @click.prevent="toggleFavorite()")
+                v-icon(v-if="connection.isFavorite") star
                 v-icon(v-else) star_border
 
             v-list-tile-content

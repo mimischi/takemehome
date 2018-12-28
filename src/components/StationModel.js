@@ -36,6 +36,11 @@ export default {
       const newActive = connections.splice(this.id, 1);
       connections.unshift(...newActive);
       this.connections = connections;
+    },
+    toggleFavorite() {
+      let connections = this.connections;
+      connections[this.id].isFavorite = !connections[this.id].isFavorite;
+      this.connections = connections;
     }
   },
   render() {
@@ -44,7 +49,8 @@ export default {
       data: this.data,
       destroy: this.destroy,
       update: this.update,
-      makeDefault: this.makeDefault
+      makeDefault: this.makeDefault,
+      toggleFavorite: this.toggleFavorite
     });
   }
 };
