@@ -3,7 +3,7 @@ v-card
   v-list(two-line)
     transition-group(name="list" tag="div")
       template(v-for="(connection, index) in sortedConnections")
-        station-model(:id="connection.uuid" :key="connection.uuid")
+        connection-model(:id="connection.uuid" :key="connection.uuid")
           v-list-tile(
             slot-scope="{ update: update, makeDefault, destroy, toggleFavorite }"
             class="list-connection"
@@ -48,7 +48,7 @@ v-card
 </template>
 
 <script>
-import StationModel from "@/components/StationModel";
+import ConnectionModel from "@/components/ConnectionModel";
 import { mapFields } from "vuex-map-fields";
 
 export default {
@@ -64,7 +64,7 @@ export default {
       });
     }
   },
-  components: { StationModel }
+  components: { ConnectionModel }
 };
 </script>
 

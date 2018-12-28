@@ -14,7 +14,7 @@ v-card
         class="card-connection"
         )
         v-flex(xs12)
-          station-model(:id="index")
+          connection-model(:id="index")
             v-card(slot-scope="{ update: update, makeDefault, destroy }")
               v-card-title(primary-title)
                 div
@@ -45,12 +45,12 @@ v-card
 </template>
 
 <script>
-import StationModel from "@/components/StationModel";
+import ConnectionModel from "@/components/ConnectionModel";
 import { mapFields } from "vuex-map-fields";
 
 export default {
   name: "ConnectionManager",
-  components: { StationModel },
+  components: { ConnectionModel },
   data: () => ({}),
   computed: {
     ...mapFields(["connections"])
