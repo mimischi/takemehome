@@ -53,6 +53,18 @@ v-card
     transition="dialog-bottom-transition"
     @keydown.esc="dialog = false"
   )
+
+    portal(to="fab")
+      v-btn(
+        fab
+        bottom
+        right
+        color="primary"
+        fixed
+        @click="dialog = !dialog"
+      )
+        v-icon add
+
     v-card
       v-toolbar(dark color="primary")
         v-btn(
@@ -73,16 +85,6 @@ v-card
       // TODO: This currently renders our current ConnectionForm, but we should actually change it to a different layout.
       connection-form
 
-  portal(to="fab")
-    v-btn(
-      fab
-      bottom
-      right
-      color="primary"
-      fixed
-      @click="dialog = !dialog"
-    )
-      v-icon add
 </template>
 
 <script>
