@@ -2,13 +2,19 @@
 v-app
   v-toolbar(app)
     v-toolbar-title(class="headline text-uppercase")
-      span TAKE.
-      span(class="font-weight-light") ME.
-      span HOME.
+      v-btn(
+        color="primary"
+        flat
+        outline
+        :ripple="{ class: 'primary--text' }"
+        active-class=""
+        to="/"
+      )
+        span TAKE.
+        span(class="font-weight-light") ME.
+        span HOME.
     v-spacer
-    v-btn(flat to="/") Home
-    v-btn(flat to="/manage") Manager
-    v-spacer
+    v-btn(flat :to="{ name: 'connectionList' }") Connections
 
   v-content
     v-container(fluid)
@@ -18,16 +24,10 @@ v-app
             router-view
 
   portal-target(name="fab")
-
 </template>
 
 <script>
 export default {
-  name: "App",
-  data() {
-    return {
-      //
-    };
-  }
+  name: "App"
 };
 </script>
