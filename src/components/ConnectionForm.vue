@@ -39,7 +39,7 @@ export default {
   components: { SearchStation, StationSearchModel },
   props: {
     entity: {
-      type: Number,
+      type: String,
       default: null
     }
   },
@@ -75,7 +75,9 @@ export default {
         return;
       }
 
-      this.connection = { ...this.connections[this.entity] };
+      this.connection = {
+        ...this.connections.find(connection => connection.uuid === this.entity)
+      };
     },
     initialize() {
       return {
@@ -105,11 +107,14 @@ export default {
       this.cancel();
     },
     update() {
-      this.connections[this.entity] = this.connection;
-      this.$router.push({ name: "connectionManager" });
+      const index = this.connections.findIndex(
+        connection => connection.uuid === this.entity
+      );
+      this.connections[index] = this.connection;
+      this.$router.push({ name: "connectionList" });
     },
     cancel() {
-      this.$router.push({ name: "connectionManager" });
+      this.$router.push({ name: "connectionList" });
     }
   }
 };

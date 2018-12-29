@@ -32,6 +32,12 @@ export default new Router({
           path: "create",
           name: "connectionCreate",
           component: ConnectionFormDialog
+        },
+        {
+          path: ":id",
+          name: "connectionEdit",
+          component: ConnectionFormDialog,
+          props: true
         }
       ]
     },

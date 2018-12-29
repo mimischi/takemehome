@@ -38,6 +38,10 @@ v-card
                       v-else
                       @click="makeDefault()")
                       v-list-tile-title Make primary
+                    v-list-tile(
+                      @click="goToUpdate(connection.uuid, update)"
+                    )
+                      v-list-tile-title Edit
                     v-list-tile(@click="destroy()")
                       v-list-tile-title Delete
 
@@ -84,7 +88,13 @@ export default {
       });
     }
   },
-  components: { ConnectionModel, ConnectionForm }
+  components: { ConnectionModel, ConnectionForm },
+  methods: {
+    goToUpdate(index, callback) {
+      callback();
+      this.$router.push({ name: "connectionEdit", params: { id: index } });
+    }
+  }
 };
 </script>
 
