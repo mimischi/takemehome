@@ -46,6 +46,22 @@ v-card
           :key="index"
         )
 
+  portal(to="fab")
+    v-btn(
+      bottom
+      right
+      color="primary"
+      fixed
+      fab
+      :to="{ name: 'connectionCreate' }"
+    )
+      v-icon(
+        class="fab-v-icon"
+      ) add
+
+  transition(name="slide-y-transition")
+    router-view
+
   v-dialog(
     v-model="dialog"
     fullscreen
@@ -53,17 +69,6 @@ v-card
     transition="dialog-bottom-transition"
     @keydown.esc="dialog = false"
   )
-
-    portal(to="fab")
-      v-btn(
-        fab
-        bottom
-        right
-        color="primary"
-        fixed
-        @click="dialog = !dialog"
-      )
-        v-icon add
 
     v-card
       v-toolbar(dark color="primary")
@@ -113,6 +118,10 @@ export default {
 </script>
 
 <style>
+.fab-v-icon {
+  display: inline-flex !important;
+}
+
 .list-connection {
   transition: all 0.3s;
 }

@@ -4,6 +4,7 @@ import Home from "@/views/Home";
 import CreateUpdateConnection from "@/views/CreateUpdateConnection";
 import ConnectionManager from "@/views/ConnectionManager";
 import ConnectionList from "@/views/ConnectionList";
+import ConnectionFormDialog from "@/components/ConnectionFormDialog";
 
 Vue.use(Router);
 
@@ -24,8 +25,15 @@ export default new Router({
     },
     {
       path: "/connections",
-      name: "connections",
-      component: ConnectionList
+      name: "connectionList",
+      component: ConnectionList,
+      children: [
+        {
+          path: "create",
+          name: "connectionCreate",
+          component: ConnectionFormDialog
+        }
+      ]
     },
     {
       path: "/create",
