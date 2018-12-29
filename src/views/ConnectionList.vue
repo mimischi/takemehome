@@ -61,35 +61,6 @@ v-card
 
   transition(name="slide-y-transition")
     router-view
-
-  v-dialog(
-    v-model="dialog"
-    fullscreen
-    hide-overlay
-    transition="dialog-bottom-transition"
-    @keydown.esc="dialog = false"
-  )
-
-    v-card
-      v-toolbar(dark color="primary")
-        v-btn(
-          icon
-          dark
-          @click="dialog = false"
-        )
-          v-icon close
-
-        v-toolbar-title Connection
-        v-spacer
-        v-toolbar-items
-          v-btn(
-            dark
-            flat
-            @click="dialog = false"
-          ) Save
-      // TODO: This currently renders our current ConnectionForm, but we should actually change it to a different layout.
-      connection-form
-
 </template>
 
 <script>
