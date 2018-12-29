@@ -4,14 +4,14 @@
     fullscreen
     hide-overlay
     transition="dialog-bottom-transition"
-    @keydown.esc="closeDialog()"
+    @keydown.esc="close()"
   )
     v-card
       v-toolbar(dark color="primary")
         v-btn(
           icon
           dark
-          @click="closeDialog()"
+          @click="close()"
         )
           v-icon close
 
@@ -21,16 +21,29 @@
           v-btn(
             dark
             flat
-            @click="closeDialog()"
+            @click="submit()"
           ) Save
-      // TODO: This currently renders our current ConnectionForm, but we should actually change it to a different layout.
-      connection-form(:entity="id")
+      v-card-text
+        search-station(
+          v-model="connection.from"
+          direction="from"
+          label="Departure station"
+        )
+        search-station(
+          v-model="connection.to"
+          direction="to"
+          label="Destination station"
+        )
 </template>
 
 <script>
+import SearchStation from "@/components/SearchStation";
 import ConnectionForm from "@/components/ConnectionForm";
 
+import { mapFields } from "vuex-map-fields";
+
 export default {
+  components: { ConnectionForm, SearchStation },
   props: {
     id: {
       type: String,
@@ -38,15 +51,26 @@ export default {
     }
   },
   data: () => ({
-    dialog: false
+    dialog: false,
+    connection: null
   }),
-  components: { ConnectionForm },
+  created() {
+    this.setup();
+  },
   mounted() {
     this.dialog = true;
   },
+  watch: {
+    id() {
+      this.setup();
+    }
+  },
   computed: {
+    ...mapFields({
+      connections: "connections"
+    }),
     label() {
-      return this.entity === null ? "Add" : "Update";
+      return this.id === null ? "Add" : "Update";
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -60,8 +84,54 @@ export default {
     }, 300);
   },
   methods: {
-    closeDialog() {
+    setup() {
+      if (this.id === null) {
+        this.connection = this.initialize();
+        return;
+      }
+
+      this.connection = {
+        ...this.connections.find(connection => connection.uuid === this.id)
+      };
+    },
+    initialize() {
+      return {
+        isDefault: false,
+        isFavorite: false,
+        provider: "RMV",
+        to: {
+          items: [],
+          station: null
+        },
+        from: {
+          items: [],
+          station: null
+        }
+      };
+    },
+    close() {
       this.$router.push({ name: "connectionList" });
+    },
+    submit() {
+      if (this.id === null) {
+        this.create();
+        return;
+      }
+
+      this.update();
+    },
+    create() {
+      this.$store.dispatch("addConnection", this.connection);
+
+      this.close();
+    },
+    update() {
+      const index = this.connections.findIndex(
+        connection => connection.uuid === this.id
+      );
+      this.connections[index] = this.connection;
+
+      this.close();
     }
   }
 };
