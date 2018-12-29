@@ -63,8 +63,7 @@ v-card
         class="fab-v-icon"
       ) add
 
-  transition(name="slide-y-transition")
-    router-view
+  router-view
 </template>
 
 <script>
