@@ -43,6 +43,7 @@ import ConnectionForm from "@/components/ConnectionForm";
 import { mapFields } from "vuex-map-fields";
 
 export default {
+  name: "ConnectionFormDialog",
   components: { ConnectionForm, SearchStation },
   props: {
     id: {
@@ -54,23 +55,17 @@ export default {
     dialog: false,
     connection: null
   }),
-  created() {
-    this.setup();
-  },
-  mounted() {
-    this.dialog = true;
-  },
-  watch: {
-    id() {
-      this.setup();
-    }
-  },
   computed: {
     ...mapFields({
       connections: "connections"
     }),
     label() {
       return this.id === null ? "Add" : "Update";
+    }
+  },
+  watch: {
+    id() {
+      this.setup();
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -82,6 +77,12 @@ export default {
     setTimeout(() => {
       next();
     }, 300);
+  },
+  created() {
+    this.setup();
+  },
+  mounted() {
+    this.dialog = true;
   },
   methods: {
     setup() {
