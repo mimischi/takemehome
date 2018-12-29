@@ -23,8 +23,8 @@ export default new Router({
       component: Home
     },
     {
-      path: "/list",
-      name: "list",
+      path: "/connections",
+      name: "connections",
       component: ConnectionList
     },
     {
