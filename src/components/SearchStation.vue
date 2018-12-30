@@ -8,8 +8,6 @@ v-autocomplete(
   hide-selected
   item-text="name"
   item-value="extId"
-  clearable
-  clear-icon="cancel"
   :label="label"
   :placeholder="placeholder"
   persisted-hint
