@@ -1,30 +1,41 @@
 <template lang="pug">
-v-card(v-if="connection === null")
-  v-card-text
-    v-layout(align-center justify-space-around)
-      v-icon(
-        large
-        color="primary"
-        ) search
-      span You have not added any connections yet. <br /> Add at least one to perform searches.
-div#timeline(v-else)
-  timeline-skeleton(v-if="trips === null")
-  timeline(
-    v-if="trips"
-    v-for="trip in trips"
-    :trip="trip"
-    :key="trip.idx"
+v-layout(row wrap)
+  transition(name="slide-x-transition")
+    v-flex(
+      xs12
+      v-if="$store.state.showWelcome"
+      class="mb-3"
     )
+      welcome-card
+
+  v-flex(xs12)
+    v-card(v-if="connection === null")
+      v-card-text
+        v-layout(align-center justify-space-around)
+          v-icon(
+            large
+            color="primary"
+            ) search
+          span You have not added any connections yet. <br /> Add at least one to perform searches.
+    div#timeline(v-else)
+      timeline-skeleton(v-if="trips === null")
+      timeline(
+        v-if="trips"
+        v-for="trip in trips"
+        :trip="trip"
+        :key="trip.idx"
+        )
 </template>
 
 <script>
 import axios from "axios";
 import Timeline from "@/components/timeline/Timeline";
 import TimelineSkeleton from "@/components/timeline/TimelineSkeleton";
+import WelcomeCard from "@/components/WelcomeCard";
 
 export default {
   name: "ConnectionTimeline",
-  components: { Timeline, TimelineSkeleton },
+  components: { Timeline, TimelineSkeleton, WelcomeCard },
   data: () => ({
     trips: null
   }),

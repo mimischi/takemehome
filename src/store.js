@@ -25,6 +25,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    showWelcome: true,
     connections: [],
     connectionDraft: {
       ...connectionDraft
@@ -36,6 +37,9 @@ export default new Vuex.Store({
     },
     addConnection({ commit }, connection) {
       commit("addConnection", connection);
+    },
+    toggleWelcome({ commit }) {
+      commit("toggleWelcome");
     }
   },
   getters: { getField },
@@ -49,6 +53,9 @@ export default new Vuex.Store({
     },
     clearItems(state, direction) {
       state.connectionDraft[direction].items = [];
+    },
+    toggleWelcome(state) {
+      state.showWelcome = !state.showWelcome;
     },
     updateField
   },
