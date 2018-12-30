@@ -25,12 +25,12 @@
               @click="submit({ create: create, update: update })"
             ) Save
         v-card-text
-          search-station(
+          station-search(
             v-model="connection.from"
             direction="from"
             label="Departure station"
           )
-          search-station(
+          station-search(
             v-model="connection.to"
             direction="to"
             label="Destination station"
@@ -40,11 +40,11 @@
 <script>
 import ConnectionForm from "@/components/ConnectionForm";
 import ConnectionModel from "@/components/ConnectionModel";
-import SearchStation from "@/components/SearchStation";
+import StationSearch from "@/components/StationSearch";
 
 export default {
   name: "ConnectionFormDialog",
-  components: { ConnectionForm, ConnectionModel, SearchStation },
+  components: { ConnectionForm, ConnectionModel, StationSearch },
   props: {
     id: {
       type: String,

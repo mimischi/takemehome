@@ -2,12 +2,12 @@
 v-card(color="teal lighten-2" dark)
   v-card-title(class="headline teal lighten-3") {{ submitLabel }} connection
     v-card-text
-      search-station(
+      station-search(
         v-model="connection.from"
         direction="from"
         label="Departure station"
       )
-      search-station(
+      station-search(
         v-model="connection.to"
         direction="to"
         label="Destination station"
@@ -29,14 +29,14 @@ v-card(color="teal lighten-2" dark)
 </template>
 
 <script>
-import SearchStation from "@/components/SearchStation";
+import StationSearch from "@/components/StationSearch";
 import StationSearchModel from "@/components/StationSearchModel";
 
 import { mapFields } from "vuex-map-fields";
 
 export default {
   name: "ConnectionForm",
-  components: { SearchStation, StationSearchModel },
+  components: { StationSearch, StationSearchModel },
   props: {
     entity: {
       type: String,
