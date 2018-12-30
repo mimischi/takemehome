@@ -19,6 +19,7 @@ v-autocomplete(
 
 <script>
 import axios from "axios";
+import debounce from "lodash/debounce";
 
 export default {
   name: "StationSearch",
@@ -54,7 +55,34 @@ export default {
       this.loading = false;
       this.reset = true;
       this.$store.dispatch("clearItems", this.direction);
-    }
+    },
+    apiCall: debounce(
+      function() {
+        this.loading = true;
+
+        axios
+          .post(process.env.VUE_APP_API_URL, {
+            url: "location.name",
+            params: {
+              input: this.search,
+              type: "S"
+            }
+          })
+          .then(response => {
+            const data = response.data;
+
+            this.items = data.stopLocationOrCoordLocation.map(
+              location => location.StopLocation
+            );
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        this.loading = false;
+      },
+      150,
+      { maxWait: 200 }
+    )
   },
   computed: {
     model: {
@@ -91,32 +119,7 @@ export default {
         return;
       }
 
-      // Request already fired
-      if (this.loading) return;
-
-      this.loading = true;
-
-      axios
-        .post(process.env.VUE_APP_API_URL, {
-          url: "location.name",
-          params: {
-            input: this.search,
-            type: "S"
-          }
-        })
-        .then(response => {
-          const data = response.data;
-
-          this.items = data.stopLocationOrCoordLocation.map(
-            location => location.StopLocation
-          );
-        })
-        .catch(err => {
-          console.log(err);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      this.apiCall();
     }
   }
 };
