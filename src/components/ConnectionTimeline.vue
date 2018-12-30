@@ -1,5 +1,13 @@
 <template lang="pug">
-div#timeline
+v-card(v-if="connection === null")
+  v-card-text
+    v-layout(align-center justify-space-around)
+      v-icon(
+        large
+        color="primary"
+        ) search
+      span You have not added any connections yet. <br /> Add at least one to perform searches.
+div#timeline(v-else)
   timeline-skeleton(v-if="trips === null")
   timeline(
     v-if="trips"
@@ -22,10 +30,12 @@ export default {
   }),
   computed: {
     connection() {
-      return this.$store.state.connections[0];
+      return this.$store.state.connections[0] || null;
     }
   },
   mounted() {
+    if (this.connection === null) return;
+
     this.getTrip();
   },
   methods: {

@@ -1,6 +1,16 @@
 <template lang="pug">
 v-card
-  v-list(two-line)
+  v-card-text(v-if="connections.length < 1")
+    v-layout(align-center justify-space-around)
+      v-icon(
+        large
+        color="primary"
+        ) train
+      span There are no connections to show
+  v-list(
+    v-else
+    two-line
+  )
     transition-group(name="list" tag="div")
       template(v-for="(connection, index) in sortedConnections")
         connection-model(:id="connection.uuid" :key="connection.uuid")
