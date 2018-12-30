@@ -6,45 +6,45 @@
     transition="dialog-bottom-transition"
     @keydown.esc="close()"
   )
-    v-card
-      v-toolbar(dark color="primary")
-        v-btn(
-          icon
-          dark
-          @click="close()"
-        )
-          v-icon close
-
-        v-toolbar-title {{ label }} connection
-        v-spacer
-        v-toolbar-items
+    connection-model(:id="id")
+      v-card(slot-scope="{ data: connection, create, update }")
+        v-toolbar(dark color="primary")
           v-btn(
+            icon
             dark
-            flat
-            @click="submit()"
-          ) Save
-      v-card-text
-        search-station(
-          v-model="connection.from"
-          direction="from"
-          label="Departure station"
-        )
-        search-station(
-          v-model="connection.to"
-          direction="to"
-          label="Destination station"
-        )
+            @click="close()"
+          )
+            v-icon close
+
+          v-toolbar-title {{ label }} connection
+          v-spacer
+          v-toolbar-items
+            v-btn(
+              dark
+              flat
+              @click="submit({ create: create, update: update })"
+            ) Save
+        v-card-text
+          search-station(
+            v-model="connection.from"
+            direction="from"
+            label="Departure station"
+          )
+          search-station(
+            v-model="connection.to"
+            direction="to"
+            label="Destination station"
+          )
 </template>
 
 <script>
-import SearchStation from "@/components/SearchStation";
 import ConnectionForm from "@/components/ConnectionForm";
-
-import { mapFields } from "vuex-map-fields";
+import ConnectionModel from "@/components/ConnectionModel";
+import SearchStation from "@/components/SearchStation";
 
 export default {
   name: "ConnectionFormDialog",
-  components: { ConnectionForm, SearchStation },
+  components: { ConnectionForm, ConnectionModel, SearchStation },
   props: {
     id: {
       type: String,
@@ -52,20 +52,11 @@ export default {
     }
   },
   data: () => ({
-    dialog: false,
-    connection: null
+    dialog: false
   }),
   computed: {
-    ...mapFields({
-      connections: "connections"
-    }),
     label() {
       return this.id === null ? "Add" : "Update";
-    }
-  },
-  watch: {
-    id() {
-      this.setup();
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -78,59 +69,15 @@ export default {
       next();
     }, 300);
   },
-  created() {
-    this.setup();
-  },
   mounted() {
     this.dialog = true;
   },
   methods: {
-    setup() {
-      if (this.id === null) {
-        this.connection = this.initialize();
-        return;
-      }
-
-      this.connection = {
-        ...this.connections.find(connection => connection.uuid === this.id)
-      };
-    },
-    initialize() {
-      return {
-        isDefault: false,
-        isFavorite: false,
-        provider: "RMV",
-        to: {
-          items: [],
-          station: null
-        },
-        from: {
-          items: [],
-          station: null
-        }
-      };
-    },
     close() {
       this.$router.push({ name: "connectionList" });
     },
-    submit() {
-      if (this.id === null) {
-        this.create();
-        return;
-      }
-
-      this.update();
-    },
-    create() {
-      this.$store.dispatch("addConnection", this.connection);
-
-      this.close();
-    },
-    update() {
-      const index = this.connections.findIndex(
-        connection => connection.uuid === this.id
-      );
-      this.connections[index] = this.connection;
+    submit(callback) {
+      this.id === null ? callback.create() : callback.update();
 
       this.close();
     }

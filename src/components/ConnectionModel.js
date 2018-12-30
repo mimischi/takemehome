@@ -3,40 +3,51 @@ import { mapFields } from "vuex-map-fields";
 export default {
   name: "ConnectionModel",
   props: {
-    entity: {
-      type: Object
-    },
     id: {
-      type: [Number, String]
+      type: String,
+      default: null
     }
   },
+  data: () => ({
+    connection: null
+  }),
+  created() {
+    this.connection =
+      this.connections.find(connection => connection.uuid === this.id) ||
+      this.initialize();
+  },
   computed: {
-    ...mapFields(["connections", "connectionDraft"]),
+    ...mapFields(["connections"]),
     index() {
       return this.connections.findIndex(
         connection => connection.uuid === this.id
       );
     },
-    connection() {
-      return this.connections.filter(connection => connection.uuid === this.id);
-    },
     remainingConnections() {
       return this.connections.filter(connection => connection.uuid !== this.id);
     }
   },
-  data() {
-    return {
-      data: this.entity || null
-    };
-  },
   methods: {
+    initialize() {
+      return {
+        isDefault: false,
+        isFavorite: false,
+        provider: "RMV",
+        to: {
+          items: [],
+          station: null
+        },
+        from: {
+          items: [],
+          station: null
+        }
+      };
+    },
     create() {
-      this.$store.dispatch("addConnection");
+      this.$store.dispatch("addConnection", this.connection);
     },
     update() {
-      this.connectionDraft = {
-        ...this.connection
-      };
+      this.connections[this.index] = this.connection;
     },
     destroy() {
       this.connections = this.remainingConnections;
@@ -53,7 +64,7 @@ export default {
   render() {
     return this.$scopedSlots.default({
       create: this.create,
-      data: this.data,
+      data: this.connection,
       destroy: this.destroy,
       update: this.update,
       makeDefault: this.makeDefault,
