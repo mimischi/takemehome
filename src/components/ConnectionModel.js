@@ -53,7 +53,7 @@ export default {
       this.connections = this.remainingConnections;
     },
     makeDefault() {
-      this.connections = [...this.connection, ...this.remainingConnections];
+      this.connections = [this.connection, ...this.remainingConnections];
     },
     toggleFavorite() {
       let connections = this.connections;
