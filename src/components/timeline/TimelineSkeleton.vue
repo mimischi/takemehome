@@ -26,11 +26,8 @@ export default {
     background-color: #a9a9a9;
   }
   50% {
-    background-color: #b5b5b5;
+    background-color: #c5c5c5;
   }
-  /* 75% {
-    background-color: #C5C5C5;
-  } */
   100% {
     background-color: #a9a9a9;
   }
@@ -41,13 +38,18 @@ export default {
   border-top-right-radius: 2px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   color: #333;
-  margin: 50px auto;
+  /* margin: 40px auto; */
+  margin-bottom: 25px;
   letter-spacing: 0.5px;
   position: relative;
   line-height: 1.4em;
   padding: 20px;
   list-style: none;
   text-align: left;
+}
+
+.timeline:last-of-type {
+  margin-bottom: 5px;
 }
 
 .timeline h3 {
