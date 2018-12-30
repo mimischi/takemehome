@@ -81,6 +81,7 @@ export default {
     },
     initialize() {
       return {
+        lastUsed: null,
         isDefault: false,
         isFavorite: false,
         provider: "RMV",

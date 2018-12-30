@@ -30,6 +30,7 @@ export default {
   methods: {
     initialize() {
       return {
+        lastUsed: null,
         isDefault: false,
         isFavorite: false,
         provider: "RMV",

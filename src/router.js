@@ -5,6 +5,7 @@ import CreateUpdateConnection from "@/views/CreateUpdateConnection";
 import ConnectionManager from "@/views/ConnectionManager";
 import ConnectionList from "@/views/ConnectionList";
 import ConnectionFormDialog from "@/components/ConnectionFormDialog";
+import ConnectionFavoriteCards from "@/components/ConnectionFavoriteCards";
 
 Vue.use(Router);
 
@@ -22,6 +23,10 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/cards",
+      component: ConnectionFavoriteCards
     },
     {
       path: "/connections",

@@ -7,6 +7,7 @@ import { getField, updateField } from "vuex-map-fields";
 import uuid from "uuid/v4";
 
 const connectionDraft = {
+  lastUsed: null,
   isFavorite: false,
   isDefault: false,
   uuid: null,
