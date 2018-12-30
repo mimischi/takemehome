@@ -1,7 +1,7 @@
 <template lang="pug">
 v-card
   v-card-title(class="primary lighten-2 white--text")
-    h3 No connections found
+    h3 {{ cardTitle }}
   v-card-text(v-if="connections.length < 1")
     v-layout(align-center justify-space-around)
       v-icon(
@@ -89,6 +89,11 @@ export default {
   }),
   computed: {
     ...mapFields(["connections"]),
+    cardTitle() {
+      return this.connections.length < 1
+        ? "No connections found"
+        : "Connections";
+    },
     sortedConnections() {
       const unsorted = this.connections.slice();
       return unsorted.sort((a, b) => {
