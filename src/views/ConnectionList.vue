@@ -1,12 +1,14 @@
 <template lang="pug">
 v-card
+  v-card-title(class="primary lighten-2 white--text")
+    h3 No connections found
   v-card-text(v-if="connections.length < 1")
     v-layout(align-center justify-space-around)
       v-icon(
         large
         color="primary"
         ) train
-      span There are no connections to show
+      span There are no connections to show.
   v-list(
     v-else
     two-line

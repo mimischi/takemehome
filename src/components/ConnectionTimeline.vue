@@ -10,12 +10,14 @@ v-layout(row wrap)
 
   v-flex(xs12)
     v-card(v-if="connection === null")
+      v-card-title(class="primary lighten-2 white--text")
+        h3 Add your first connection
       v-card-text
         v-layout(align-center justify-space-around)
           v-icon(
             large
             color="primary"
-            ) search
+            ) commute
           span You have not added any connections yet. <br /> Add at least one to perform searches.
     div#timeline(v-else)
       timeline-skeleton(v-if="trips === null")
