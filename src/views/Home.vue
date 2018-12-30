@@ -1,21 +1,13 @@
 <template lang="pug">
-v-btn(
-  to="/create"
-) Add connection
+connection-timeline
 </template>
 
 <script>
-import ConnectionForm from "@/components/ConnectionForm";
+import ConnectionTimeline from "@/components/ConnectionTimeline";
 
 export default {
   components: {
-    ConnectionForm
-  },
-  props: {
-    id: {
-      type: Number,
-      default: null
-    }
+    ConnectionTimeline
   }
 };
 </script>
