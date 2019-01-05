@@ -3,7 +3,8 @@ v-item-group
   v-container(grid-list-md ma-0 pa-0)
     v-layout(row wrap)
       v-flex(
-        xs4
+        xs12
+        sm4
         v-for="connection in connections"
         :key="connection.uuid"
       )
@@ -18,6 +19,7 @@ v-item-group
             )
               v-timeline(dense)
                 v-timeline-item(
+                  xs12
                   small
                   fill-dot
                   :color="active ? cardActive : cardColor"
@@ -30,7 +32,7 @@ v-item-group
             v-card-text
               span(class="grey--text") {{ lastUsed(connection.lastUsed) }}
 
-      v-flex(xs4)
+      v-flex(xs12 sm4)
         v-item
           v-card(
             slot-scope="{ active, toggle }"
@@ -77,10 +79,20 @@ export default {
 <style lang="scss" scoped>
 .v-card {
   height: 100%;
-  min-height: 300px;
+  min-height: 200px;
 }
 .v-card__title {
-  height: 80%;
+  height: 75%;
+}
+@media (min-width: 600px) {
+  .v-card {
+    min-height: 280px;
+  }
+}
+@media (min-width: 700px) {
+  .v-card {
+    min-height: 200px;
+  }
 }
 .v-card__text,
 .v-timeline {
@@ -88,5 +100,6 @@ export default {
 }
 .v-timeline {
   height: 100%;
+  width: 100%;
 }
 </style>
