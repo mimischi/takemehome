@@ -25,6 +25,17 @@ export default {
     },
     remainingConnections() {
       return this.connections.filter(connection => connection.uuid !== this.id);
+    },
+    valid() {
+      if (
+        this.connection.to.station === null ||
+        this.connection.from.station === null ||
+        this.connection.from.station.extId === this.connection.to.station.extId
+      ) {
+        return false;
+      }
+
+      return true;
     }
   },
   methods: {
@@ -69,7 +80,8 @@ export default {
       destroy: this.destroy,
       update: this.update,
       makeDefault: this.makeDefault,
-      toggleFavorite: this.toggleFavorite
+      toggleFavorite: this.toggleFavorite,
+      valid: this.valid
     });
   }
 };

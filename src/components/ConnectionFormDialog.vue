@@ -7,7 +7,7 @@
     @keydown.esc="close()"
   )
     connection-model(:id="id")
-      v-card(slot-scope="{ data: connection, create, update }")
+      v-card(slot-scope="{ data: connection, create, update, valid }")
         v-toolbar(dark color="primary")
           v-btn(
             icon
@@ -23,6 +23,7 @@
               dark
               flat
               @click="submit({ create: create, update: update })"
+              :disabled="!valid"
             ) Save
         v-card-text
           station-search(
