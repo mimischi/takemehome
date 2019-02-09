@@ -1,22 +1,14 @@
 import Vue from "vue";
 import Router from "vue-router";
+import Onboarding from "@/views/Onboarding";
 import Home from "@/views/Home";
-import CreateUpdateConnection from "@/views/CreateUpdateConnection";
-import ConnectionManager from "@/views/ConnectionManager";
+import Settings from "@/views/Settings";
 import ConnectionList from "@/views/ConnectionList";
 import ConnectionFormDialog from "@/components/ConnectionFormDialog";
-import ConnectionFavoriteCards from "@/components/ConnectionFavoriteCards";
-import Settings from "@/views/Settings";
 import ConnectionTimeline from "@/components/ConnectionTimeline";
-import Onboarding from "@/views/Onboarding";
+import ConnectionFavoriteCards from "@/components/ConnectionFavoriteCards";
 
 Vue.use(Router);
-
-function numberRouteParams(route) {
-  return {
-    id: Number(route.params.id)
-  };
-}
 
 export default new Router({
   mode: "history",
@@ -37,49 +29,31 @@ export default new Router({
       component: Settings
     },
     {
-      path: "/connection/:id",
+      path: "/c",
+      name: "connectionList",
+      component: ConnectionList
+    },
+    {
+      path: "/c/create",
+      name: "connectionCreate",
+      component: ConnectionFormDialog
+    },
+    {
+      path: "/c/:id",
       name: "lookup",
       component: ConnectionTimeline,
       props: true
     },
     {
-      path: "/cards",
+      path: "/c/:id/edit",
+      name: "connectionEdit",
+      component: ConnectionFormDialog,
+      props: true
+    },
+    {
+      path: "/c/favorites",
       name: "cards",
       component: ConnectionFavoriteCards
-    },
-    {
-      path: "/connections",
-      name: "connectionList",
-      component: ConnectionList,
-      children: [
-        {
-          path: "create",
-          name: "connectionCreate",
-          component: ConnectionFormDialog
-        },
-        {
-          path: ":id",
-          name: "connectionEdit",
-          component: ConnectionFormDialog,
-          props: true
-        }
-      ]
-    },
-    {
-      path: "/create",
-      name: "createConnection",
-      component: CreateUpdateConnection
-    },
-    {
-      path: "/edit/:id",
-      name: "editConnection",
-      component: CreateUpdateConnection,
-      props: numberRouteParams
-    },
-    {
-      path: "/manage",
-      name: "connectionManager",
-      component: ConnectionManager
     }
   ]
 });
