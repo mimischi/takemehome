@@ -8,6 +8,7 @@ import ConnectionFormDialog from "@/components/ConnectionFormDialog";
 import ConnectionFavoriteCards from "@/components/ConnectionFavoriteCards";
 import Settings from "@/views/Settings";
 import ConnectionTimeline from "@/components/ConnectionTimeline";
+import Onboarding from "@/views/Onboarding";
 
 Vue.use(Router);
 
@@ -21,6 +22,10 @@ export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: "/welcome",
+      component: Onboarding
+    },
     {
       path: "/",
       name: "home",
