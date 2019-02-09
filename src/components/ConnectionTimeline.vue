@@ -53,18 +53,15 @@ export default {
   }),
   computed: {
     connection() {
-      let connection = null;
-      if (this.id !== null) {
-        connection = this.$store.state.connections.find(
-          connection => connection.uuid == this.id
-        );
-      }
-
-      return this.data || connection;
+      const connection = this.$store.state.connections.find(
+        connection => connection.uuid === this.id
+      );
+      return connection;
     }
   },
   mounted() {
-    // if (this.connection === null) return;
+    // Do nothing if we cannot lookup the connection UUID.
+    if (!this.connection) return;
 
     this.getTrip();
   },
