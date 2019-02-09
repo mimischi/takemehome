@@ -17,6 +17,7 @@
       )
         v-timeline-item(
           v-for="item in items"
+          :key="item.id"
           :small="item.small || false"
           :color="item.color || `primary`"
           :icon="item.icon || ``"
@@ -33,18 +34,21 @@ export default {
     items: [
       {
         small: false,
+        id: 1,
         text:
           "TAKE.ME.HOME makes it easy to repeatedly look up your favorite connection.",
         icon: "train"
       },
       {
         small: true,
+        id: 2,
         color: "primary lighten-1",
         text:
           "Automagically retrieve your favorite train connections on your next visit."
       },
       {
         small: true,
+        id: 3,
         color: "blue lighten-2",
         text: "Go ahead and add your first connection!"
       }
