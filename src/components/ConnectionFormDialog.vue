@@ -68,14 +68,15 @@ export default {
     // seems to be finished when we change the route.
     setTimeout(() => {
       next();
-    }, 300);
+    }, 100);
   },
   mounted() {
     this.dialog = true;
   },
   methods: {
     close() {
-      this.$router.push({ name: "connectionList" });
+      this.$router.go(-1);
+      // this.$router.push({ name: "connectionList" });
     },
     submit(callback) {
       this.id === null ? callback.create() : callback.update();
