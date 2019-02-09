@@ -15,6 +15,7 @@ v-item-group
             :class="{ 'elevation-10': active }"
             @mouseover="toggle"
             @mouseout="toggle"
+            @click="lookupConnection(connection.uuid)"
           )
             v-card-title(
               class="primary white--text py-0"
@@ -64,6 +65,9 @@ export default {
     }
   },
   methods: {
+    lookupConnection(uuid) {
+      this.$router.push({ name: "connectionLookup", params: { id: uuid } });
+    },
     lastUsed(date) {
       return date === null ? "Not used yet" : date;
     },
