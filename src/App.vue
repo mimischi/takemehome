@@ -5,14 +5,13 @@ v-app
       v-btn(
         color="primary"
         flat
-        outline
         :ripple="{ class: 'primary--text' }"
         active-class=""
         to="/"
       )
-        span TAKE.
-        span(class="font-weight-light") ME.
-        span HOME.
+        span T.
+        span(class="font-weight-light") M.
+        span H.
     v-spacer
     v-btn(flat :to="{ name: 'settings' }") Settings
     v-btn(flat :to="{ name: 'connectionList' }") Connections
