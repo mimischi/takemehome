@@ -7,6 +7,7 @@ v-item-group
         sm4
         v-for="connection in connections"
         :key="connection.uuid"
+        class="mb-1"
       )
         v-item
           v-card(
@@ -50,13 +51,7 @@ export default {
   name: "ConnectionFavoriteCard",
   data: () => ({
     cardColor: "grey lighten-2",
-    cardActive: "green lighten-3",
-    cards: [
-      {
-        uuid: "123",
-        title: "Card1"
-      }
-    ]
+    cardActive: "green lighten-3"
   }),
   computed: {
     connections() {
@@ -65,12 +60,7 @@ export default {
   },
   methods: {
     lastUsed(date) {
-      console.log(date);
-      if (date === null) {
-        return "Not used yet";
-      }
-
-      return date;
+      return date === null ? "Not used yet" : date;
     }
   }
 };
