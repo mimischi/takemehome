@@ -7,6 +7,7 @@ import ConnectionList from "@/views/ConnectionList";
 import ConnectionFormDialog from "@/components/ConnectionFormDialog";
 import ConnectionFavoriteCards from "@/components/ConnectionFavoriteCards";
 import Settings from "@/views/Settings";
+import ConnectionTimeline from "@/components/ConnectionTimeline";
 
 Vue.use(Router);
 
@@ -31,7 +32,14 @@ export default new Router({
       component: Settings
     },
     {
+      path: "/connection/:id",
+      name: "lookup",
+      component: ConnectionTimeline,
+      props: true
+    },
+    {
       path: "/cards",
+      name: "cards",
       component: ConnectionFavoriteCards
     },
     {

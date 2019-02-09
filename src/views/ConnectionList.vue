@@ -20,9 +20,9 @@ v-card
             slot-scope="{ update: update, makeDefault, destroy, toggleFavorite }"
             class="list-connection"
             ripple
-            @click=""
+            @click="lookupConnection(connection.uuid)"
           )
-            v-list-tile-action
+            v-list-tile-action(@click.stop @mousedown.stop)
               v-btn(flat icon @click.prevent="toggleFavorite()")
                 v-icon(v-if="connection.isFavorite") star
                 v-icon(v-else) star_border
@@ -31,7 +31,7 @@ v-card
               v-list-tile-sub-title(class="text--primary") {{ connection.from.station.name }}
               v-list-tile-sub-title(class="text--primary") {{ connection.to.station.name }}
 
-            v-list-tile-action(@click.stop)
+            v-list-tile-action(@click.stop @mousedown.stop)
               v-list-tile-action-text
                 v-menu(bottom left)
                   v-btn(
@@ -106,6 +106,9 @@ export default {
   },
   components: { ConnectionModel, ConnectionForm },
   methods: {
+    lookupConnection(uuid) {
+      this.$router.push({ name: "lookup", params: { id: uuid } });
+    },
     goToUpdate(index, callback) {
       callback();
       this.$router.push({ name: "connectionEdit", params: { id: index } });

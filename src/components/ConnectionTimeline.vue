@@ -38,22 +38,38 @@ import WelcomeCard from "@/components/WelcomeCard";
 export default {
   name: "ConnectionTimeline",
   components: { Timeline, TimelineSkeleton, WelcomeCard },
+  props: {
+    data: {
+      type: Object,
+      default: null
+    },
+    id: {
+      type: String,
+      default: null
+    }
+  },
   data: () => ({
     trips: null
   }),
   computed: {
     connection() {
-      return this.$store.state.connections[0] || null;
+      let connection = null;
+      if (this.id !== null) {
+        connection = this.$store.state.connections.find(
+          connection => connection.uuid == this.id
+        );
+      }
+
+      return this.data || connection;
     }
   },
   mounted() {
-    if (this.connection === null) return;
+    // if (this.connection === null) return;
 
     this.getTrip();
   },
   methods: {
     getTrip() {
-      console.log("Called getTrip()");
       axios
         .post(process.env.VUE_APP_API_URL, {
           url: "trip",
