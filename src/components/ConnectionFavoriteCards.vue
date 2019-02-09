@@ -13,7 +13,8 @@ v-item-group
           v-card(
             slot-scope="{ active, toggle }"
             :class="{ 'elevation-10': active }"
-            @click="toggle"
+            @mouseover="toggle"
+            @mouseout="toggle"
           )
             v-card-title(
               class="primary white--text py-0"
@@ -38,7 +39,9 @@ v-item-group
           v-card(
             slot-scope="{ active, toggle }"
             :class="{ 'elevation-10': active }"
-            @click="toggle"
+            @mouseover="toggle"
+            @mouseout="toggle"
+            @click="addConnection()"
           )
             v-card-text(style="height: 100%")
               v-layout(align-center justify-center fill-height row)
@@ -61,6 +64,9 @@ export default {
   methods: {
     lastUsed(date) {
       return date === null ? "Not used yet" : date;
+    },
+    addConnection() {
+      this.$router.push({ name: "connectionCreate" });
     }
   }
 };
