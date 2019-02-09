@@ -20,7 +20,7 @@ v-app
     v-container(fluid)
       v-layout(justify-center)
         v-flex(xs12)
-          v-slide-y-transition(leave-absolute)
+          v-slide-y-transition(hide-on-leave)
             router-view
 
   portal-target(name="fab")
