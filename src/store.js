@@ -27,6 +27,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     showWelcome: true,
+    settings: {
+      homepage: null
+    },
     connections: [],
     connectionDraft: {
       ...connectionDraft
@@ -41,6 +44,9 @@ export default new Vuex.Store({
     },
     toggleWelcome({ commit }) {
       commit("toggleWelcome");
+    },
+    updateSettings({ commit }, settings) {
+      commit("updateSettings", settings);
     }
   },
   getters: { getField },
@@ -57,6 +63,9 @@ export default new Vuex.Store({
     },
     toggleWelcome(state) {
       state.showWelcome = !state.showWelcome;
+    },
+    updateSettings(state, settings) {
+      state.settings = settings;
     },
     updateField
   },

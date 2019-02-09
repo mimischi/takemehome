@@ -6,6 +6,7 @@ import ConnectionManager from "@/views/ConnectionManager";
 import ConnectionList from "@/views/ConnectionList";
 import ConnectionFormDialog from "@/components/ConnectionFormDialog";
 import ConnectionFavoriteCards from "@/components/ConnectionFavoriteCards";
+import Settings from "@/views/Settings";
 
 Vue.use(Router);
 
@@ -23,6 +24,11 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/settings",
+      name: "settings",
+      component: Settings
     },
     {
       path: "/cards",

@@ -14,6 +14,7 @@ v-app
         span(class="font-weight-light") ME.
         span HOME.
     v-spacer
+    v-btn(flat :to="{ name: 'settings' }") Settings
     v-btn(flat :to="{ name: 'connectionList' }") Connections
 
   v-content
