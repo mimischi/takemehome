@@ -107,7 +107,7 @@ export default {
   components: { ConnectionModel, ConnectionForm },
   methods: {
     lookupConnection(uuid) {
-      this.$router.push({ name: "lookup", params: { id: uuid } });
+      this.$router.push({ name: "connectionLookup", params: { id: uuid } });
     },
     goToUpdate(index, callback) {
       callback();
