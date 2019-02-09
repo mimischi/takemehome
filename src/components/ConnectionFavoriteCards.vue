@@ -58,7 +58,9 @@ export default {
   }),
   computed: {
     connections() {
-      return this.$store.state.connections;
+      return this.$store.state.connections.filter(
+        connection => connection.isFavorite === true
+      );
     }
   },
   methods: {
