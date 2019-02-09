@@ -40,7 +40,7 @@ export default new Router({
     },
     {
       path: "/c/:id",
-      name: "lookup",
+      name: "connectionLookup",
       component: ConnectionTimeline,
       props: true
     },
@@ -51,8 +51,8 @@ export default new Router({
       props: true
     },
     {
-      path: "/c/favorites",
-      name: "cards",
+      path: "favorites",
+      name: "connectionFavorites",
       component: ConnectionFavoriteCards
     }
   ]

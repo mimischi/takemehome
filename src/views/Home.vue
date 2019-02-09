@@ -24,10 +24,10 @@ export default {
     }
 
     let router = {};
-    if (this.$store.state.settings.homepage === "cards") {
-      router["name"] = "cards";
+    if (this.$store.state.settings.homepage === "connectionFavorites") {
+      router["name"] = "connectionFavorites";
     } else {
-      router["name"] = "lookup";
+      router["name"] = "connectionLookup";
       router["params"] = { id: this.$store.state.connections[0].uuid };
     }
 

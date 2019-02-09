@@ -34,8 +34,8 @@ export default {
   data: () => ({
     valid: true,
     items: [
-      { name: "Connection timeline", path: "timeline" },
-      { name: "Favorite connections", path: "cards" }
+      { name: "Connection timeline", path: "connectionLookup" },
+      { name: "Favorite connections", path: "connectionFavorites" }
     ]
   }),
   computed: {
