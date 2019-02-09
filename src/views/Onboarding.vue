@@ -124,23 +124,23 @@ v-card
 <script>
 export default {
   data: () => ({
-      step: 0,
-      dialog: false
+    step: 0,
+    dialog: false
   }),
   methods: {
     nextStep() {
-      this.step++
+      this.step++;
     },
     previousStep() {
-      this.step--
+      this.step--;
     },
     closeDialog() {
-      this.dialog = false
+      this.dialog = false;
     },
     skipTutorial() {
-      this.closeDialog()
-      console.log("Skipped tutorial!")
+      this.closeDialog();
+      console.log("Skipped tutorial!");
     }
   }
-}
+};
 </script>
