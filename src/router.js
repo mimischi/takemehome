@@ -51,7 +51,7 @@ export default new Router({
       props: true
     },
     {
-      path: "favorites",
+      path: "/favorites",
       name: "connectionFavorites",
       component: ConnectionFavoriteCards
     }
