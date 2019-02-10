@@ -6,7 +6,9 @@ v-flex(
   @mouseout="hover = false"
 )
   v-card(:elevation="elevation" height="100%")
-    v-card-text(class="headline font-weight-bold")
+    v-card-title(class="pb-0 no-user-select")
+      h3 Load primary connection
+    v-card-text(class="pb-0 pt-0")
       timeline-skeleton(
         :active="hover || active"
         :num="1"
@@ -37,3 +39,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.no-user-select {
+  user-select: none;
+}
+</style>

@@ -8,8 +8,10 @@ v-flex(
   v-card(
     :elevation="elevation"
     height="100%"
-    )
-    v-card-text
+  )
+    v-card-title(class="pb-0 no-user-select")
+      h3 Show favorites
+    v-card-text(class="pb-0 pt-0")
       connection-skeleton(:active="active")
 </template>
 
@@ -30,3 +32,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.no-user-select {
+  user-select: none;
+}
+</style>
