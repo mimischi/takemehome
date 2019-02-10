@@ -3,6 +3,14 @@ v-content(class="py-0")
   h1(class="header") Settings
   v-card
     v-card-text
+      v-container(grid-list-xl)
+        v-layout
+          v-flex
+            v-layout(row wrap)
+              preview-connection-timeline
+              preview-connection-list
+  v-card
+    v-card-text
       v-form(
         ref="form"
         v-model="valid"
@@ -29,6 +37,8 @@ v-content(class="py-0")
 
 <script>
 import { mapFields } from "vuex-map-fields";
+import PreviewConnectionList from "@/components/settings/PreviewConnectionList";
+import PreviewConnectionTimeline from "@/components/settings/PreviewConnectionTimeline";
 
 export default {
   data: () => ({
@@ -38,6 +48,7 @@ export default {
       { name: "Favorite connections", path: "connectionFavorites" }
     ]
   }),
+  components: { PreviewConnectionList, PreviewConnectionTimeline },
   computed: {
     ...mapFields(["settings"])
   },

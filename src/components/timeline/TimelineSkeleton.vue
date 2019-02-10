@@ -1,21 +1,46 @@
 <template lang="pug">
   v-slide-y-transition
     v-flex(xs12)
-      ul.timeline(v-for="n in num")
-        li.event
-          h3 &nbsp;
-          p &nbsp;
-          p &nbsp;
+      ul.timeline(
+        :class="{ 'active-border': active }"
+        v-for="n in num"
+      )
+        li(:class="{ 'event': true, 'active-color': active }")
+          h3(:class="animate") &nbsp;
+          p(:class="classes") &nbsp;
+          p(:class="classes") &nbsp;
 </template>
 
 <script>
 export default {
   name: "TimelineSkeleton",
-  props: ["trip"],
-  data() {
-    return {
-      num: 3
-    };
+  props: {
+    trip: {
+      type: Object
+    },
+    animation: {
+      type: Boolean,
+      default: true
+    },
+    num: {
+      type: Number,
+      default: 3
+    },
+    active: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    animate() {
+      return this.animation ? { "timeline-animation": true } : "";
+    },
+    activeColor() {
+      return { "active-color": this.active };
+    },
+    classes() {
+      return Object.assign(this.animate, this.activeColor);
+    }
   }
 };
 </script>
@@ -45,10 +70,16 @@ export default {
   padding: 20px;
   list-style: none;
   text-align: left;
+  width: 100%;
 }
 
 .timeline:last-of-type {
   margin-bottom: 5px;
+}
+
+.timeline h3,
+.timeline p {
+  background-color: #a9a9a9;
 }
 
 .timeline h3 {
@@ -56,8 +87,7 @@ export default {
   width: 80%;
 }
 
-.timeline h3,
-.timeline p {
+.timeline .timeline-animation {
   background-color: #c5c5c5;
   animation-name: color;
   animation-duration: 1.5s;
@@ -70,6 +100,10 @@ export default {
 
 .timeline p:first-of-type {
   margin-top: 20px;
+}
+
+.timeline p:last-of-type {
+  margin-bottom: 0px;
 }
 
 .timeline p::before {
@@ -110,5 +144,15 @@ export default {
   width: 11px;
   content: "";
   top: 4px;
+}
+
+.active-border {
+  border-left: 8px solid #6aaaff;
+}
+
+.timeline li.active-color::after,
+p.active-color::before {
+  background: #6aaaff;
+  box-shadow: 0 0 0 8px #6aaaff;
 }
 </style>
