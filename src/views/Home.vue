@@ -27,8 +27,12 @@ export default {
     if (this.$store.state.settings.homepage === "connectionFavorites") {
       router["name"] = "connectionFavorites";
     } else {
-      router["name"] = "connectionLookup";
-      router["params"] = { id: this.$store.state.connections[0].uuid };
+      if (this.$store.state.connections.length < 1) {
+        router["name"] = "connectionList";
+      } else {
+        router["name"] = "connectionLookup";
+        router["params"] = { id: this.$store.state.connections[0].uuid };
+      }
     }
 
     this.$router.push(router);
