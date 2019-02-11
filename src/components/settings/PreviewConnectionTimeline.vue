@@ -4,6 +4,7 @@ v-flex(
   md6
   @mouseover="hover = true"
   @mouseout="hover = false"
+  @click="select()"
 )
   v-card(:elevation="elevation" height="100%")
     v-card-title(class="pb-0 no-user-select")
@@ -22,14 +23,24 @@ import TimelineSkeleton from "@/components/timeline/TimelineSkeleton";
 export default {
   data: () => ({
     hover: false,
-    elevation: 1
+    elevation: 1,
+    name: "connectionLookup"
   }),
   components: { TimelineSkeleton },
-  methods: {},
   props: {
-    active: {
-      type: Boolean,
-      default: false
+    selected: {
+      type: String,
+      default: null
+    }
+  },
+  computed: {
+    active() {
+      return this.selected == this.name;
+    }
+  },
+  methods: {
+    select() {
+      this.$emit("select", this.name);
     }
   },
   watch: {

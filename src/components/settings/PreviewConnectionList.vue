@@ -2,8 +2,9 @@
 v-flex(
   xs12
   md6
-  @mouseover="active = true"
-  @mouseout="active = false"
+  @mouseover="hover = true"
+  @mouseout="hover = false"
+  @click="select()"
 )
   v-card(
     :elevation="elevation"
@@ -12,7 +13,7 @@ v-flex(
     v-card-title(class="pb-0 no-user-select")
       h3 Show favorites
     v-card-text(class="pb-0 pt-0")
-      connection-skeleton(:active="active")
+      connection-skeleton(:active="hover || active")
 </template>
 
 <script>
@@ -21,10 +22,27 @@ import ConnectionSkeleton from "@/components/settings/ConnectionSkeleton";
 
 export default {
   data: () => ({
-    active: false,
-    elevation: 1
+    hover: false,
+    elevation: 1,
+    name: "connectionFavorites"
   }),
   components: { ConnectionSkeleton, TimelineSkeleton },
+  props: {
+    selected: {
+      type: String,
+      default: null
+    }
+  },
+  computed: {
+    active() {
+      return this.selected == this.name;
+    }
+  },
+  methods: {
+    select() {
+      this.$emit("select", this.name);
+    }
+  },
   watch: {
     active() {
       this.elevation = this.active ? 8 : 1;

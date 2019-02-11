@@ -11,32 +11,22 @@ v-content(class="py-0")
         v-layout
           v-flex
             v-layout(row wrap)
-              preview-connection-timeline
-              preview-connection-list
-  v-card
-    v-card-text
-      v-form(
-        ref="form"
-        v-model="valid"
-        lazy-validation
-      )
-        v-layout(row)
-          v-flex(xs4)
-            v-subheader Default page
-          v-flex(xs8)
-            v-select(
-              v-model="settings.homepage"
-              :items="items"
-              item-text="name"
-              item-value="path"
-              label="Select default page"
-            )
-        v-btn(
-          :disabled="!valid"
-          color="primary"
-          block
-          @click="save"
-        ) Save
+              preview-connection-timeline(
+                :selected="selected"
+                @select="setActive"
+              )
+              preview-connection-list(
+                :selected="selected"
+                @select="setActive"
+              )
+
+    v-card-actions
+      v-spacer
+      v-btn(
+      :disabled="!settings.homepage"
+      color="primary"
+      @click="save"
+    ) Save
 </template>
 
 <script>
@@ -54,9 +44,15 @@ export default {
   }),
   components: { PreviewConnectionList, PreviewConnectionTimeline },
   computed: {
-    ...mapFields(["settings"])
+    ...mapFields(["settings"]),
+    selected() {
+      return this.settings.homepage;
+    }
   },
   methods: {
+    setActive(name) {
+      this.settings.homepage = name;
+    },
     save() {
       this.$store.dispatch("updateSettings", this.settings);
     }
