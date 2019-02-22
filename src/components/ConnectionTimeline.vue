@@ -1,5 +1,5 @@
 <template lang="pug">
-v-layout(row wrap)
+v-layout(row wrap v-scroll="onScroll")
   //- transition(name="slide-x-transition")
   //-   v-flex(
   //-     xs12
@@ -27,6 +27,21 @@ v-layout(row wrap)
         :trip="trip"
         :key="trip.idx"
         )
+
+  portal(to="fab")
+    v-fab-transition
+      v-btn(
+        color="red"
+        dark
+        large
+        bottom
+        right
+        fab
+        fixed
+        v-show="offsetTop > 300"
+        @click="scrollToTop"
+      )
+        v-icon keyboard_arrow_up
 </template>
 
 <script>
@@ -49,7 +64,8 @@ export default {
     }
   },
   data: () => ({
-    trips: null
+    trips: null,
+    offsetTop: 0
   }),
   computed: {
     connection() {
@@ -66,6 +82,12 @@ export default {
     this.getTrip();
   },
   methods: {
+    scrollToTop() {
+      this.$vuetify.goTo("#app");
+    },
+    onScroll() {
+      this.offsetTop = window.pageYOffset || document.documentElement.scrollTop;
+    },
     getTrip() {
       axios
         .post(process.env.VUE_APP_API_URL, {
