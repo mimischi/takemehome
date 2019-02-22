@@ -6,7 +6,7 @@ import Settings from "@/views/Settings";
 import ConnectionList from "@/views/ConnectionList";
 import ConnectionFormDialog from "@/components/ConnectionFormDialog";
 import ConnectionTimeline from "@/components/ConnectionTimeline";
-import ConnectionFavoriteCards from "@/components/ConnectionFavoriteCards";
+// import ConnectionFavoriteCards from "@/components/ConnectionFavoriteCards";
 
 Vue.use(Router);
 
@@ -53,7 +53,7 @@ export default new Router({
     {
       path: "/favorites",
       name: "connectionFavorites",
-      component: ConnectionFavoriteCards
+      component: ConnectionList
     }
   ]
 });
