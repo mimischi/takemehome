@@ -1,12 +1,12 @@
 <template lang="pug">
 v-layout(row wrap)
-  transition(name="slide-x-transition")
-    v-flex(
-      xs12
-      v-if="$store.state.showWelcome"
-      class="mb-3"
-    )
-      welcome-card
+  //- transition(name="slide-x-transition")
+  //-   v-flex(
+  //-     xs12
+  //-     v-if="$store.state.showWelcome"
+  //-     class="mb-3"
+  //-   )
+  //-     welcome-card
 
   v-flex(xs12)
     v-card(v-if="connection === null")
