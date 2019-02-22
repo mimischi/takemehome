@@ -67,6 +67,12 @@ export default {
     makeDefault() {
       this.connections = [this.connection, ...this.remainingConnections];
     },
+    swap() {
+      [this.connection.from, this.connection.to] = [
+        this.connection.to,
+        this.connection.from
+      ];
+    },
     toggleFavorite() {
       let connections = this.connections;
       connections[this.index].isFavorite = !connections[this.index].isFavorite;
@@ -81,6 +87,7 @@ export default {
       update: this.update,
       makeDefault: this.makeDefault,
       toggleFavorite: this.toggleFavorite,
+      swap: this.swap,
       valid: this.valid
     });
   }

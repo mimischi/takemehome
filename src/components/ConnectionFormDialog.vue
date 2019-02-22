@@ -7,7 +7,7 @@
     @keydown.esc="close()"
   )
     connection-model(:id="id")
-      v-card(slot-scope="{ data: connection, create, update, valid }")
+      v-card(slot-scope="{ data: connection, create, update, swap, valid }")
         v-toolbar(dark color="primary")
           v-btn(
             icon
@@ -26,16 +26,26 @@
               :disabled="!valid"
             ) Save
         v-card-text
-          station-search(
-            v-model="connection.from"
-            direction="from"
-            label="Departure station"
-          )
-          station-search(
-            v-model="connection.to"
-            direction="to"
-            label="Destination station"
-          )
+          v-layout(row)
+            v-flex(xs11)
+              station-search(
+                v-model="connection.from"
+                direction="from"
+                label="Departure station"
+              )
+              station-search(
+                v-model="connection.to"
+                direction="to"
+                label="Destination station"
+              )
+            v-flex(xs1)
+              v-layout(xs1 align-center justify-center fill-height)
+                v-btn(
+                  icon
+                  :disabled="!valid"
+                  @click="swap()"
+                )
+                  v-icon swap_vert
 </template>
 
 <script>
