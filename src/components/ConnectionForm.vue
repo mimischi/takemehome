@@ -1,121 +1,105 @@
 <template lang="pug">
-v-card(color="teal lighten-2" dark)
-  v-card-title(class="headline teal lighten-3") {{ submitLabel }} connection
-    v-card-text
-      station-search(
-        v-model="connection.from"
-        direction="from"
-        label="Departure station"
-      )
-      station-search(
-        v-model="connection.to"
-        direction="to"
-        label="Destination station"
-      )
-  v-divider
-  v-card-actions
-    v-spacer
-    v-btn(
-      :disabled="clearDisabled"
-      color="teal darken-1"
-      flat
-      @click="cancel()"
-    ) Cancel
-    v-btn(
-      :disabled="clearDisabled"
-      color="teal darken-2"
-      @click="submit()"
-    ) {{ submitLabel }}
+the-card(
+  :title="`${label} connection`"
+)
+
+  template(v-slot:rightSide)
+    portal-target(name="save-button")
+
+  connection-model(:id="id")
+    v-card(slot-scope="{ data: connection, create, update, swap, valid }")
+
+      portal(to="save-button")
+        v-btn(
+          flat
+          @click="submit({ create: create, update: update })"
+          :disabled="!valid"
+        ) Save
+    
+      v-layout(justify-center)
+        v-flex(xs12 md6 lg5)
+          v-card-title
+            span.subheading Departure and destination
+          v-card-text
+            v-layout(row)
+              v-flex(xs11)
+                station-search(
+                  v-model="connection.from"
+                  direction="from"
+                  label="Departure station"
+                  prepend-icon="flight_takeoff"
+                  hint="Choose your departure station"
+                )
+                station-search(
+                  v-model="connection.to"
+                  direction="to"
+                  label="Destination station"
+                  prepend-icon="flight_land"
+                  hint="Choose your destination station"
+                )
+              v-flex(xs1)
+                v-layout(xs1 align-center justify-center fill-height)
+                  v-btn(
+                    icon
+                    :disabled="!valid"
+                    @click="swap()"
+                  )
+                    v-icon swap_vert
+          v-card-title
+            span.subheading Connection settings
+          v-card-text
+            v-switch(
+              v-model="connection.isFavorite"
+              label="Mark connection as favorite?"
+              :prepend-icon="connection.isFavorite ? 'star' : 'star_border'"
+            ) Favorite
 </template>
 
 <script>
+import TheCard from "@/components/TheCard";
+import ConnectionForm from "@/components/ConnectionForm";
+import ConnectionModel from "@/components/ConnectionModel";
 import StationSearch from "@/components/StationSearch";
-import StationSearchModel from "@/components/StationSearchModel";
-
-import { mapFields } from "vuex-map-fields";
 
 export default {
-  name: "ConnectionForm",
-  components: { StationSearch, StationSearchModel },
+  name: "ConnectionFormDialog",
+  components: { ConnectionForm, ConnectionModel, StationSearch, TheCard },
   props: {
-    entity: {
+    id: {
       type: String,
       default: null
     }
   },
   data: () => ({
-    connection: null
+    dialog: false
   }),
   computed: {
-    ...mapFields({
-      connections: "connections"
-    }),
-    clearDisabled() {
-      return (
-        this.connection.from.station === null &&
-        this.connection.to.station === null
-      );
-    },
-    submitLabel() {
-      return this.entity === null ? "Add" : "Update";
+    label() {
+      return this.id === null ? "Add" : "Update";
     }
   },
-  created() {
-    this.setup();
+  beforeRouteLeave(to, from, next) {
+    this.dialog = false;
+
+    // This is a nasty hack. I couldn't think of any other working solution. I
+    // do not know if the timing is alright, but as of today the transition
+    // seems to be finished when we change the route.
+    setTimeout(() => {
+      next();
+    }, 100);
   },
-  watch: {
-    entity() {
-      this.setup();
-    }
+  mounted() {
+    this.dialog = true;
   },
   methods: {
-    setup() {
-      if (this.entity === null) {
-        this.connection = this.initialize();
-        return;
-      }
+    close() {
+      this.$router.go(-1);
+      // this.$router.push({ name: "connectionList" });
+    },
+    submit(callback) {
+      this.id === null ? callback.create() : callback.update();
 
-      this.connection = {
-        ...this.connections.find(connection => connection.uuid === this.entity)
-      };
-    },
-    initialize() {
-      return {
-        lastUsed: null,
-        isDefault: false,
-        isFavorite: false,
-        provider: "RMV",
-        to: {
-          items: [],
-          station: null
-        },
-        from: {
-          items: [],
-          station: null
-        }
-      };
-    },
-    submit() {
-      if (this.entity === null) {
-        this.create();
-        return;
-      }
-
-      this.update();
-    },
-    create() {
-      this.$store.dispatch("addConnection", this.connection);
-      this.cancel();
-    },
-    update() {
-      const index = this.connections.findIndex(
-        connection => connection.uuid === this.entity
-      );
-      this.connections[index] = this.connection;
-      this.$router.push({ name: "connectionList" });
-    },
-    cancel() {
-      this.$router.push({ name: "connectionList" });
+      this.close();
     }
   }
 };

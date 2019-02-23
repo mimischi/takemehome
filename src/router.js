@@ -4,7 +4,7 @@ import Onboarding from "@/views/Onboarding";
 import Home from "@/views/Home";
 import Settings from "@/views/Settings";
 import ConnectionList from "@/views/ConnectionList";
-import ConnectionFormDialog from "@/components/ConnectionFormDialog";
+import ConnectionForm from "@/components/ConnectionForm";
 import ConnectionTimeline from "@/components/ConnectionTimeline";
 // import ConnectionFavoriteCards from "@/components/ConnectionFavoriteCards";
 
@@ -36,7 +36,7 @@ export default new Router({
     {
       path: "/c/create",
       name: "connectionCreate",
-      component: ConnectionFormDialog
+      component: ConnectionForm
     },
     {
       path: "/c/:id",
@@ -47,7 +47,7 @@ export default new Router({
     {
       path: "/c/:id/edit",
       name: "connectionEdit",
-      component: ConnectionFormDialog,
+      component: ConnectionForm,
       props: true
     },
     {
