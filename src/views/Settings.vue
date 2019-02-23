@@ -1,6 +1,14 @@
 <template lang="pug">
-v-content(class="py-0")
-  h1(class="header") Settings
+the-card(
+  title="Settings"
+)
+  template(v-slot:rightSide)
+    v-btn(
+      :disabled="!settings.homepage"
+      color="primary"
+      @click="save"
+    ) Save
+
   v-card
     v-card-title(primary-title)
       div
@@ -19,18 +27,11 @@ v-content(class="py-0")
                 :selected="selected"
                 @select="setActive"
               )
-
-    v-card-actions
-      v-spacer
-      v-btn(
-      :disabled="!settings.homepage"
-      color="primary"
-      @click="save"
-    ) Save
 </template>
 
 <script>
 import { mapFields } from "vuex-map-fields";
+import TheCard from "@/components/TheCard";
 import PreviewConnectionList from "@/components/settings/PreviewConnectionList";
 import PreviewConnectionTimeline from "@/components/settings/PreviewConnectionTimeline";
 
@@ -42,7 +43,7 @@ export default {
       { name: "Favorite connections", path: "connectionFavorites" }
     ]
   }),
-  components: { PreviewConnectionList, PreviewConnectionTimeline },
+  components: { PreviewConnectionList, PreviewConnectionTimeline, TheCard },
   computed: {
     ...mapFields(["settings"]),
     selected() {
