@@ -14,6 +14,7 @@
 
 the-card(
   :title="trip"
+  :noTitle=`true`
   :backLink="{ name: 'connectionList' }"
   v-scroll="onScroll"
 )

@@ -1,6 +1,7 @@
 <template lang="pug">
 the-card(
   :title="`${label} connection`"
+  :backLink="{ name: 'connectionList' }"
 )
 
   template(v-slot:rightSide)

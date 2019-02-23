@@ -9,7 +9,7 @@ v-card(class="card--flex-toolbar")
           exact
         )
           v-icon chevron_left
-      template(v-else) {{ title }}
+      template(v-if="!noTitle") {{ title }}
     v-spacer
     slot(name="rightSide")
   v-divider
@@ -24,6 +24,9 @@ export default {
   props: {
     title: {
       type: String
+    },
+    noTitle: {
+      type: Boolean
     },
     backLink: {
       type: Object
