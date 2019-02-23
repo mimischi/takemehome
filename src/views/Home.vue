@@ -18,10 +18,10 @@ export default {
     }
   },
   mounted() {
-    if (this.$store.state.settings.homepage === null) {
-      this.staying = true;
-      return;
-    }
+    // if (this.$store.state.settings.homepage === null) {
+    //   this.staying = true;
+    //   return;
+    // }
 
     let router = {};
     if (this.$store.state.settings.homepage === "connectionFavorites") {
