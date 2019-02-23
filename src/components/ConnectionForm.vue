@@ -17,7 +17,7 @@ the-card(
         ) Save
     
       v-layout(justify-center)
-        v-flex(xs12 md6 lg5)
+        v-flex(xs12 md8 lg6)
           v-card-title
             span.subheading Departure and destination
           v-card-text
