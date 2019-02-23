@@ -3,9 +3,9 @@ v-app
   v-navigation-drawer(
     v-model="drawer"
     app
-    clipped
+    :clipped="drawer"
     mini-variant
-    permanent
+    :permanent="!isMobile || drawer"
   )
     v-list(dense)
       v-list-tile(:to="{ name: 'connectionList' }" exact)
@@ -22,10 +22,15 @@ v-app
     app
     dark
     extended
-    clipped-left
+    :clipped-left="!drawer"
     color="primary"
     flat
   )
+    v-toolbar-side-icon(
+      v-if="isMobile"
+      @click.stop="drawer = !drawer"
+    )
+      v-icon menu
     //- v-toolbar-title(class="headline text-uppercase")
     //-   v-btn(
     //-     color="white"
@@ -53,6 +58,11 @@ export default {
   name: "App",
   data: () => ({
     drawer: false
-  })
+  }),
+  computed: {
+    isMobile() {
+      return this.$vuetify.breakpoint.xs;
+    }
+  }
 };
 </script>
