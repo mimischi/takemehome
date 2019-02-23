@@ -22,18 +22,22 @@ const connectionDraft = {
   }
 };
 
+const initialState = {
+  showWelcome: true,
+  settings: {
+    homepage: null
+  },
+  connections: [],
+  connectionDraft: {
+    ...connectionDraft
+  }
+};
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    showWelcome: true,
-    settings: {
-      homepage: null
-    },
-    connections: [],
-    connectionDraft: {
-      ...connectionDraft
-    }
+    ...initialState
   },
   actions: {
     clearItems({ commit }, direction) {
@@ -47,6 +51,9 @@ export default new Vuex.Store({
     },
     updateSettings({ commit }, settings) {
       commit("updateSettings", settings);
+    },
+    resetState({ commit }) {
+      commit("resetState");
     }
   },
   getters: { getField },
@@ -66,6 +73,11 @@ export default new Vuex.Store({
     },
     updateSettings(state, settings) {
       state.settings = settings;
+    },
+    resetState(state) {
+      state.connections = [];
+      state.settings.homepage = null;
+      state.connectionDraft = { ...connectionDraft };
     },
     updateField
   },

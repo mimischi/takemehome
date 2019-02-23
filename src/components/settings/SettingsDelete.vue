@@ -28,6 +28,7 @@ v-dialog(
       v-btn(
         color="red lighten-2"
         flat
+        @click="resetState()"
       ) Confirm
 </template>
 
@@ -36,6 +37,12 @@ export default {
   name: "SettingsDelete",
   data: () => ({
     dialog: false
-  })
+  }),
+  methods: {
+    resetState() {
+      this.$store.dispatch("resetState");
+      this.dialog = false;
+    }
+  }
 };
 </script>
