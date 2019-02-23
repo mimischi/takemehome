@@ -27,23 +27,40 @@ the-card(
                 :selected="selected"
                 @select="setActive"
               )
+
+  v-divider
+
+  v-card
+    v-card-title(primary-title)
+      div
+        div.headline Delete data
+        span Press the following button to delete all data that was saved in this application. This is equivalent to a factory reset.
+    v-card-actions
+      settings-delete
 </template>
 
 <script>
 import { mapFields } from "vuex-map-fields";
+import SettingsDelete from "@/components/settings/SettingsDelete";
 import TheCard from "@/components/TheCard";
 import PreviewConnectionList from "@/components/settings/PreviewConnectionList";
 import PreviewConnectionTimeline from "@/components/settings/PreviewConnectionTimeline";
 
 export default {
   data: () => ({
+    dialog: false,
     valid: true,
     items: [
       { name: "Connection timeline", path: "connectionLookup" },
       { name: "Favorite connections", path: "connectionFavorites" }
     ]
   }),
-  components: { PreviewConnectionList, PreviewConnectionTimeline, TheCard },
+  components: {
+    PreviewConnectionList,
+    PreviewConnectionTimeline,
+    SettingsDelete,
+    TheCard
+  },
   computed: {
     ...mapFields(["settings"]),
     selected() {
