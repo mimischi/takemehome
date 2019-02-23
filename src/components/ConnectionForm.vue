@@ -4,13 +4,13 @@ the-card(
   :backLink="{ name: 'connectionList' }"
 )
 
-  template(v-slot:rightSide)
+  //- template(v-slot:rightSide)
     portal-target(name="save-button")
 
   connection-model(:id="id")
     v-card(slot-scope="{ data: connection, create, update, swap, valid }")
 
-      portal(to="save-button")
+      //- portal(to="save-button")
         v-btn(
           flat
           @click="submit({ create: create, update: update })"
@@ -55,6 +55,19 @@ the-card(
               label="Mark connection as favorite?"
               :prepend-icon="connection.isFavorite ? 'star' : 'star_border'"
             ) Favorite
+
+          v-card-actions
+            v-btn(
+              flat
+              @click="$router.push({ name: 'connectionList' })"
+            ) Cancel
+            v-spacer
+            v-btn(
+              color="primary"
+              @click="submit({ create: create, update: update })"
+              :disabled="!valid"
+            ) Save
+
 </template>
 
 <script>
