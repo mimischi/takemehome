@@ -5,7 +5,7 @@ v-content(class="py-0")
     v-card-title(primary-title)
       div
         div(class="headline") Default behavior
-        span Choose whether you want to load your primary connection or see your favorites.
+        span Choose whether you want to load your primary connection or see all connections.
     v-card-text
       v-container(grid-list-xl)
         v-layout

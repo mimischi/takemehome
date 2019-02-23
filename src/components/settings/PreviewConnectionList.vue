@@ -11,8 +11,9 @@ v-flex(
     height="100%"
   )
     v-card-title(class="pb-0 no-user-select")
-      h3 Show favorites
+      h6.title Show all connections
     v-card-text(class="pb-0 pt-0")
+      p.subheading Manually cycle through connections and upcoming departures.
       connection-skeleton(:active="hover || active")
 </template>
 

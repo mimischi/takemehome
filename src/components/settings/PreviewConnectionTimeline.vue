@@ -8,8 +8,9 @@ v-flex(
 )
   v-card(:elevation="elevation" height="100%")
     v-card-title(class="pb-0 no-user-select")
-      h3 Load primary connection
+      h6.title Load primary connection
     v-card-text(class="pb-0 pt-0")
+      p.subheading Automatically load upcoming departures for your primary connection.
       timeline-skeleton(
         :active="hover || active"
         :num="1"
