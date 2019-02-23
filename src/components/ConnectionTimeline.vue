@@ -1,25 +1,26 @@
 <template lang="pug">
-v-layout(row wrap v-scroll="onScroll")
-  //- transition(name="slide-x-transition")
-  //-   v-flex(
-  //-     xs12
-  //-     v-if="$store.state.showWelcome"
-  //-     class="mb-3"
-  //-   )
-  //-     welcome-card
+//- v-layout(row wrap v-scroll="onScroll")
+//-   v-flex(xs12)
+//-     v-card(v-if="connection === null")
+//-       v-card-title(class="primary lighten-2 white--text")
+//-         h3 Add your first connection
+//-       v-card-text
+//-         v-layout(align-center justify-space-around)
+//-           v-icon(
+//-             large
+//-             color="primary"
+//-             ) commute
+//-           span You have not added any connections yet. <br /> Add at least one to perform searches.
 
-  v-flex(xs12)
-    v-card(v-if="connection === null")
-      v-card-title(class="primary lighten-2 white--text")
-        h3 Add your first connection
-      v-card-text
-        v-layout(align-center justify-space-around)
-          v-icon(
-            large
-            color="primary"
-            ) commute
-          span You have not added any connections yet. <br /> Add at least one to perform searches.
-    div#timeline(v-else)
+the-card(
+  :title="trip"
+  :backLink="{ name: 'connectionList' }"
+  v-scroll="onScroll"
+)
+  template(v-slot:rightSide)
+    v-container {{ trip }}
+  v-container
+    div#timeline
       timeline-skeleton(v-if="trips === null")
       timeline(
         v-if="trips"
@@ -46,13 +47,14 @@ v-layout(row wrap v-scroll="onScroll")
 
 <script>
 import axios from "axios";
+import TheCard from "@/components/TheCard";
 import Timeline from "@/components/timeline/Timeline";
 import TimelineSkeleton from "@/components/timeline/TimelineSkeleton";
 import WelcomeCard from "@/components/WelcomeCard";
 
 export default {
   name: "ConnectionTimeline",
-  components: { Timeline, TimelineSkeleton, WelcomeCard },
+  components: { Timeline, TimelineSkeleton, TheCard, WelcomeCard },
   props: {
     data: {
       type: Object,
@@ -73,6 +75,10 @@ export default {
         connection => connection.uuid === this.id
       );
       return connection;
+    },
+    trip() {
+      return `${this.connection.from.station.name} - 
+      ${this.connection.to.station.name}`;
     }
   },
   mounted() {

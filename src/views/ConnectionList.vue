@@ -1,6 +1,6 @@
 <template lang="pug">
-v-card
-  v-card-title(class="primary lighten-2 white--text")
+the-card(:title="cardTitle")
+  //- v-card-title(class="primary lighten-2 white--text")
     h3 {{ cardTitle }}
   v-card-text(v-if="connections.length < 1")
     v-layout(align-center justify-space-around)
@@ -79,6 +79,7 @@ v-card
 </template>
 
 <script>
+import TheCard from "@/components/TheCard";
 import ConnectionForm from "@/components/ConnectionForm";
 import ConnectionModel from "@/components/ConnectionModel";
 import { mapFields } from "vuex-map-fields";
@@ -104,7 +105,7 @@ export default {
       });
     }
   },
-  components: { ConnectionModel, ConnectionForm },
+  components: { ConnectionModel, ConnectionForm, TheCard },
   methods: {
     lookupConnection(uuid) {
       this.$router.push({ name: "connectionLookup", params: { id: uuid } });
