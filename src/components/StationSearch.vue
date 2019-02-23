@@ -2,17 +2,18 @@
 v-autocomplete(
   v-model="model"
   :items="items"
+  :label="label"
   :loading="loading"
   :search-input.sync="search"
-  hide-no-data
-  hide-selected
-  item-text="name"
-  item-value="extId"
-  :label="label"
   :placeholder="placeholder"
-  persisted-hint
   :prepend-icon="prependIcon"
   @click:clear="clear"
+  hide-no-data
+  :hint="hint"
+  persistent-hint
+  item-text="name"
+  item-value="extId"
+  outline
   return-object
 )
 </template>
@@ -31,6 +32,10 @@ export default {
     label: {
       type: String,
       default: "Station name"
+    },
+    hint: {
+      type: String,
+      default: undefined
     },
     placeholder: {
       type: String,

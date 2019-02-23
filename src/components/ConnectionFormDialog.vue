@@ -32,11 +32,15 @@
                 v-model="connection.from"
                 direction="from"
                 label="Departure station"
+                prepend-icon="flight_takeoff"
+                hint="Choose your departure station"
               )
               station-search(
                 v-model="connection.to"
                 direction="to"
                 label="Destination station"
+                prepend-icon="flight_land"
+                hint="Choose your destination station"
               )
             v-flex(xs1)
               v-layout(xs1 align-center justify-center fill-height)
