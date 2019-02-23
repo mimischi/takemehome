@@ -25,31 +25,44 @@
               @click="submit({ create: create, update: update })"
               :disabled="!valid"
             ) Save
-        v-card-text
-          v-layout(row)
-            v-flex(xs11)
-              station-search(
-                v-model="connection.from"
-                direction="from"
-                label="Departure station"
-                prepend-icon="flight_takeoff"
-                hint="Choose your departure station"
-              )
-              station-search(
-                v-model="connection.to"
-                direction="to"
-                label="Destination station"
-                prepend-icon="flight_land"
-                hint="Choose your destination station"
-              )
-            v-flex(xs1)
-              v-layout(xs1 align-center justify-center fill-height)
-                v-btn(
-                  icon
-                  :disabled="!valid"
-                  @click="swap()"
-                )
-                  v-icon swap_vert
+
+        v-layout(justify-center)
+          v-flex(xs12 md6 lg5)
+            v-card-title
+              span.subheading Departure and destination
+            v-card-text
+              v-layout(row)
+                v-flex(xs11)
+                  station-search(
+                    v-model="connection.from"
+                    direction="from"
+                    label="Departure station"
+                    prepend-icon="flight_takeoff"
+                    hint="Choose your departure station"
+                  )
+                  station-search(
+                    v-model="connection.to"
+                    direction="to"
+                    label="Destination station"
+                    prepend-icon="flight_land"
+                    hint="Choose your destination station"
+                  )
+                v-flex(xs1)
+                  v-layout(xs1 align-center justify-center fill-height)
+                    v-btn(
+                      icon
+                      :disabled="!valid"
+                      @click="swap()"
+                    )
+                      v-icon swap_vert
+            v-card-title
+              span.subheading Connection settings
+            v-card-text
+              v-switch(
+                v-model="connection.isFavorite"
+                label="Mark connection as favorite?"
+                :prepend-icon="connection.isFavorite ? 'star' : 'star_border'"
+              ) Favorite
 </template>
 
 <script>
