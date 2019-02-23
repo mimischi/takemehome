@@ -67,7 +67,7 @@ export default {
   letter-spacing: 0.5px;
   position: relative;
   line-height: 1.4em;
-  padding: 20px;
+  padding: 20px 20px 25px 20px;
   list-style: none;
   text-align: left;
   width: 100%;

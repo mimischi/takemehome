@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-container
+  v-container(class="container--skeleton")
     v-card
       v-card-title(:class="cardTitleClass")
       v-list
@@ -71,6 +71,9 @@ export default {
 </script>
 
 <style>
+.container--skeleton {
+  padding: 12px 12px 12px 12px;
+}
 .station {
   background-color: #a9a9a9;
   height: 1em;
