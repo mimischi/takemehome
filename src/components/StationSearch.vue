@@ -1,6 +1,7 @@
 <template lang="pug">
 v-autocomplete(
   v-model="model"
+  :autofocus="autofocus"
   :items="items"
   :label="label"
   :loading="loading"
@@ -28,6 +29,10 @@ export default {
     value: {
       type: Object,
       required: true
+    },
+    autofocus: {
+      type: Boolean,
+      default: false
     },
     label: {
       type: String,

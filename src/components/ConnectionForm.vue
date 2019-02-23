@@ -25,6 +25,7 @@ the-card(
               v-flex(xs11)
                 station-search(
                   v-model="connection.from"
+                  :autofocus=`true`,
                   direction="from"
                   label="Departure station"
                   prepend-icon="flight_takeoff"
