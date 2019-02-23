@@ -3,7 +3,7 @@ v-app
   v-navigation-drawer(
     v-model="drawer"
     app
-    :clipped="drawer"
+    :clipped="!isMobile"
     mini-variant
     :permanent="!isMobile || drawer"
   )
