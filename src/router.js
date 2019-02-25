@@ -3,8 +3,8 @@ import Router from "vue-router";
 
 import Home from "@/views/Home";
 import Settings from "@/views/Settings";
-import ConnectionForm from "@/views/ConnectionForm";
-import ConnectionList from "@/views/ConnectionList";
+import Connections from "@/views/Connections";
+import CreateUpdateConnection from "@/views/CreateUpdateConnection";
 import ConnectionTimeline from "@/views/ConnectionTimeline";
 
 Vue.use(Router);
@@ -26,12 +26,12 @@ export default new Router({
     {
       path: "/c",
       name: "connectionList",
-      component: ConnectionList
+      component: Connections
     },
     {
       path: "/c/create",
       name: "connectionCreate",
-      component: ConnectionForm
+      component: CreateUpdateConnection
     },
     {
       path: "/c/:id/:reverse?",
@@ -42,13 +42,13 @@ export default new Router({
     {
       path: "/c/:id/edit",
       name: "connectionEdit",
-      component: ConnectionForm,
+      component: CreateUpdateConnection,
       props: true
     },
     {
       path: "/favorites",
       name: "connectionFavorites",
-      component: ConnectionList
+      component: Connections
     }
   ]
 });
