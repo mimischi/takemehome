@@ -8,6 +8,11 @@ v-app
     :permanent="!isMobile || drawer"
   )
     v-list(dense)
+      v-list-tile(:to="{ name: 'home' }" exact)
+        v-list-tile-action
+          v-icon home
+        v-list-tile-content
+          v-list-tile-title Home
       v-list-tile(:to="{ name: 'connectionList' }" exact)
         v-list-tile-action
           v-icon commute
