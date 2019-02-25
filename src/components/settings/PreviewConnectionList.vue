@@ -24,7 +24,7 @@ export default {
   data: () => ({
     hover: false,
     elevation: 1,
-    name: "connectionFavorites"
+    name: "connectionList"
   }),
   components: { ConnectionSkeleton },
   props: {
