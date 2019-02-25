@@ -84,7 +84,9 @@ export default {
     trips: null,
     offsetTop: 0,
     connectionData: null,
-    loading: false
+    loading: false,
+    interval: null,
+    ago: null
   }),
   computed: {
     connection() {
@@ -98,7 +100,7 @@ export default {
       ${this.connectionData.to.station.name}`;
     },
     timeAgo() {
-      return format(this.connectionData.lastUsed);
+      return this.ago;
     },
     isMobile() {
       return this.$vuetify.breakpoint.xs;
@@ -120,7 +122,18 @@ export default {
 
     this.getTrip();
   },
+  destroyed() {
+    clearInterval(this.interval);
+  },
   methods: {
+    setTimeAgo() {
+      this.ago = format(this.connection.lastUsed);
+    },
+    startTimeAgoInterval() {
+      this.interval = setInterval(() => {
+        this.setTimeAgo();
+      }, 5000);
+    },
     revertConnection() {
       [this.connectionData.from, this.connectionData.to] = [
         this.connectionData.to,
@@ -160,6 +173,8 @@ export default {
         .then(response => {
           this.trips = response.data.Trip;
           this.$store.dispatch("usedConnection", this.connection.uuid);
+
+          this.startTimeAgoInterval();
         })
         .catch(e => {
           this.errors = 'Something went wrong with the API: "' + e + '".';
