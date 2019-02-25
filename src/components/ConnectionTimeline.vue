@@ -64,11 +64,16 @@ export default {
     id: {
       type: String,
       default: null
+    },
+    reverse: {
+      type: String,
+      default: null
     }
   },
   data: () => ({
     trips: null,
-    offsetTop: 0
+    offsetTop: 0,
+    connectionData: null
   }),
   computed: {
     connection() {
@@ -78,15 +83,31 @@ export default {
       return connection;
     },
     trip() {
-      return `${this.connection.from.station.name} - 
-      ${this.connection.to.station.name}`;
+      return `${this.connectionData.from.station.name} - 
+      ${this.connectionData.to.station.name}`;
     }
   },
-  mounted() {
+  created() {
     // Do nothing if we cannot lookup the connection UUID.
     if (!this.connection) return;
 
-    this.getTrip();
+    // Determine in which direction to lookup the connections.
+    let from = this.connection.from;
+    let to = this.connection.to;
+
+    if (!!this.reverse && this.reverse === "reverse") {
+      [from, to] = [to, from];
+    }
+
+    this.connectionData = {
+      from: from,
+      to: to
+    };
+
+    this.getTrip({
+      originExtId: from.station.extId,
+      destExtId: to.station.extId
+    });
   },
   methods: {
     scrollToTop() {
@@ -95,14 +116,11 @@ export default {
     onScroll() {
       this.offsetTop = window.pageYOffset || document.documentElement.scrollTop;
     },
-    getTrip() {
+    getTrip(connection) {
       axios
         .post(process.env.VUE_APP_API_URL, {
           url: "trip",
-          params: {
-            originExtId: this.connection.from.station.extId,
-            destExtId: this.connection.to.station.extId
-          }
+          params: connection
         })
         .then(response => {
           this.trips = response.data.Trip;

@@ -39,7 +39,7 @@ export default new Router({
       component: ConnectionForm
     },
     {
-      path: "/c/:id",
+      path: "/c/:id/:reverse?",
       name: "connectionLookup",
       component: ConnectionTimeline,
       props: true
