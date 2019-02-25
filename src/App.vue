@@ -63,6 +63,13 @@ export default {
     isMobile() {
       return this.$vuetify.breakpoint.xs;
     }
+  },
+  watch: {
+    isMobile: function(val) {
+      if (val) {
+        this.drawer = false;
+      }
+    }
   }
 };
 </script>
