@@ -39,20 +39,18 @@ v-app
           v-slide-y-transition(hide-on-leave)
             router-view
 
-  portal-target(name="fab")
+    portal-target(name="fab")
 </template>
 
 <script>
+import IsMobile from "@/components/mixins/IsMobile";
+
 export default {
   name: "App",
+  mixins: [IsMobile],
   data: () => ({
     drawer: false
   }),
-  computed: {
-    isMobile() {
-      return this.$vuetify.breakpoint.xs;
-    }
-  },
   watch: {
     isMobile: function(val) {
       if (val) {
