@@ -174,6 +174,7 @@ export default {
           this.trips = response.data.Trip;
           this.$store.dispatch("usedConnection", this.connection.uuid);
 
+          this.setTimeAgo();
           this.startTimeAgoInterval();
         })
         .catch(e => {
