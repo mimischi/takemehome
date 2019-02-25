@@ -22,12 +22,23 @@ the-card(
     v-container
       v-flex(xs10) {{ trip }}
     v-spacer
-    v-tooltip(left)
+    v-tooltip(left :disabled="loading")
+      template(#activator="data")
+        v-btn(
+          icon
+          v-on="data.on"
+          @click="getTrip()"
+          :disabled="loading"
+        )
+          v-icon autorenew
+      span Reload connection
+    v-tooltip(left :disabled="loading")
       template(#activator="data")
         v-btn(
           icon
           v-on="data.on"
           @click="reverseLookup()"
+          :disabled="loading"
         )
           v-icon swap_vert
       span Perform reverse lookup
@@ -84,7 +95,8 @@ export default {
   data: () => ({
     trips: null,
     offsetTop: 0,
-    connectionData: null
+    connectionData: null,
+    loading: false
   }),
   computed: {
     connection() {
@@ -133,7 +145,6 @@ export default {
         params: { id: this.id, reverse: reverse }
       });
 
-      this.trips = null;
       this.revertConnection();
       this.getTrip();
     },
@@ -144,6 +155,9 @@ export default {
       this.offsetTop = window.pageYOffset || document.documentElement.scrollTop;
     },
     getTrip() {
+      this.trips = null;
+      this.loading = true;
+
       axios
         .post(process.env.VUE_APP_API_URL, {
           url: "trip",
@@ -157,6 +171,9 @@ export default {
         })
         .catch(e => {
           this.errors = 'Something went wrong with the API: "' + e + '".';
+        })
+        .finally(() => {
+          this.loading = false;
         });
     }
   }
