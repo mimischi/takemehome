@@ -1,4 +1,5 @@
 import { mapFields } from "vuex-map-fields";
+import connectionDraft from "@/store/connectionDraft";
 
 export default {
   name: "ConnectionModel",
@@ -41,18 +42,7 @@ export default {
   methods: {
     initialize() {
       return {
-        lastUsed: null,
-        isDefault: false,
-        isFavorite: false,
-        provider: "RMV",
-        to: {
-          items: [],
-          station: null
-        },
-        from: {
-          items: [],
-          station: null
-        }
+        ...connectionDraft
       };
     },
     create() {

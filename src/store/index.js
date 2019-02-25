@@ -6,21 +6,7 @@ import { getField, updateField } from "vuex-map-fields";
 
 import uuid from "uuid/v4";
 
-const connectionDraft = {
-  lastUsed: null,
-  isFavorite: false,
-  isDefault: false,
-  uuid: null,
-  provider: "RMV",
-  from: {
-    items: [],
-    station: null
-  },
-  to: {
-    items: [],
-    station: null
-  }
-};
+import connectionDraft from "@/store/connectionDraft";
 
 const initialState = {
   showWelcome: true,
@@ -46,6 +32,9 @@ export default new Vuex.Store({
     addConnection({ commit }, connection) {
       commit("addConnection", connection);
     },
+    usedConnection({ commit }, uuid) {
+      commit("usedConnection", uuid);
+    },
     toggleWelcome({ commit }) {
       commit("toggleWelcome");
     },
@@ -61,6 +50,14 @@ export default new Vuex.Store({
     addConnection(state, connection) {
       connection.uuid = uuid();
       state.connections.push(connection);
+    },
+    usedConnection(state, uuid) {
+      const index = state.connections.findIndex(
+        connection => connection.uuid === uuid
+      );
+
+      state.connections[index].lastUsed = new Date();
+      state.connections[index].counter++;
     },
     resetDraft(state) {
       state.connectionDraft = { ...connectionDraft };

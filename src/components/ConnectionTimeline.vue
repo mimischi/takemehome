@@ -126,9 +126,6 @@ export default {
 
     this.getTrip();
   },
-  beforeRouteUpdate(to, from, next) {
-    next();
-  },
   methods: {
     revertConnection() {
       [this.connectionData.from, this.connectionData.to] = [
@@ -168,6 +165,7 @@ export default {
         })
         .then(response => {
           this.trips = response.data.Trip;
+          this.$store.dispatch("usedConnection", this.connection.uuid);
         })
         .catch(e => {
           this.errors = 'Something went wrong with the API: "' + e + '".';
