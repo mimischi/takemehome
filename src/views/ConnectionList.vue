@@ -51,6 +51,10 @@ the-card(:title="cardTitle")
                       @click="makeDefault()")
                       v-list-tile-title Make primary
                     v-list-tile(
+                      @click="lookupConnection(connection.uuid, 'reverse')"
+                    )
+                      v-list-tile-title Reverse lookup
+                    v-list-tile(
                       @click="goToUpdate(connection.uuid, update)"
                     )
                       v-list-tile-title Edit
@@ -107,8 +111,11 @@ export default {
   },
   components: { ConnectionModel, ConnectionForm, TheCard },
   methods: {
-    lookupConnection(uuid) {
-      this.$router.push({ name: "connectionLookup", params: { id: uuid } });
+    lookupConnection(uuid, reverse = null) {
+      this.$router.push({
+        name: "connectionLookup",
+        params: { id: uuid, reverse: reverse }
+      });
     },
     goToUpdate(index, callback) {
       callback();
