@@ -36,7 +36,8 @@ v-app
     v-container(fluid)
       v-layout(justify-center)
         v-flex(xs12)
-          router-view
+          v-slide-y-transition(hide-on-leave)
+            router-view
 
   portal-target(name="fab")
 </template>
