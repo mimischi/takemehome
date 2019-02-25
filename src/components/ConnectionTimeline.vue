@@ -19,7 +19,7 @@ the-card(
   v-scroll="onScroll"
 )
   template(v-slot:rightSide)
-    v-container
+    v-container(v-if="!isMobile")
       v-flex(xs10) {{ trip }}
     v-spacer
     v-tooltip(left :disabled="loading")
@@ -113,6 +113,9 @@ export default {
     },
     timeAgo() {
       return format(this.connectionData.lastUsed);
+    },
+    isMobile() {
+      return this.$vuetify.breakpoint.xs;
     }
   },
   created() {
