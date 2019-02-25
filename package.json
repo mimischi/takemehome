@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "iso8601-duration": "^1.1.7",
     "lodash": "^4.17.11",
     "portal-vue": "^1.5.0",
     "pug": "^2.0.3",
@@ -35,8 +36,6 @@
     "node-sass": "^4.9.0",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.0.1",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
     "vue-cli-plugin-vuetify": "^0.4.6",
     "vue-template-compiler": "^2.5.17",
     "vuetify-loader": "^1.0.5"
