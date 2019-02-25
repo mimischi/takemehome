@@ -19,7 +19,18 @@ the-card(
   v-scroll="onScroll"
 )
   template(v-slot:rightSide)
-    v-container {{ trip }}
+    v-container
+      v-flex(xs10) {{ trip }}
+    v-spacer
+    v-tooltip(left)
+      template(#activator="data")
+        v-btn(
+          icon
+          v-on="data.on"
+          @click="reverseLookup()"
+        )
+          v-icon swap_vert
+      span Perform reverse lookup
   v-container
     div#timeline
       timeline-skeleton(v-if="trips === null")
@@ -92,35 +103,54 @@ export default {
     if (!this.connection) return;
 
     // Determine in which direction to lookup the connections.
-    let from = this.connection.from;
-    let to = this.connection.to;
-
-    if (!!this.reverse && this.reverse === "reverse") {
-      [from, to] = [to, from];
-    }
-
     this.connectionData = {
-      from: from,
-      to: to
+      from: this.connection.from,
+      to: this.connection.to
     };
 
-    this.getTrip({
-      originExtId: from.station.extId,
-      destExtId: to.station.extId
-    });
+    if (!!this.reverse && this.reverse === "reverse") {
+      this.revertConnection();
+    }
+
+    this.getTrip();
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
   },
   methods: {
+    revertConnection() {
+      [this.connectionData.from, this.connectionData.to] = [
+        this.connectionData.to,
+        this.connectionData.from
+      ];
+    },
+    reverseLookup() {
+      let reverse = this.$route.params.reverse;
+      reverse = !reverse ? "reverse" : null;
+
+      this.$router.push({
+        name: "connectionLookup",
+        params: { id: this.id, reverse: reverse }
+      });
+
+      this.trips = null;
+      this.revertConnection();
+      this.getTrip();
+    },
     scrollToTop() {
       this.$vuetify.goTo("#app");
     },
     onScroll() {
       this.offsetTop = window.pageYOffset || document.documentElement.scrollTop;
     },
-    getTrip(connection) {
+    getTrip() {
       axios
         .post(process.env.VUE_APP_API_URL, {
           url: "trip",
-          params: connection
+          params: {
+            originExtId: this.connectionData.from.station.extId,
+            destExtId: this.connectionData.to.station.extId
+          }
         })
         .then(response => {
           this.trips = response.data.Trip;
