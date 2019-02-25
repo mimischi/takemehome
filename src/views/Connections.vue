@@ -1,6 +1,19 @@
 <template lang="pug">
 the-card(:title="cardTitle")
   connection-list
+
+  portal(to="fab")
+    v-btn(
+      bottom
+      right
+      color="primary"
+      fixed
+      fab
+      :to="{ name: 'connectionCreate' }"
+    )
+      v-icon(
+        class="fab-v-icon"
+      ) add
 </template>
 
 <script>

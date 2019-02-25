@@ -62,19 +62,6 @@ v-list(
         v-if="index + 1 < connections.length"
         :key="index"
       )
-
-  portal(to="fab")
-    v-btn(
-      bottom
-      right
-      color="primary"
-      fixed
-      fab
-      :to="{ name: 'connectionCreate' }"
-    )
-      v-icon(
-        class="fab-v-icon"
-      ) add
 </template>
 
 <script>
