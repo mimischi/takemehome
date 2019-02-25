@@ -31,7 +31,7 @@ the-card(
           :disabled="loading"
         )
           v-icon autorenew
-      span Reload connection
+      span Reload connection (Last used: {{ timeAgo }})
     v-tooltip(left :disabled="loading")
       template(#activator="data")
         v-btn(
@@ -70,6 +70,8 @@ the-card(
 
 <script>
 import axios from "axios";
+import { format } from "timeago.js";
+
 import TheCard from "@/components/TheCard";
 import Timeline from "@/components/timeline/Timeline";
 import TimelineSkeleton from "@/components/timeline/TimelineSkeleton";
@@ -108,6 +110,9 @@ export default {
     trip() {
       return `${this.connectionData.from.station.name} - 
       ${this.connectionData.to.station.name}`;
+    },
+    timeAgo() {
+      return format(this.connectionData.lastUsed);
     }
   },
   created() {
