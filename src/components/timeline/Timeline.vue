@@ -3,7 +3,7 @@ v-slide-y-transition
   v-flex(xs12)
     ul.timeline
       span(data-icon="timer") {{ $options.computed.formatDuration(trip.duration) }}
-      span(data-icon="autorenew") {{ LegListLength }}
+      span(data-icon="transfer_within_a_station") {{ LegListLength }}
       li.event(
         v-for="l in trip.LegList.Leg"
         :data-icon="$options.computed.productType(l)"
