@@ -1,17 +1,4 @@
 <template lang="pug">
-//- v-layout(row wrap v-scroll="onScroll")
-//-   v-flex(xs12)
-//-     v-card(v-if="connection === null")
-//-       v-card-title(class="primary lighten-2 white--text")
-//-         h3 Add your first connection
-//-       v-card-text
-//-         v-layout(align-center justify-space-around)
-//-           v-icon(
-//-             large
-//-             color="primary"
-//-             ) commute
-//-           span You have not added any connections yet. <br /> Add at least one to perform searches.
-
 the-card(
   :title="trip"
   :noTitle=`true`
@@ -75,11 +62,10 @@ import { format } from "timeago.js";
 import TheCard from "@/components/TheCard";
 import Timeline from "@/components/timeline/Timeline";
 import TimelineSkeleton from "@/components/timeline/TimelineSkeleton";
-import WelcomeCard from "@/components/WelcomeCard";
 
 export default {
   name: "ConnectionTimeline",
-  components: { Timeline, TimelineSkeleton, TheCard, WelcomeCard },
+  components: { Timeline, TimelineSkeleton, TheCard },
   props: {
     data: {
       type: Object,

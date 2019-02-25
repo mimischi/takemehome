@@ -41,10 +41,10 @@ the-card(
 
 <script>
 import { mapFields } from "vuex-map-fields";
-import SettingsDelete from "@/components/settings/SettingsDelete";
 import TheCard from "@/components/TheCard";
 import PreviewConnectionList from "@/components/settings/PreviewConnectionList";
 import PreviewConnectionTimeline from "@/components/settings/PreviewConnectionTimeline";
+import SettingsDelete from "@/components/settings/SettingsDelete";
 
 export default {
   data: () => ({

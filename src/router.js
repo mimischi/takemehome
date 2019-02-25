@@ -1,12 +1,11 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Onboarding from "@/views/Onboarding";
+
 import Home from "@/views/Home";
 import Settings from "@/views/Settings";
+import ConnectionForm from "@/views/ConnectionForm";
 import ConnectionList from "@/views/ConnectionList";
-import ConnectionForm from "@/components/ConnectionForm";
-import ConnectionTimeline from "@/components/ConnectionTimeline";
-// import ConnectionFavoriteCards from "@/components/ConnectionFavoriteCards";
+import ConnectionTimeline from "@/views/ConnectionTimeline";
 
 Vue.use(Router);
 
@@ -14,10 +13,6 @@ export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
-    {
-      path: "/welcome",
-      component: Onboarding
-    },
     {
       path: "/",
       name: "home",

@@ -3,20 +3,8 @@ the-card(
   :title="`${label} connection`"
   :backLink="{ name: 'connectionList' }"
 )
-
-  //- template(v-slot:rightSide)
-    portal-target(name="save-button")
-
   connection-model(:id="id")
     v-card(slot-scope="{ data: connection, create, update, swap, valid }")
-
-      //- portal(to="save-button")
-        v-btn(
-          flat
-          @click="submit({ create: create, update: update })"
-          :disabled="!valid"
-        ) Save
-    
       v-layout(justify-center)
         v-flex(xs12 md8 lg6)
           v-card-title
@@ -72,13 +60,12 @@ the-card(
 
 <script>
 import TheCard from "@/components/TheCard";
-import ConnectionForm from "@/components/ConnectionForm";
-import ConnectionModel from "@/components/ConnectionModel";
+import ConnectionModel from "@/components/models/ConnectionModel";
 import StationSearch from "@/components/StationSearch";
 
 export default {
   name: "ConnectionFormDialog",
-  components: { ConnectionForm, ConnectionModel, StationSearch, TheCard },
+  components: { ConnectionModel, StationSearch, TheCard },
   props: {
     id: {
       type: String,

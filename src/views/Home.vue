@@ -3,12 +3,7 @@ p(v-if="staying") HELLO
 </template>
 
 <script>
-import ConnectionTimeline from "@/components/ConnectionTimeline";
-
 export default {
-  components: {
-    ConnectionTimeline
-  },
   data: () => ({
     staying: false
   }),

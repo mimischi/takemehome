@@ -31,18 +31,6 @@ v-app
       @click.stop="drawer = !drawer"
     )
       v-icon menu
-    //- v-toolbar-title(class="headline text-uppercase")
-    //-   v-btn(
-    //-     color="white"
-    //-     flat
-    //-     :ripple="{ class: 'white--text' }"
-    //-     active-class=""
-    //-     to="/"
-    //-     small
-    //-   )
-    //-     span T.
-    //-     span(class="font-weight-light") M.
-    //-     span H.
 
   v-content
     v-container(fluid)

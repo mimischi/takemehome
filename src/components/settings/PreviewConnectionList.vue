@@ -18,8 +18,7 @@ v-flex(
 </template>
 
 <script>
-import TimelineSkeleton from "@/components/timeline/TimelineSkeleton";
-import ConnectionSkeleton from "@/components/settings/ConnectionSkeleton";
+import ConnectionSkeleton from "@/components/connection/ConnectionSkeleton";
 
 export default {
   data: () => ({
@@ -27,7 +26,7 @@ export default {
     elevation: 1,
     name: "connectionFavorites"
   }),
-  components: { ConnectionSkeleton, TimelineSkeleton },
+  components: { ConnectionSkeleton },
   props: {
     selected: {
       type: String,
