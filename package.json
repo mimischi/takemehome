@@ -9,7 +9,7 @@
     "now-build": "npm run build"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "iso8601-duration": "^1.1.7",
     "lodash": "^4.17.11",
     "portal-vue": "^1.5.0",
