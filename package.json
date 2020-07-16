@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "iso8601-duration": "^1.1.7",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "portal-vue": "^1.5.0",
     "pug": "^2.0.3",
     "roboto-fontface": "*",
